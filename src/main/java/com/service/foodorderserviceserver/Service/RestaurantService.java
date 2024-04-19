@@ -1,0 +1,121 @@
+package com.service.foodorderserviceserver.Service;
+
+import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
+import com.service.foodorderserviceserver.Repository.RestaurantRepository;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Time;
+import java.util.List;
+
+@Service
+public class RestaurantService {
+
+    private final RestaurantRepository restaurantRepository;
+    private final RestaurantMapper restaurantMapper;
+
+    public RestaurantService(RestaurantRepository restaurantRepository,
+                             RestaurantMapper restaurantMapper) {
+        this.restaurantRepository = restaurantRepository;
+        this.restaurantMapper = restaurantMapper;
+    }
+    // Get all restaurants
+    public List<Restaurant> getAllRestaurants() {
+        return restaurantRepository.findAll();
+    }
+
+    // Get restaurant by ID
+    @Transactional
+    public Restaurant getRestaurantById(int restaurantId) {
+        return restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+    }
+
+    // Add a new restaurant
+    @Transactional
+    public Restaurant addRestaurant(Restaurant restaurant) {
+        restaurant.setRestaurantName(restaurant.getRestaurantName());
+        restaurant.setEmail(restaurant.getEmail());
+        restaurant.setPhone(restaurant.getPhone());
+        restaurant.setCuisine(restaurant.getCuisine());
+        restaurant.setOpenTime(restaurant.getOpenTime());
+        restaurant.setCloseTime(restaurant.getCloseTime());
+        restaurant.setOpened(restaurant.isOpened());
+        restaurant.setDescription(restaurant.getDescription());
+        return restaurantRepository.save(restaurant);
+    }
+
+    // Update an existing restaurant
+    @Transactional
+    public Restaurant updateRestaurant(int restaurantId, Restaurant restaurantDTO) {
+        Restaurant existingRestaurant = restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+
+        existingRestaurant.setRestaurantName(restaurantDTO.getRestaurantName());
+        existingRestaurant.setEmail(restaurantDTO.getEmail());
+        existingRestaurant.setPhone(restaurantDTO.getPhone());
+        existingRestaurant.setCuisine(restaurantDTO.getCuisine());
+        existingRestaurant.setOpenTime(restaurantDTO.getOpenTime());
+        existingRestaurant.setCloseTime(restaurantDTO.getCloseTime());
+        existingRestaurant.setOpened(restaurantDTO.isOpened());
+        existingRestaurant.setDescription(restaurantDTO.getDescription());
+        restaurantRepository.save(existingRestaurant);
+        return existingRestaurant;
+    }
+
+    // Delete a restaurant
+    @Transactional
+    public void deleteRestaurant(int restaurantId) {
+        Restaurant restaurant = restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+        restaurant.removeAllItems();
+        restaurantRepository.delete(restaurant);
+    }
+
+    // Open a restaurant
+    @Transactional
+    public void openRestaurant(int restaurantId) {
+        Restaurant restaurant = restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+        restaurant.openRestaurant();
+        restaurantRepository.save(restaurant);
+    }
+
+    // Close a restaurant
+    @Transactional
+    public void closeRestaurant(int restaurantId) {
+        Restaurant restaurant = restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+        restaurant.closeRestaurant();
+        restaurantRepository.save(restaurant);
+    }
+
+    // Update the open status of all restaurants
+    @Transactional
+    @Scheduled(fixedRate = 60000)
+    public void updateRestaurantOpenStatus() {
+        List<Restaurant> allRestaurants = restaurantRepository.findAll();
+        for (Restaurant restaurant : allRestaurants) {
+            Time now = new Time(System.currentTimeMillis());
+            if (now.after(restaurant.getOpenTime()) && now.before(restaurant.getCloseTime())) {
+                if (!restaurant.isOpened()) {
+                    openRestaurant(restaurant.getId());
+                }
+            } else {
+                if (restaurant.isOpened()) {
+                    closeRestaurant(restaurant.getId());
+                }
+            }
+        }
+    }
+
+}
+
