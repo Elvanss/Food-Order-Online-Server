@@ -1,7 +1,6 @@
 package com.service.foodorderserviceserver.DTO;
 
 import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
-import com.service.foodorderserviceserver.DTO.Address.RestaurantAddressDTO;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import lombok.*;
 
@@ -23,7 +22,7 @@ public class RestaurantDTO {
     private boolean isOpened;
     private String description;
     private Roles roles;
-    private RestaurantAddressDTO address;
+    private AddressDTO address;
     private Integer numberOfItems;
 
 

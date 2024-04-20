@@ -1,8 +1,12 @@
 package com.service.foodorderserviceserver.DTO.Address;
 
+import com.service.foodorderserviceserver.DTO.RestaurantDTO;
+import com.service.foodorderserviceserver.DTO.User.UserDTO;
+
 import lombok.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 public class AddressDTO {
@@ -11,7 +15,9 @@ public class AddressDTO {
     private String street;
     private String suburb;
     private String state;
-    private String postCode;
+    private String postCode;    
+    private UserDTO userId;
+    private RestaurantDTO restaurantId;
 
     public AddressDTO(Integer id, String bname, String street, String suburb, String state, String postCode) {
         this.id = id;

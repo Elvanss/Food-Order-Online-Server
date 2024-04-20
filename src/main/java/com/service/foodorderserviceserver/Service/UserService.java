@@ -1,9 +1,14 @@
 package com.service.foodorderserviceserver.Service;
 
+import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
+import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +21,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final AddressRepository addressRepository;
+
 //    private final PasswordEncoder passwordEncoder;
 
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     public List<User> findAll() {
@@ -62,4 +70,19 @@ public class UserService {
                 .orElseThrow(() -> new ObjectNotFoundException("user not found!", userId));
         this.userRepository.deleteById(userId);
     }
+
+    @Transactional 
+    public void assignAddress(Integer userId, Integer addressId) {
+        Address addressToBeAssigned = this.addressRepository.findById(addressId)
+                .orElseThrow(() -> new ObjectNotFoundException("address not found!", addressId));
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("user not found!", userId));
+
+        // if (addressToBeAssigned.getUser() != null) {
+        //     addressToBeAssigned.getUser().removeArtifact(addressToBeAssigned);
+        // }
+        user.addAddress(addressToBeAssigned);
+    }
+
+
 }

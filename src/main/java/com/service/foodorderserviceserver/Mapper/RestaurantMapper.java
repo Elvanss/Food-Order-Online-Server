@@ -29,7 +29,7 @@ public class RestaurantMapper {
                                  source.getDescription(),
                                  source.getRoles(),
                                  source.getAddress() != null
-                                         ? this.addressMapper.convertToResAddressDTO(source.getAddress())
+                                         ? this.addressMapper.convertToDto(source.getAddress())
                                          : null,
                                  source.getNumberOfItems());
     }

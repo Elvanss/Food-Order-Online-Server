@@ -1,8 +1,11 @@
 package com.service.foodorderserviceserver.Service;
 
+import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
+import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,9 +18,11 @@ import java.util.List;
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final AddressRepository addressRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository, AddressRepository addressRepository) {
         this.restaurantRepository = restaurantRepository;
+        this.addressRepository = addressRepository;
     }
     // Get all restaurants
     @Transactional
@@ -63,7 +68,6 @@ public class RestaurantService {
         existingRestaurant.setCloseTime(restaurantDTO.getCloseTime());
         existingRestaurant.setOpened(restaurantDTO.isOpened());
         existingRestaurant.setDescription(restaurantDTO.getDescription());
-        existingRestaurant.setAddress(restaurantDTO.getAddress());
         restaurantRepository.save(existingRestaurant);
         return existingRestaurant;
     }
@@ -116,6 +120,25 @@ public class RestaurantService {
             }
         }
     }
+
+    public List<Restaurant> getRestaurantByCuisine(String cuisine) {
+        return restaurantRepository.findByCuisine(cuisine);
+    }
+
+    @Transactional
+    public void assignAddress(Integer restaurantId, Integer addressId) {
+        Address addressToBeAssigned = addressRepository.findById(addressId)
+                .orElseThrow(() -> new ObjectNotFoundException(addressId, "Address not found"));
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
+                // if address is assigned to user then throw exception
+        if (restaurant.getAddress() != null) {
+            throw new RuntimeException("Address already assigned to restaurant/user");
+        }
+        restaurant.setAddress(addressToBeAssigned);
+    }
+
+    
 
 }
 

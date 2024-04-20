@@ -1,7 +1,6 @@
 package com.service.foodorderserviceserver.Entity.User;
 
-import com.service.foodorderserviceserver.Entity.Address.Address;
-import com.service.foodorderserviceserver.Entity.Address.CustomerAddress;
+import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,18 +48,23 @@ public class User implements Serializable {
     @Column(name="type")
     private Roles type;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CustomerAddress> addresses = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Address> addresses = new ArrayList<>();
 
     public Integer getNumberOfAddress() {
         return this.addresses.size();
     }
 
-    public void addAddress(CustomerAddress address) {
+    public void addAddress(Address address) {
         address.setUser(this);
+        address.setRestaurant(null);
         this.addresses.add(address);
     }
 
-
+    public void removeAddress(Address addressToBeAssigned) {
+        // Remove artifact owner.
+        addressToBeAssigned.setUser(null);
+        this.addresses.remove(addressToBeAssigned);
+    }
 
 }

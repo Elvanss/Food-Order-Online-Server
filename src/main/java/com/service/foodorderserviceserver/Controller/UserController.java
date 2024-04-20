@@ -63,11 +63,17 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedUserDto);
     }
 
-
     // Change password.
     @DeleteMapping("/delete/{userId}")
     public Result deleteUser(@PathVariable Integer userId) {
         this.userService.delete(userId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
+    }
+
+    // Assign an address to a user.
+    @PostMapping("/{userId}/address/{addressId}")
+    public Result assignAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
+        this.userService.assignAddress(userId, addressId);
+        return new Result(true, StatusCode.SUCCESS, "Assign Address Success", addressId);
     }
 }

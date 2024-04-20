@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.service.foodorderserviceserver.Entity.Address.Address;
-import com.service.foodorderserviceserver.Entity.Address.RestaurantAddress;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -64,7 +62,11 @@ public class Restaurant implements Serializable {
 //    @JsonIgnore
     @OneToOne(cascade = CascadeType.MERGE ,fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private RestaurantAddress address;
+    private Address address;
+
+    public void setAddress(Address address) {
+        address.setRestaurant(this);
+    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)
     private List<Item> itemList;

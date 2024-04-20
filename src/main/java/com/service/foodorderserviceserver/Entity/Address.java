@@ -1,4 +1,4 @@
-package com.service.foodorderserviceserver.Entity.Address;
+package com.service.foodorderserviceserver.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,14 +8,14 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+import com.service.foodorderserviceserver.Entity.User.User;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Address")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "address_type", discriminatorType = DiscriminatorType.STRING)
 public class Address implements Serializable {
 
     @Id // Primary Key
@@ -36,6 +36,12 @@ public class Address implements Serializable {
 
     @Column(name = "postCode", columnDefinition = "VARCHAR(255)")
     private String postCode;
+
+    @ManyToOne
+    private User user;
+
+    @OneToOne(mappedBy = "address")
+    private Restaurant restaurant;
 
 
     public Address(String bname, String street, String suburb, String state, String postCode) {
