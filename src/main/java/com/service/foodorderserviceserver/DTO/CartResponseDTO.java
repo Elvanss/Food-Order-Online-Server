@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter
 @Getter
-public class CartDTO {
+public class CartResponseDTO {
     private Integer id;
     private UserDTO userId;
     private Date createdDate;
+    private List<CartItemResponseDTO> cartItems; // Store all items in cart
 }

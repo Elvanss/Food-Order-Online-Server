@@ -1,5 +1,9 @@
 package com.service.foodorderserviceserver.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.service.foodorderserviceserver.Entity.Address.Address;
 import com.service.foodorderserviceserver.Entity.Address.RestaurantAddress;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
@@ -19,7 +23,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "restaurant")
+@Table(name = "Restaurant")
 public class Restaurant implements Serializable {
 
     @Id
@@ -57,22 +61,21 @@ public class Restaurant implements Serializable {
     @Column(name="roles")
     private Roles roles;
 
-    @OneToOne // Only one address can be assigned to the restaurant
-    @JoinColumn(name = "address-id", referencedColumnName = "id")
+//    @JsonIgnore
+    @OneToOne(cascade = CascadeType.MERGE ,fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private RestaurantAddress address;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)
-    // Show the list of items belong to restaurant
     private List<Item> itemList;
-
 
     public int getNumberOfItems() {
         return itemList.size();
     }
 
     public void addItem(Item item) {
-        this.itemList.add(item);
         item.setRestaurantId(this);
+        this.itemList.add(item);
     }
 
     public void removeAllItems() {

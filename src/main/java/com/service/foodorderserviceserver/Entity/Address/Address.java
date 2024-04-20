@@ -38,6 +38,11 @@ public class Address implements Serializable {
     private String postCode;
 
 
-
-
+    public Address(String bname, String street, String suburb, String state, String postCode) {
+        this.bname = bname;
+        this.street = street;
+        this.suburb = suburb;
+        this.state = state;
+        this.postCode = postCode;
+    }
 }

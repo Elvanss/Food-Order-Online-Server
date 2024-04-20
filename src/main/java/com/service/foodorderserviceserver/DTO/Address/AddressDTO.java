@@ -1,8 +1,10 @@
 package com.service.foodorderserviceserver.DTO.Address;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@Setter
+@Getter
 public class AddressDTO {
     private Integer id;
     private String bname;

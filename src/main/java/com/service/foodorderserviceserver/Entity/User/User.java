@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,11 +49,16 @@ public class User implements Serializable {
     @Column(name="type")
     private Roles type;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CustomerAddress> addresses;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CustomerAddress> addresses = new ArrayList<>();
 
     public Integer getNumberOfAddress() {
         return this.addresses.size();
+    }
+
+    public void addAddress(CustomerAddress address) {
+        address.setUser(this);
+        this.addresses.add(address);
     }
 
 

@@ -1,11 +1,15 @@
 package com.service.foodorderserviceserver.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,7 +40,6 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "restaurant-id", referencedColumnName = "id")
-    // The item which is belong to restaurant
     private Restaurant restaurantId;
 
 }

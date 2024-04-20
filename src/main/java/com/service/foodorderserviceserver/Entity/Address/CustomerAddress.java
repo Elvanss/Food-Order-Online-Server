@@ -10,17 +10,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Entity
 @DiscriminatorValue("CUSTOMER_ADDRESS")
 @Table(name = "CustomerAddress")
 public class CustomerAddress extends Address {
 
-    @Id // Primary Key
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    public CustomerAddress(Integer id, String bname, String street, String suburb, String state, String postCode, User user) {
+        super(id, bname, street, suburb, state, postCode);
+        this.user = user;
+
+    }
 }

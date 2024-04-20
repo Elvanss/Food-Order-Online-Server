@@ -15,14 +15,12 @@ import java.util.List;
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
-    private final RestaurantMapper restaurantMapper;
 
-    public RestaurantService(RestaurantRepository restaurantRepository,
-                             RestaurantMapper restaurantMapper) {
+    public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.restaurantMapper = restaurantMapper;
     }
     // Get all restaurants
+    @Transactional
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
@@ -46,6 +44,7 @@ public class RestaurantService {
         restaurant.setCloseTime(restaurant.getCloseTime());
         restaurant.setOpened(restaurant.isOpened());
         restaurant.setDescription(restaurant.getDescription());
+        restaurant.setAddress(restaurant.getAddress());
         return restaurantRepository.save(restaurant);
     }
 
@@ -64,6 +63,7 @@ public class RestaurantService {
         existingRestaurant.setCloseTime(restaurantDTO.getCloseTime());
         existingRestaurant.setOpened(restaurantDTO.isOpened());
         existingRestaurant.setDescription(restaurantDTO.getDescription());
+        existingRestaurant.setAddress(restaurantDTO.getAddress());
         restaurantRepository.save(existingRestaurant);
         return existingRestaurant;
     }
