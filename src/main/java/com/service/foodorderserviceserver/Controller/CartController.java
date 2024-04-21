@@ -1,8 +1,7 @@
 package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.CartDTO;
-import com.service.foodorderserviceserver.DTO.CartItemRequestDTO;
-import com.service.foodorderserviceserver.DTO.CartItemResponseDTO;
+import com.service.foodorderserviceserver.DTO.CartLineItemDTO;
 import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Entity.CartLineItem;
 import com.service.foodorderserviceserver.Mapper.CartLineItemMapper;
@@ -13,7 +12,6 @@ import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -47,14 +45,26 @@ public class CartController {
 //        return success(res);
 //    }
 
-    @PostMapping("/add-to-cart") // Add to Cart
-    public Result addToCart(@RequestBody CartItemRequestDTO cartItemRequestDTO){
-        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getProductId());
+//    @PostMapping("/add-to-cart") // Add to Cart
+//    public Result addToCart(@RequestBody CartItemRequestDTO cartItemRequestDTO){
+//        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getProductId());
+//        CartLineItem cartLineItem = cartLineItemMapper.convertToEntity(cartItemRequestDTO);
+//        CartLineItem res = cartLineItemService.createCartItem(cartLineItem);
+//        CartItemResponseDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
+//        return new Result(true, StatusCode.SUCCESS, "Added Product to Cart", cartItemResponseDTO);
+//    }
+    // Make another API function for add item to cart by using CartItemRequestDTO and CartItemResponseDTO
+    @PostMapping("/add-to-cart")
+    public Result addToCart(@RequestBody CartLineItemDTO cartItemRequestDTO) {
+        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getVariantProductId());
         CartLineItem cartLineItem = cartLineItemMapper.convertToEntity(cartItemRequestDTO);
         CartLineItem res = cartLineItemService.createCartItem(cartLineItem);
-        CartItemResponseDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
+        CartLineItemDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
         return new Result(true, StatusCode.SUCCESS, "Added Product to Cart", cartItemResponseDTO);
     }
+
+
+
 
     @GetMapping("/{id}") // View Cart
     public Result viewCart(@PathVariable(name = "id") Integer id){
@@ -64,9 +74,10 @@ public class CartController {
     }
 
     @DeleteMapping("/delete-after-order/{id}/{orderId}")
-    public Result deleteAfterOrder(@PathVariable Integer id, @PathVariable Integer orderId) {
+    public Result deleteAfterOrder(@PathVariable Integer id, // CartLineItem id
+                                    @PathVariable Integer orderId) {
         CartLineItem cartLineItem = cartLineItemService.deleteAfterOrder(id, orderId);
-        CartItemResponseDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(cartLineItem);
+        CartLineItemDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(cartLineItem);
         return new Result(true, StatusCode.SUCCESS, "Deleted Cart Line Item After Order", cartItemResponseDTO);
     }
 

@@ -1,6 +1,5 @@
 package com.service.foodorderserviceserver.DTO;
 
-import com.service.foodorderserviceserver.Entity.Cart;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItemResponseDTO {
+public class CartLineItemDTO {
     private Integer id;
-    private CartDTO cartId;
-    private ItemDTO variantProductId;
+    private Integer cartId;
+    private Integer variantProductId;
     private int quantity;
     private Double totalPrice;
     private Date addedDate;

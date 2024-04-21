@@ -24,7 +24,7 @@ public class Cart {
     private Integer id;
 
     @Column(name = "Total_Price")
-    private Long totalPrice;
+    private Double totalPrice;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -32,5 +32,9 @@ public class Cart {
 
     @Column(name = "created_date")
     private Date createdDate;
+
+    @OneToMany(mappedBy = "cartId", cascade = CascadeType.ALL)
+    private List<CartLineItem> cartLineItems = new ArrayList<>();
+
 
 }

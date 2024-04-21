@@ -13,6 +13,6 @@ import java.sql.Date;
 @Getter
 public class CartDTO {
     private Integer id;
-    private UserDTO userId;
+    private Integer userId;
     private Date createdDate;
 }

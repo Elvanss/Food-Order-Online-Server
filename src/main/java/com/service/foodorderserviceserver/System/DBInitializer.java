@@ -1,12 +1,16 @@
 package com.service.foodorderserviceserver.System;
 
 import com.service.foodorderserviceserver.Entity.Address;
+import com.service.foodorderserviceserver.Entity.Cart;
+import com.service.foodorderserviceserver.Entity.Item;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.Membership;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
+import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.ItemRepository;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Repository.User.MembershipRepository;
@@ -28,17 +32,19 @@ public class DBInitializer implements CommandLineRunner {
     private final RestaurantRepository restaurantRepository;
     private final AddressRepository addressRepository;
     private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
     public DBInitializer(UserRepository userRepository,
                          UserService userService,
                          MembershipRepository membershipRepository, RestaurantRepository restaurantRepository,
-                         AddressRepository addressRepository, ItemRepository itemRepository) {
+                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.membershipRepository = membershipRepository;
         this.restaurantRepository = restaurantRepository;
         this.addressRepository = addressRepository;
         this.itemRepository = itemRepository;
+        this.cartRepository = cartRepository;
     }
 
     @Override
@@ -156,6 +162,38 @@ public class DBInitializer implements CommandLineRunner {
         userRepository.save(user3);
         userRepository.save(user4);
         userRepository.save(user5);
+
+        Cart cart1 = new Cart();
+        cart1.setUser(user1);
+        cart1.setTotalPrice(0.0);
+        cart1.setCreatedDate(Date.valueOf(LocalDate.now()));
+
+        Cart cart2 = new Cart();
+        cart2.setUser(user2);
+        cart2.setTotalPrice(0.0);
+        cart2.setCreatedDate(Date.valueOf(LocalDate.now()));
+
+        Cart cart3 = new Cart();
+        cart3.setUser(user3);
+        cart3.setTotalPrice(0.0);
+        cart3.setCreatedDate(Date.valueOf(LocalDate.now()));
+
+        Cart cart4 = new Cart();
+        cart4.setUser(user4);
+        cart4.setTotalPrice(0.0);
+        cart4.setCreatedDate(Date.valueOf(LocalDate.now()));
+
+        Cart cart5 = new Cart();
+        cart5.setUser(user5);
+        cart5.setTotalPrice(0.0);
+        cart5.setCreatedDate(Date.valueOf(LocalDate.now()));
+
+        cartRepository.save(cart1);
+        cartRepository.save(cart2);
+        cartRepository.save(cart3);
+        cartRepository.save(cart4);
+        cartRepository.save(cart5);
+
         /*
          ====================Create 5 users (End)=====================
          */
@@ -449,68 +487,66 @@ public class DBInitializer implements CommandLineRunner {
          */
 
 
-//
-//
-//        /*
-//         ====================Create Items for Restaurant=====================
-//         */
-//        Item item1 = new Item();
-//        item1.setItemName("Pizza");
-//        item1.setDescription("Pepperoni pizza");
-//        item1.setAvailable(true);
-//        item1.setPrice(15.5);
-//        item1.setItemCategory(ItemCategory.Main);
-//        item1.setRestaurantId(restaurant1);
-//
-//        Item item2 = new Item();
-//        item2.setItemName("Pasta");
-//        item2.setDescription("Spaghetti with meatballs");
-//        item2.setAvailable(true);
-//        item2.setPrice(12.5);
-//        item2.setItemCategory(ItemCategory.Main);
-//        item2.setRestaurantId(restaurant1);
-//
-//        Item item3 = new Item();
-//        item3.setItemName("Fried Rice");
-//        item3.setDescription("Fried rice with chicken");
-//        item3.setAvailable(true);
-//        item3.setPrice(10.5);
-//        item3.setItemCategory(ItemCategory.Main);
-//        item3.setRestaurantId(restaurant1);
-//
-//        Item item4 = new Item();
-//        item4.setItemName("Sushi");
-//        item4.setDescription("California roll");
-//        item4.setAvailable(true);
-//        item4.setPrice(8.5);
-//        item4.setItemCategory(ItemCategory.Main);
-//        item4.setRestaurantId(restaurant1);
-//
-//        Item item5 = new Item();
-//        item5.setItemName("Tacos");
-//        item5.setDescription("Beef tacos");
-//        item5.setAvailable(true);
-//        item5.setPrice(7.5);
-//        item5.setItemCategory(ItemCategory.Main);
-//        item5.setRestaurantId(restaurant2);
-//
-//        Item item6 = new Item();
-//        item6.setItemName("Burger");
-//        item6.setDescription("Cheeseburger");
-//        item6.setAvailable(true);
-//        item6.setPrice(6.5);
-//        item6.setItemCategory(ItemCategory.Main);
-//        item6.setRestaurantId(restaurant2);
-//
-//        itemRepository.save(item1);
-//        itemRepository.save(item2);
-//        itemRepository.save(item3);
-//        itemRepository.save(item4);
-//        itemRepository.save(item5);
-//        itemRepository.save(item6);
-//        /*
-//         ====================Create Items for Restaurant=====================
-//         */
+        /*
+         ====================Create Items for Restaurant=====================
+         */
+        Item item1 = new Item();
+        item1.setItemName("Pizza");
+        item1.setDescription("Pepperoni pizza");
+        item1.setAvailable(true);
+        item1.setPrice(15.5);
+        item1.setItemCategory(ItemCategory.Main);
+        item1.setRestaurantId(restaurant1);
+
+        Item item2 = new Item();
+        item2.setItemName("Pasta");
+        item2.setDescription("Spaghetti with meatballs");
+        item2.setAvailable(true);
+        item2.setPrice(12.5);
+        item2.setItemCategory(ItemCategory.Main);
+        item2.setRestaurantId(restaurant1);
+
+        Item item3 = new Item();
+        item3.setItemName("Fried Rice");
+        item3.setDescription("Fried rice with chicken");
+        item3.setAvailable(true);
+        item3.setPrice(10.5);
+        item3.setItemCategory(ItemCategory.Main);
+        item3.setRestaurantId(restaurant1);
+
+        Item item4 = new Item();
+        item4.setItemName("Sushi");
+        item4.setDescription("California roll");
+        item4.setAvailable(true);
+        item4.setPrice(8.5);
+        item4.setItemCategory(ItemCategory.Main);
+        item4.setRestaurantId(restaurant1);
+
+        Item item5 = new Item();
+        item5.setItemName("Tacos");
+        item5.setDescription("Beef tacos");
+        item5.setAvailable(true);
+        item5.setPrice(7.5);
+        item5.setItemCategory(ItemCategory.Main);
+        item5.setRestaurantId(restaurant2);
+
+        Item item6 = new Item();
+        item6.setItemName("Burger");
+        item6.setDescription("Cheeseburger");
+        item6.setAvailable(true);
+        item6.setPrice(6.5);
+        item6.setItemCategory(ItemCategory.Main);
+        item6.setRestaurantId(restaurant2);
+
+        itemRepository.save(item1);
+        itemRepository.save(item2);
+        itemRepository.save(item3);
+        itemRepository.save(item4);
+        itemRepository.save(item5);
+        itemRepository.save(item6);
+        /*
+         ====================Create Items for Restaurant=====================
+         */
 
     }
 

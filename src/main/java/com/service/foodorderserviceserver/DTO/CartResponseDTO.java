@@ -1,7 +1,6 @@
 package com.service.foodorderserviceserver.DTO;
 
 import com.service.foodorderserviceserver.DTO.User.UserDTO;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,5 +15,5 @@ public class CartResponseDTO {
     private Integer id;
     private UserDTO userId;
     private Date createdDate;
-    private List<CartItemResponseDTO> cartItems; // Store all items in cart
+    private List<CartLineItemDTO> cartItems; // Store all items in cart
 }

@@ -1,6 +1,7 @@
 package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import com.service.foodorderserviceserver.Service.UserService;
@@ -24,13 +25,32 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+    //Login user with username and password
+    @PostMapping("/login")
+    public Result login(@RequestBody UserDTO userDto) {
+        User user = this.userMapper.convertToEntity(userDto);
+        User user1 = this.userService.login(user);
+        UserDTO userDto1 = this.userMapper.convertToDto(user1);
+        return new Result(true, StatusCode.SUCCESS, "Login Success", userDto1);
+    }
+
     // Register a new user.
-//    @PostMapping("/register")
-//    public Result register(@RequestBody User newUser, @RequestParam(name = "role", required=false) Roles role) {
-//        User savedUser = this.userService.save(newUser, role);
-//        UserDTO savedUserDto = this.userMapper.convertToDto(savedUser);
-//        return new Result(true, StatusCode.SUCCESS, "Add Success", savedUserDto);
-//    }
+    @PostMapping("/register")
+    public Result register(@RequestBody User newUser, @RequestParam(name = "role", required=false) Roles role) {
+        User savedUser = this.userService.register(newUser, role);
+        UserDTO savedUserDto = this.userMapper.convertToDto(savedUser);
+        return new Result(true, StatusCode.SUCCESS, "Add Success", savedUserDto);
+    }
+
+    // Change password.
+    @PutMapping("/changePassword/{userId}")
+    public Result changePassword(@PathVariable Integer userId, @RequestBody UserDTO userDto) {
+        User update = this.userMapper.convertToEntity(userDto);
+        User updatedUser = this.userService.changePassword(userId, update);
+        updatedUser.setPassword(updatedUser.getPassword());
+        UserDTO updatedUserDto = this.userMapper.convertToDto(updatedUser);
+        return new Result(true, StatusCode.SUCCESS, "Update Success", updatedUserDto);
+    }
 
     // Get all users.
     @GetMapping
