@@ -32,9 +32,8 @@ public class UserMapper {
         user.setUserName(source.getUsername());
         user.setPassword(source.getPassword());
         user.setEmail(source.getEmail());
+        user.setPhoneNumber(source.getPhoneNumber());
         user.setType(source.getRoles());
-        user.setPhoneNumber(source.getPhone());
-        user.setType(source.getRoles());
-        return user;
-    }
+    return user;
+}
 }

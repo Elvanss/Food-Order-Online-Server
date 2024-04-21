@@ -23,6 +23,19 @@ public class CartLineItemMapper {
         return cartLineItemDTO;
     }
 
+//    public CartLineItem convertToEntity(CartLineItemDTO cartItemRequestDTO) {
+//        CartLineItem cartLineItem = new CartLineItem();
+//        cartLineItem.setId(cartItemRequestDTO.getId());
+//        Cart cart = new Cart();
+//        cart.setId(cartItemRequestDTO.getCartId());
+//        cartLineItem.setCartId(cart);
+//        Item variantProduct = new Item();
+//        variantProduct.setId(cartItemRequestDTO.getVariantProductId());
+//        cartLineItem.setProductId(variantProduct);
+//        cartLineItem.setQuantity(cartItemRequestDTO.getQuantity());
+//        return cartLineItem;
+//    }
+
     public CartLineItem convertToEntity(CartLineItemDTO cartItemRequestDTO) {
         CartLineItem cartLineItem = new CartLineItem();
         cartLineItem.setId(cartItemRequestDTO.getId());
@@ -33,6 +46,8 @@ public class CartLineItemMapper {
         variantProduct.setId(cartItemRequestDTO.getVariantProductId());
         cartLineItem.setProductId(variantProduct);
         cartLineItem.setQuantity(cartItemRequestDTO.getQuantity());
+        cartLineItem.setTotalPrice(cartItemRequestDTO.getTotalPrice());
+        cartLineItem.setAddedDate(cartItemRequestDTO.getAddedDate());
         return cartLineItem;
     }
 }

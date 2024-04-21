@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 public class CartResponseDTO {
     private Integer id;
+    private Double totalPrice;
     private UserDTO userId;
     private Date createdDate;
     private List<CartLineItemDTO> cartItems; // Store all items in cart

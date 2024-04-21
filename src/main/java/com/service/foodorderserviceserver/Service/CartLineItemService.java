@@ -32,42 +32,44 @@ public class CartLineItemService {
         this.cartLineItemMapper = cartLineItemMapper;
     }
 
-public CartLineItem createCartItem(CartLineItem item) {
-    // get variant product by id
-    Item variantProduct = getVariantProductById(item.getProductId().getId());
-    log.info("Variant product: " + variantProduct.getId());
+    public CartLineItem createCartItem(CartLineItem item) {
+        // get variant product by id
+        Item variantProduct = getVariantProductById(item.getProductId().getId());
+        log.info("Variant product: " + variantProduct.getId());
 
-    // check if the cart line item already exists in the cart
-    Optional<CartLineItem> foundCartLineItem = cartLineItemRepository.findByVariantProductIdAndNotDeteted (
+        // check if the cart line item already exists in the cart
+        Optional<CartLineItem> foundCartLineItem = cartLineItemRepository.findByVariantProductIdAndNotDeteted (
                                                                                             item.getCartId().getId(),
                                                                                             item.getId());
-    if (foundCartLineItem.isPresent()) {
-        log.warn("Found cart line item in cart");
-        CartLineItem cartLineItem = foundCartLineItem.get();
-        cartLineItem.setQuantity(cartLineItem.getQuantity() + item.getQuantity());
-        cartLineItem.setTotalPrice(variantProduct.getPrice() * cartLineItem.getQuantity());
-        cartLineItem.setAddedDate(new Date());
+        CartLineItem cartLineItem;
+        if (foundCartLineItem.isPresent()) {
+            log.warn("Found cart line item in cart");
+            cartLineItem = foundCartLineItem.get();
+            cartLineItem.setQuantity(cartLineItem.getQuantity() + item.getQuantity());
+            cartLineItem.setTotalPrice(variantProduct.getPrice() * cartLineItem.getQuantity());
+            cartLineItem.setAddedDate(new Date());
+            cartLineItemRepository.save(cartLineItem);
+        } else {
+            cartLineItem = new CartLineItem();
+            log.warn("Create new cart line item");
+            cartLineItem.setCartId(item.getCartId());
+            cartLineItem.setProductId(item.getProductId());
+            cartLineItem.setQuantity(item.getQuantity());
+            cartLineItem.setTotalPrice(variantProduct.getPrice() * item.getQuantity());
+            cartLineItem.setAddedDate(new Date());
+            cartLineItem.setDeleted(false);
+            cartLineItemRepository.save(cartLineItem);
+        }
+
+        //update the total price and update data in cart after add item in cart_line_items'
+        updateCartTotalPrice(item.getCartId().getId());
         return cartLineItemRepository.save(cartLineItem);
     }
-
-    CartLineItem cartLineItem = new CartLineItem();
-    log.warn("Create new cart line item");
-    cartLineItem.setCartId(item.getCartId());
-    cartLineItem.setProductId(item.getProductId());
-    cartLineItem.setQuantity(item.getQuantity());
-    cartLineItem.setTotalPrice(variantProduct.getPrice() * item.getQuantity());
-    cartLineItem.setAddedDate(new Date());
-    cartLineItem.setDeleted(false);
-    //update the total price and update data in cart after add item in cart_line_items'
-    updateCartTotalPrice(item.getCartId().getId());
-    return cartLineItemRepository.save(cartLineItem);
-    
-}
 
     private void updateCartTotalPrice(Integer id) {
         Optional<Cart> foundCart = cartRepository.findById(id);
         if (foundCart.isEmpty()) {
-            log.error("Cart with id " + id + " is not found");
+            log.error("Cart with id {} is not found", id);
             throw new AppException(HttpStatus.NOT_FOUND.value(), "Cart not found");
         }
 
@@ -99,4 +101,13 @@ public CartLineItem createCartItem(CartLineItem item) {
         }
         return foundVariantProduct.get();
     }
+
+    public List<CartLineItem> getListCartLineItemsByCartId(Integer id) {
+        List<CartLineItem> listCartItems = cartLineItemRepository.findAllByCartId(id);
+        if (listCartItems.isEmpty()){
+            throw new AppException(HttpStatus.NO_CONTENT.value(), "Cart is empty");
+        }
+        return listCartItems;
+    }
+
 }

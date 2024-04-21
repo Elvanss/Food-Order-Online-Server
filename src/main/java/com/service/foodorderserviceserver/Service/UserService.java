@@ -2,22 +2,27 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Cart;
+import com.service.foodorderserviceserver.Entity.CartLineItem;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
+import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
+import com.service.foodorderserviceserver.System.exception.AppException;
 import com.service.foodorderserviceserver.System.exception.ObjectNotFoundException;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,15 +30,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final CartRepository cartRepository;
+    private final CartLineItemRepository cartLineItemRepository;
 
 
 
     public UserService(UserRepository userRepository,
                        AddressRepository addressRepository,
-                       CartRepository cartRepository) {
+                       CartRepository cartRepository, CartLineItemRepository cartLineItemRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.cartRepository = cartRepository;
+        this.cartLineItemRepository = cartLineItemRepository;
     }
 
     public List<User> findAll() {
@@ -56,7 +63,7 @@ public class UserService {
         user.setUserName(newUser.getUserName());
         user.setEmail(newUser.getEmail());
         user.setPassword(newUser.getPassword());
-        user.setPhoneNumber(newUser.getPhoneNumber());
+        user.setPhoneNumber(newUser.getPhoneNumber()); // Ensure this line is present
         user.setType(role);
         User userSaved = this.userRepository.save(user);
 
@@ -67,6 +74,17 @@ public class UserService {
         cartRepository.save(cart);
 
         return userSaved;
+}
+
+    // Login by Username and Password but parameter is User
+    public User login(User user) {
+        User foundUser = this.userRepository.findByUserName(user.getUserName())
+                .orElseThrow(() -> new ObjectNotFoundException("user not found!", user.getUserName()));
+        if (foundUser.getPassword().equals(user.getPassword())) {
+            return foundUser;
+        } else {
+            throw new RuntimeException("Password is incorrect");
+        }
     }
 
     public User update(Integer userId, User update) {
@@ -91,9 +109,9 @@ public class UserService {
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("user not found!", userId));
 
-        // if (addressToBeAssigned.getUser() != null) {
-        //     addressToBeAssigned.getUser().removeArtifact(addressToBeAssigned);
-        // }
+         if (addressToBeAssigned.getUser() != null) {
+             addressToBeAssigned.getUser().removeAddress(addressToBeAssigned);
+         }
         user.addAddress(addressToBeAssigned);
     }
 
@@ -106,15 +124,21 @@ public class UserService {
     }
 
 
+//    // Check Cart of User
+//    private Cart getCartByUserId(Integer userId) {
+//        Optional<Cart> foundCart = cartRepository.findByUserId(userId);
+//        if (foundCart.isEmpty()) {
+//            throw new AppException(HttpStatus.NOT_FOUND.value(), "Not found cart in user");
+//        }
+//        return foundCart.get();
+//    }
+//
+//    private int getQuantityByUserId(Integer userId) {
+//        Cart cart= getCartByUserId(userId);
+//        List<CartLineItem> cartLineItems = cartLineItemRepository.findAllByCartId(cart.getId());
+//        return cartLineItems.stream().mapToInt(CartLineItem::getQuantity).reduce(0, Integer::sum);
+//    }
 
-    // Login by Username and Password but parameter is User
-    public User login(User user) {
-        User foundUser = this.userRepository.findByUserName(user.getUserName())
-                .orElseThrow(() -> new ObjectNotFoundException("user not found!", user.getUserName()));
-        if (foundUser.getPassword().equals(user.getPassword())) {
-            return foundUser;
-        } else {
-            throw new RuntimeException("Password is incorrect");
-        }
-    }
+
+
 }

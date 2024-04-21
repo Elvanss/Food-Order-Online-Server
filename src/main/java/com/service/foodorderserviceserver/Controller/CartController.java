@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.CartDTO;
 import com.service.foodorderserviceserver.DTO.CartLineItemDTO;
+import com.service.foodorderserviceserver.DTO.CartResponseDTO;
 import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Entity.CartLineItem;
 import com.service.foodorderserviceserver.Mapper.CartLineItemMapper;
@@ -13,6 +14,9 @@ import com.service.foodorderserviceserver.System.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -66,11 +70,30 @@ public class CartController {
 
 
 
+//    @GetMapping("/{id}") // View Cart with no list
+//    public Result viewCart(@PathVariable(name = "id") Integer id){
+//        Cart cart = cartService.findById(id);
+//        CartDTO cartDTO = cartMapper.convertToDto(cart);
+//        return new Result(true, StatusCode.SUCCESS, "View Cart", cartDTO);
+//    }
+
     @GetMapping("/{id}") // View Cart
     public Result viewCart(@PathVariable(name = "id") Integer id){
+        // Fetch the Cart entity
         Cart cart = cartService.findById(id);
-        CartDTO cartDTO = cartMapper.convertToDto(cart);
-        return new Result(true, StatusCode.SUCCESS, "View Cart", cartDTO);
+
+        // Fetch the list of CartLineItem entities associated with the Cart
+        List<CartLineItem> cartLineItems = cartLineItemService.getListCartLineItemsByCartId(id);
+
+        // Convert the CartLineItem entities to CartLineItemDTO
+        List<CartLineItemDTO> cartLineItemDTOs = cartLineItems.stream()
+                .map(cartLineItemMapper::convertToDto)
+                .collect(Collectors.toList());
+
+        // Convert the Cart entity and the list of CartLineItemDTO to CartResponseDTO
+        CartResponseDTO cartResponseDTO = cartMapper.convertToResponseDto(cart, cartLineItemDTOs);
+
+        return new Result(true, StatusCode.SUCCESS, "View Cart", cartResponseDTO);
     }
 
     @DeleteMapping("/delete-after-order/{id}/{orderId}")

@@ -21,6 +21,7 @@ public class CartMapper {
     public CartDTO convertToDto(Cart cart) {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(cart.getId());
+        cartDTO.setTotalPrice(cart.getTotalPrice());
         cartDTO.setUserId(cart.getUser().getId());
         cartDTO.setCreatedDate(cart.getCreatedDate());
         return cartDTO;
@@ -30,6 +31,7 @@ public class CartMapper {
     public CartResponseDTO convertToResponseDto(Cart cart, List<CartLineItemDTO> cartItemResponseDTOList) {
         CartResponseDTO cartResponseDTO = new CartResponseDTO();
         cartResponseDTO.setId(cart.getId());
+        cartResponseDTO.setTotalPrice(cart.getTotalPrice());
         cartResponseDTO.setUserId(cart.getUser() != null
                                     ? this.userMapper.convertToDto(cart.getUser())
                                     : null);

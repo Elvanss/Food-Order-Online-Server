@@ -15,7 +15,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private Roles roles;
     private Integer numberOfAddress;
 
@@ -25,7 +25,7 @@ public class UserDTO {
                    String username,
                    String password,
                    String email,
-                   String phone,
+                   String phoneNumber,
                    Roles roles,
                    Integer numberOfAddress) {
         this.id = id;
@@ -34,7 +34,7 @@ public class UserDTO {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.roles = roles;
         this.numberOfAddress = numberOfAddress;
     }
