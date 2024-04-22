@@ -1,16 +1,15 @@
 package com.service.foodorderserviceserver.System;
 
-import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Entity.Cart;
-import com.service.foodorderserviceserver.Entity.Item;
-import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.*;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
+import com.service.foodorderserviceserver.Entity.Type.Rating;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.Membership;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
+import com.service.foodorderserviceserver.Repository.FeedbackRepository;
 import com.service.foodorderserviceserver.Repository.ItemRepository;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Repository.User.MembershipRepository;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class DBInitializer implements CommandLineRunner {
@@ -33,11 +33,12 @@ public class DBInitializer implements CommandLineRunner {
     private final AddressRepository addressRepository;
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
+    private final FeedbackRepository feedbackRepository;
 
     public DBInitializer(UserRepository userRepository,
                          UserService userService,
                          MembershipRepository membershipRepository, RestaurantRepository restaurantRepository,
-                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository) {
+                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository, FeedbackRepository feedbackRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.membershipRepository = membershipRepository;
@@ -45,6 +46,7 @@ public class DBInitializer implements CommandLineRunner {
         this.addressRepository = addressRepository;
         this.itemRepository = itemRepository;
         this.cartRepository = cartRepository;
+        this.feedbackRepository = feedbackRepository;
     }
 
     @Override
@@ -546,6 +548,24 @@ public class DBInitializer implements CommandLineRunner {
         /*
          ====================Create Items for Restaurant=====================
          */
+
+
+        Feedback feedback1 = new Feedback();
+        feedback1.setUser(user1);
+        feedback1.setRestaurant(restaurant1);
+        feedback1.setContent("Tam tam");
+        feedback1.setRating(Rating.TwoStar);
+        feedback1.setPostDateTime(LocalDateTime.now());
+
+        Feedback feedback2 = new Feedback();
+        feedback2.setUser(user1);
+        feedback2.setRestaurant(restaurant1);
+        feedback2.setContent("Ok");
+        feedback2.setRating(Rating.ThreeStar);
+        feedback2.setPostDateTime(LocalDateTime.now());
+
+        feedbackRepository.save(feedback1);
+        feedbackRepository.save(feedback2);
 
     }
 
