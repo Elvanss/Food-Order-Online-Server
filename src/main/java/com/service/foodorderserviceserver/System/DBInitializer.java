@@ -486,7 +486,6 @@ public class DBInitializer implements CommandLineRunner {
          ====================Create 10 restaurants (End)=====================
          */
 
-
         /*
          ====================Create Items for Restaurant=====================
          */
