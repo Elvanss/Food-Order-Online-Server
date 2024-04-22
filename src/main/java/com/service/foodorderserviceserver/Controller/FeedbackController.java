@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/feedback")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FeedbackController {
 
     private final FeedbackService feedbackService;

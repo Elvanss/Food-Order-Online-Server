@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/memberships")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MembershipController {
     @Autowired
     private MembershipService membershipService;
