@@ -40,7 +40,7 @@ public class RestaurantService {
 
     // Add a new restaurant
     @Transactional
-    public Restaurant addRestaurant(Restaurant restaurant) {
+    public Restaurant register(Restaurant restaurant) {
         restaurant.setRestaurantName(restaurant.getRestaurantName());
         restaurant.setEmail(restaurant.getEmail());
         restaurant.setPhone(restaurant.getPhone());
