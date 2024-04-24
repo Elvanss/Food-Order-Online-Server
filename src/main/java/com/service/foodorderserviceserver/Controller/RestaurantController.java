@@ -72,7 +72,7 @@ public class RestaurantController {
     @PostMapping
     public Result addRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
         Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
-        Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
+        Restaurant newRestaurant = restaurantService.register(restaurant);
         RestaurantDTO newRestaurantDTO = restaurantMapper.convertToDto(newRestaurant);
         return new Result(true, StatusCode.SUCCESS, "Restaurant added successfully", newRestaurantDTO);
     }
