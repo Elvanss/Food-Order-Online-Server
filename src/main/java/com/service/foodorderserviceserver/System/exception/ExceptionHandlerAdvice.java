@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.System.exception;
 
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 //import org.springframework.security.access.AccessDeniedException;
 //import org.springframework.security.authentication.AccountStatusException;
