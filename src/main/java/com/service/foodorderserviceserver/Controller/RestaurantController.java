@@ -42,14 +42,23 @@ public class RestaurantController {
          return new Result(true, StatusCode.SUCCESS, "Success", restaurantDTO);
      }
 
-    //Update Restaurant
-    @PutMapping("/{restaurantId}")
-     public Result updateRestaurant(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
+    //Register Restaurant
+    @PutMapping("/register/{restaurantId}")
+     public Result r(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
          Restaurant update = restaurantMapper.convertToEntity(restaurantDTO);
          Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantId, update);
          RestaurantDTO updatedRestaurantDTO = restaurantMapper.convertToDto(updatedRestaurant);
          return new Result(true, StatusCode.SUCCESS, "Success", updatedRestaurantDTO);
      }
+
+     // Login
+    @PostMapping("/login")
+    public Result login(@RequestBody RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
+        Restaurant loginRestaurant = restaurantService.login(restaurant);
+        RestaurantDTO loginRestaurantDTO = restaurantMapper.convertToDto(loginRestaurant);
+        return new Result(true, StatusCode.SUCCESS, "Login successful", loginRestaurantDTO);
+    }
 
     @DeleteMapping("/{restaurantId}")
     public Result deleteRestaurant(@PathVariable Integer restaurantId) {

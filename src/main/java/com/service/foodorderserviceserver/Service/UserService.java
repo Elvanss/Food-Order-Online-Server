@@ -10,11 +10,11 @@ import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
-import com.service.foodorderserviceserver.System.exception.AppException;
-import com.service.foodorderserviceserver.System.exception.ObjectNotFoundException;
 
+import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 import jakarta.transaction.Transactional;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +79,7 @@ public class UserService {
     // Login by Username and Password but parameter is User
     public User login(User user) {
         User foundUser = this.userRepository.findByUserName(user.getUserName())
-                .orElseThrow(() -> new ObjectNotFoundException("user not found!", user.getUserName()));
+                .orElseThrow(() -> new CustomObjectNotFoundException("user not found!", user.getUserName()));
         if (foundUser.getPassword().equals(user.getPassword())) {
             return foundUser;
         } else {

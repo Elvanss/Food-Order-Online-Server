@@ -2,9 +2,9 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Restaurant;
-import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
+import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -43,6 +43,7 @@ public class RestaurantService {
     public Restaurant register(Restaurant restaurant) {
         restaurant.setRestaurantName(restaurant.getRestaurantName());
         restaurant.setEmail(restaurant.getEmail());
+        restaurant.setPassword(restaurant.getPassword());
         restaurant.setPhone(restaurant.getPhone());
         restaurant.setCuisine(restaurant.getCuisine());
         restaurant.setOpenTime(restaurant.getOpenTime());
@@ -51,6 +52,16 @@ public class RestaurantService {
         restaurant.setDescription(restaurant.getDescription());
         restaurant.setAddress(restaurant.getAddress());
         return restaurantRepository.save(restaurant);
+    }
+
+    public Restaurant login(Restaurant restaurant) {
+        Restaurant foundedRestaurant = this.restaurantRepository.findByEmail(restaurant.getRestaurantName())
+                .orElseThrow(() -> new CustomObjectNotFoundException("Restaurant not found!", restaurant.getRestaurantName()));
+        if (foundedRestaurant.getPassword().equals(restaurant.getPassword())) {
+            return foundedRestaurant;
+        } else {
+            throw new RuntimeException("Password is incorrect");
+        }
     }
 
     // Update an existing restaurant
@@ -138,7 +149,7 @@ public class RestaurantService {
         restaurant.setAddress(addressToBeAssigned);
     }
 
-    
+
 
 }
 
