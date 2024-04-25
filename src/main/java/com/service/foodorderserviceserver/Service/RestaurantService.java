@@ -55,7 +55,7 @@ public class RestaurantService {
     }
 
     public Restaurant login(Restaurant restaurant) {
-        Restaurant foundedRestaurant = this.restaurantRepository.findByEmail(restaurant.getRestaurantName())
+        Restaurant foundedRestaurant = this.restaurantRepository.findByEmail(restaurant.getEmail())
                 .orElseThrow(() -> new CustomObjectNotFoundException("Restaurant not found!", restaurant.getRestaurantName()));
         if (foundedRestaurant.getPassword().equals(restaurant.getPassword())) {
             return foundedRestaurant;
