@@ -42,30 +42,6 @@ class UserServiceTest {
     }
 
     @Test
-    void findAll() {
-        userService.findAll();
-        verify(userRepository, times(1)).findAll();
-    }
-
-    @Test
-    void findById() {
-        User user = new User();
-        user.setId(1);
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-
-        User foundUser = userService.findById(1);
-
-        assertEquals(user, foundUser);
-    }
-
-    @Test
-    void findByIdNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-
-        assertThrows(ObjectNotFoundException.class, () -> userService.findById(1));
-    }
-
-    @Test
     void register() {
         User user = new User();
         user.setUserName("username");
@@ -88,6 +64,31 @@ class UserServiceTest {
 
         assertEquals(user, loggedInUser);
     }
+
+    @Test
+    void findById() {
+        User user = new User();
+        user.setId(1);
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+
+        User foundUser = userService.findById(1);
+
+        assertEquals(user, foundUser);
+    }
+
+    @Test
+    void findByIdNotFound() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(ObjectNotFoundException.class, () -> userService.findById(1));
+    }
+
+    @Test
+    void findAll() {
+        userService.findAll();
+        verify(userRepository, times(1)).findAll();
+    }
+
 
     @Test
     void loginPasswordIncorrect() {
