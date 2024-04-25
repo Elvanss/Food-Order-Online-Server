@@ -51,7 +51,7 @@ class FeedbackServiceTest {
         User user = new User();
         Restaurant restaurant = new Restaurant();
         Feedback newFeedback = new Feedback();
-        newFeedback.setContent("Vua phai");
+        newFeedback.setContent("Excellent");
         newFeedback.setRating(Rating.FiveStar);
         newFeedback.setPostDateTime(LocalDateTime.now());
 
