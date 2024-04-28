@@ -6,6 +6,8 @@ import com.service.foodorderserviceserver.Entity.Feedback;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.FeedbackMapper;
+import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
+import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import com.service.foodorderserviceserver.Service.FeedbackService;
 import com.service.foodorderserviceserver.Service.RestaurantService;
 import com.service.foodorderserviceserver.Service.UserService;
@@ -26,13 +28,17 @@ public class FeedbackController {
     private final FeedbackMapper feedbackMapper;
     private final UserService userService;
     private final RestaurantService restaurantService;
+    private final UserMapper userMapper;
+    private final RestaurantMapper restaurantMapper;
 
     @Autowired
-    public FeedbackController(FeedbackService feedbackService, FeedbackMapper feedbackMapper, UserService userService, RestaurantService restaurantService) {
+    public FeedbackController(FeedbackService feedbackService, FeedbackMapper feedbackMapper, UserService userService, RestaurantService restaurantService, UserMapper userMapper, RestaurantMapper restaurantMapper) {
         this.feedbackService = feedbackService;
         this.feedbackMapper = feedbackMapper;
         this.userService = userService;
         this.restaurantService = restaurantService;
+        this.userMapper = userMapper;
+        this.restaurantMapper = restaurantMapper;
     }
 
     @GetMapping
@@ -44,8 +50,8 @@ public class FeedbackController {
 
     @PostMapping
     public Result createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
-        User user = feedbackDTO.getUser(); // Assuming User is received in the request
-        Restaurant restaurant = feedbackDTO.getRestaurant(); // Assuming Restaurant is received in the request
+        User user = userMapper.convertToEntity(feedbackDTO.getUser());
+        Restaurant restaurant = restaurantMapper.convertToEntity(feedbackDTO.getRestaurant());
         Feedback feedback = feedbackMapper.convertToEntity(feedbackDTO);
         Feedback createdFeedback = feedbackService.createFeedback(feedback, user, restaurant);
         return new Result(true, StatusCode.SUCCESS, "Feedback created successfully", feedbackMapper.convert(createdFeedback));

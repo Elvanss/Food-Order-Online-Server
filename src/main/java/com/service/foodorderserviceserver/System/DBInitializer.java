@@ -168,27 +168,22 @@ public class DBInitializer implements CommandLineRunner {
         Cart cart1 = new Cart();
         cart1.setUser(user1);
         cart1.setTotalPrice(0.0);
-        cart1.setCreatedDate(Date.valueOf(LocalDate.now()));
 
         Cart cart2 = new Cart();
         cart2.setUser(user2);
         cart2.setTotalPrice(0.0);
-        cart2.setCreatedDate(Date.valueOf(LocalDate.now()));
 
         Cart cart3 = new Cart();
         cart3.setUser(user3);
         cart3.setTotalPrice(0.0);
-        cart3.setCreatedDate(Date.valueOf(LocalDate.now()));
 
         Cart cart4 = new Cart();
         cart4.setUser(user4);
         cart4.setTotalPrice(0.0);
-        cart4.setCreatedDate(Date.valueOf(LocalDate.now()));
 
         Cart cart5 = new Cart();
         cart5.setUser(user5);
         cart5.setTotalPrice(0.0);
-        cart5.setCreatedDate(Date.valueOf(LocalDate.now()));
 
         cartRepository.save(cart1);
         cartRepository.save(cart2);

@@ -47,7 +47,6 @@ public class CartLineItemService {
             cartLineItem = foundCartLineItem.get();
             cartLineItem.setQuantity(cartLineItem.getQuantity() + item.getQuantity());
             cartLineItem.setTotalPrice(variantProduct.getPrice() * cartLineItem.getQuantity());
-            cartLineItem.setAddedDate(new Date());
             cartLineItemRepository.save(cartLineItem);
         } else {
             cartLineItem = new CartLineItem();
@@ -56,7 +55,6 @@ public class CartLineItemService {
             cartLineItem.setProductId(item.getProductId());
             cartLineItem.setQuantity(item.getQuantity());
             cartLineItem.setTotalPrice(variantProduct.getPrice() * item.getQuantity());
-            cartLineItem.setAddedDate(new Date());
             cartLineItem.setDeleted(false);
             cartLineItemRepository.save(cartLineItem);
         }

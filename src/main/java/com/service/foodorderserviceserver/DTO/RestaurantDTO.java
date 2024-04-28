@@ -24,8 +24,6 @@ public class RestaurantDTO {
     private Roles roles;
     private AddressDTO address;
     private Integer numberOfItems;
-
-
 }
 
 

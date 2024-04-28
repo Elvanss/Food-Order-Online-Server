@@ -70,7 +70,6 @@ public class UserService {
         Cart cart = new Cart();
         cart.setUser(userSaved);
         cart.setTotalPrice(0.0);
-        cart.setCreatedDate(new Date(Calendar.getInstance().getTime().getTime()));
         cartRepository.save(cart);
 
         return userSaved;

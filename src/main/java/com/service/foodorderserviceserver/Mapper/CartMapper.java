@@ -3,6 +3,7 @@ package com.service.foodorderserviceserver.Mapper;
 import com.service.foodorderserviceserver.DTO.CartDTO;
 import com.service.foodorderserviceserver.DTO.CartLineItemDTO;
 import com.service.foodorderserviceserver.DTO.CartResponseDTO;
+import com.service.foodorderserviceserver.DTO.User.UserDTO;
 import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,9 @@ public class CartMapper {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(cart.getId());
         cartDTO.setTotalPrice(cart.getTotalPrice());
-        cartDTO.setUserId(cart.getUser().getId());
-        cartDTO.setCreatedDate(cart.getCreatedDate());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(cart.getUser().getId());
+        cartDTO.setUserId(userDTO);
         return cartDTO;
     }
 
@@ -35,7 +37,6 @@ public class CartMapper {
         cartResponseDTO.setUserId(cart.getUser() != null
                                     ? this.userMapper.convertToDto(cart.getUser())
                                     : null);
-        cartResponseDTO.setCreatedDate(cart.getCreatedDate());
         cartResponseDTO.setCartItems(cartItemResponseDTOList);
         return cartResponseDTO;
     }
@@ -43,7 +44,6 @@ public class CartMapper {
     public Cart convertToEntity(CartDTO cartId) {
         Cart cart = new Cart();
         cart.setId(cartId.getId());
-        cart.setCreatedDate(cartId.getCreatedDate());
         return cart;
     }
 }
