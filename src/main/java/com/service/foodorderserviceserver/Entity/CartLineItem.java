@@ -34,9 +34,6 @@ public class CartLineItem {
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @Column(name = "added_date")
-    private Date addedDate;
-
     @Column(name = "is_deleted")
     private boolean isDeleted;
 }

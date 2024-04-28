@@ -30,9 +30,6 @@ public class Cart {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(name = "created_date")
-    private Date createdDate;
-
     @OneToMany(mappedBy = "cartId", cascade = CascadeType.ALL)
     private List<CartLineItem> cartLineItems = new ArrayList<>();
 
