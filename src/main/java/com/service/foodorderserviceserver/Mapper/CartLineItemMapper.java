@@ -16,16 +16,23 @@ import java.util.stream.Collectors;
 @Component
 public class CartLineItemMapper {
 
-    public CartLineItemDTO convertToDto(CartLineItem cartLineItem) {
+public CartLineItemDTO convertToDto(CartLineItem cartLineItem) {
     CartLineItemDTO cartLineItemDTO = new CartLineItemDTO();
     cartLineItemDTO.setId(cartLineItem.getId());
 
     CartDTO cartDTO = new CartDTO();
     cartDTO.setId(cartLineItem.getCartId().getId());
+    cartDTO.setTotalPrice(cartLineItem.getCartId().getTotalPrice()); // Set totalPrice
     cartLineItemDTO.setCartId(cartDTO);
 
     ItemDTO itemDTO = new ItemDTO();
     itemDTO.setId(cartLineItem.getProductId().getId());
+    itemDTO.setName(cartLineItem.getProductId().getItemName()); // Set name
+    itemDTO.setDescription(cartLineItem.getProductId().getDescription()); // Set description
+    itemDTO.setPrice(cartLineItem.getProductId().getPrice()); // Set price
+    itemDTO.setItemCategory(cartLineItem.getProductId().getItemCategory()); // Set itemCategory
+//    itemDTO.setRestaurantId(cartLineItem.getProductId().getRestaurantId()); // Set restaurantId
+    itemDTO.setAvailable(cartLineItem.getProductId().isAvailable()); // Set available
     cartLineItemDTO.setVariantProductId(itemDTO);
 
     cartLineItemDTO.setQuantity(cartLineItem.getQuantity());

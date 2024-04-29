@@ -21,47 +21,49 @@ import java.util.Optional;
 public class CartLineItemService {
     private static final Logger log = LoggerFactory.getLogger(CartLineItemService.class);
     private final CartRepository cartRepository;
-    private final ItemRepository variantProductRepository;
+    private final ItemRepository itemRepository;
     private final CartLineItemRepository cartLineItemRepository;
-    private final CartLineItemMapper cartLineItemMapper;
 
-    public CartLineItemService(CartRepository cartRepository, ItemRepository variantProductRepository, CartLineItemRepository cartLineItemRepository, CartLineItemMapper cartLineItemMapper) {
+    public CartLineItemService(CartRepository cartRepository, ItemRepository itemRepository, CartLineItemRepository cartLineItemRepository) {
         this.cartRepository = cartRepository;
-        this.variantProductRepository = variantProductRepository;
+        this.itemRepository = itemRepository;
         this.cartLineItemRepository = cartLineItemRepository;
-        this.cartLineItemMapper = cartLineItemMapper;
     }
 
-    public CartLineItem createCartItem(CartLineItem item) {
+    public CartLineItem createCartItem(CartLineItem cartLineItem) {
         // get variant product by id
-        Item variantProduct = getVariantProductById(item.getProductId().getId());
-        log.info("Variant product: " + variantProduct.getId());
+        Item item = getVariantProductById(cartLineItem.getProductId().getId());
+        log.info("Variant product: " + item.getId());
 
         // check if the cart line item already exists in the cart
-        Optional<CartLineItem> foundCartLineItem = cartLineItemRepository.findByVariantProductIdAndNotDeteted (
-                                                                                            item.getCartId().getId(),
-                                                                                            item.getId());
-        CartLineItem cartLineItem;
-        if (foundCartLineItem.isPresent()) {
-            log.warn("Found cart line item in cart");
-            cartLineItem = foundCartLineItem.get();
-            cartLineItem.setQuantity(cartLineItem.getQuantity() + item.getQuantity());
-            cartLineItem.setTotalPrice(variantProduct.getPrice() * cartLineItem.getQuantity());
-            cartLineItemRepository.save(cartLineItem);
-        } else {
-            cartLineItem = new CartLineItem();
-            log.warn("Create new cart line item");
-            cartLineItem.setCartId(item.getCartId());
-            cartLineItem.setProductId(item.getProductId());
-            cartLineItem.setQuantity(item.getQuantity());
-            cartLineItem.setTotalPrice(variantProduct.getPrice() * item.getQuantity());
-            cartLineItem.setDeleted(false);
-            cartLineItemRepository.save(cartLineItem);
-        }
+        if (cartLineItem.getCartId() != null) {
+            Optional<CartLineItem> foundCartLineItem = cartLineItemRepository.findByVariantProductIdAndNotDeteted (
+                    cartLineItem.getCartId().getId(),
+                    item.getId());
+            CartLineItem cartLineItemObj;
+            if (foundCartLineItem.isPresent()) {
+                log.warn("Found cart line item in cart");
+                cartLineItemObj = foundCartLineItem.get();
+                cartLineItemObj.setQuantity(cartLineItem.getQuantity() + cartLineItem.getQuantity());
+                cartLineItemObj.setTotalPrice(item.getPrice() * cartLineItem.getQuantity());
+                cartLineItemRepository.save(cartLineItem);
+            } else {
+                cartLineItemObj = new CartLineItem();
+                log.warn("Create new cart line item");
+                cartLineItemObj.setCartId(cartLineItem.getCartId());
+                cartLineItemObj.setProductId(cartLineItem.getProductId());
+                cartLineItemObj.setQuantity(cartLineItem.getQuantity());
+                cartLineItemObj.setTotalPrice(item.getPrice() * cartLineItem.getQuantity());
+                cartLineItemObj.setDeleted(false);
+                cartLineItemRepository.save(cartLineItemObj);
+            }
 
-        //update the total price and update data in cart after add item in cart_line_items'
-        updateCartTotalPrice(item.getCartId().getId());
-        return cartLineItemRepository.save(cartLineItem);
+            //update the total price and update data in cart after add item in cart_line_items'
+            updateCartTotalPrice(cartLineItem.getCartId().getId());
+            return cartLineItemRepository.save(cartLineItem);
+        } else {
+            throw new AppException(HttpStatus.BAD_REQUEST.value(), "CartId cannot be null");
+        }
     }
 
     private void updateCartTotalPrice(Integer id) {
@@ -93,7 +95,7 @@ public class CartLineItemService {
 
 
     private Item getVariantProductById(Integer id){
-        Optional<Item> foundVariantProduct = variantProductRepository.findById(id);
+        Optional<Item> foundVariantProduct = itemRepository.findById(id);
         if (foundVariantProduct.isEmpty()) {
             throw new AppException(HttpStatus.NOT_FOUND.value(), "Variant product not found");
         }

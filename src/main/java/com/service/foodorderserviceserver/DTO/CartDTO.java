@@ -14,5 +14,4 @@ public class CartDTO {
     private Integer id;
     private Double totalPrice;
     private UserDTO userId;
-    private Date createdDate;
 }

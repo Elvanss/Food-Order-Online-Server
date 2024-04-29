@@ -36,32 +36,20 @@ public class CartController {
         this.cartMapper = cartMapper;
     }
 
+    // Make another API function for add item to cart by using CartItemRequestDTO and CartItemResponseDTO
 //    @PostMapping("/add-to-cart")
-//    public ResponseEntity<ResponseDTO<CartItemResDTO>> addToCart(@RequestBody CartItemReqDTO cartItem){
-//        log.info("Creating CartItem with variant product id " + cartItem.getVariantProductId());
-//        CartItemResDTO res = cartLineItemService.createCartItem(cartItem);
-//        return success(res);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ResponseDTO<CartResDTO>> viewCart(@PathVariable(name = "id") Long id){
-//        CartResDTO res = cartService.findById(id);
-//        return success(res);
-//    }
-
-//    @PostMapping("/add-to-cart") // Add to Cart
-//    public Result addToCart(@RequestBody CartItemRequestDTO cartItemRequestDTO){
-//        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getProductId());
+//    public Result addToCart(@RequestBody CartLineItemDTO cartItemRequestDTO) {
+//        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getVariantProductId());
 //        CartLineItem cartLineItem = cartLineItemMapper.convertToEntity(cartItemRequestDTO);
 //        CartLineItem res = cartLineItemService.createCartItem(cartLineItem);
-//        CartItemResponseDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
+//        CartLineItemDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
 //        return new Result(true, StatusCode.SUCCESS, "Added Product to Cart", cartItemResponseDTO);
 //    }
-    // Make another API function for add item to cart by using CartItemRequestDTO and CartItemResponseDTO
-    @PostMapping("/add-to-cart")
-    public Result addToCart(@RequestBody CartLineItemDTO cartItemRequestDTO) {
-        log.info("Creating CartItem with variant product id " + cartItemRequestDTO.getVariantProductId());
-        CartLineItem cartLineItem = cartLineItemMapper.convertToEntity(cartItemRequestDTO);
+
+@PostMapping("/add-to-cart") // Add to Cart
+    public Result addToCart(@RequestBody CartLineItemDTO cartLineItemDTO){
+        log.info("Creating CartItem with variant product id " + cartLineItemDTO.getVariantProductId());
+        CartLineItem cartLineItem = cartLineItemMapper.convertToEntity(cartLineItemDTO);
         CartLineItem res = cartLineItemService.createCartItem(cartLineItem);
         CartLineItemDTO cartItemResponseDTO = cartLineItemMapper.convertToDto(res);
         return new Result(true, StatusCode.SUCCESS, "Added Product to Cart", cartItemResponseDTO);
@@ -69,30 +57,18 @@ public class CartController {
 
 
 
-
-//    @GetMapping("/{id}") // View Cart with no list
-//    public Result viewCart(@PathVariable(name = "id") Integer id){
-//        Cart cart = cartService.findById(id);
-//        CartDTO cartDTO = cartMapper.convertToDto(cart);
-//        return new Result(true, StatusCode.SUCCESS, "View Cart", cartDTO);
-//    }
-
     @GetMapping("/{id}") // View Cart
     public Result viewCart(@PathVariable(name = "id") Integer id){
         // Fetch the Cart entity
         Cart cart = cartService.findById(id);
-
         // Fetch the list of CartLineItem entities associated with the Cart
         List<CartLineItem> cartLineItems = cartLineItemService.getListCartLineItemsByCartId(id);
-
         // Convert the CartLineItem entities to CartLineItemDTO
         List<CartLineItemDTO> cartLineItemDTOs = cartLineItems.stream()
                 .map(cartLineItemMapper::convertToDto)
                 .collect(Collectors.toList());
-
         // Convert the Cart entity and the list of CartLineItemDTO to CartResponseDTO
         CartResponseDTO cartResponseDTO = cartMapper.convertToResponseDto(cart, cartLineItemDTOs);
-
         return new Result(true, StatusCode.SUCCESS, "View Cart", cartResponseDTO);
     }
 
