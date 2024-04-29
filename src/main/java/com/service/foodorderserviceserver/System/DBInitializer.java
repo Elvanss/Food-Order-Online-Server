@@ -1,5 +1,7 @@
 package com.service.foodorderserviceserver.System;
 
+import com.service.foodorderserviceserver.DTO.CartDTO;
+import com.service.foodorderserviceserver.DTO.ItemDTO;
 import com.service.foodorderserviceserver.Entity.*;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
@@ -7,11 +9,8 @@ import com.service.foodorderserviceserver.Entity.Type.Rating;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.Membership;
 import com.service.foodorderserviceserver.Entity.User.User;
+import com.service.foodorderserviceserver.Repository.*;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
-import com.service.foodorderserviceserver.Repository.CartRepository;
-import com.service.foodorderserviceserver.Repository.FeedbackRepository;
-import com.service.foodorderserviceserver.Repository.ItemRepository;
-import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Repository.User.MembershipRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
 import com.service.foodorderserviceserver.Service.UserService;
@@ -34,11 +33,12 @@ public class DBInitializer implements CommandLineRunner {
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
     private final FeedbackRepository feedbackRepository;
+    private final CartLineItemRepository cartLineItemRepository;
 
     public DBInitializer(UserRepository userRepository,
                          UserService userService,
                          MembershipRepository membershipRepository, RestaurantRepository restaurantRepository,
-                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository, FeedbackRepository feedbackRepository) {
+                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository, FeedbackRepository feedbackRepository, CartLineItemRepository cartLineItemRepository) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.membershipRepository = membershipRepository;
@@ -47,6 +47,7 @@ public class DBInitializer implements CommandLineRunner {
         this.itemRepository = itemRepository;
         this.cartRepository = cartRepository;
         this.feedbackRepository = feedbackRepository;
+        this.cartLineItemRepository = cartLineItemRepository;
     }
 
     @Override
@@ -561,6 +562,35 @@ public class DBInitializer implements CommandLineRunner {
 
         feedbackRepository.save(feedback1);
         feedbackRepository.save(feedback2);
+
+
+//        private Integer id;
+//        private CartDTO cartId;
+//        private ItemDTO variantProductId;
+//        private int quantity;
+//        private Double totalPrice;
+//        private boolean isDeleted;
+
+        // Create CartLineItem objects with the retrieved Cart and Item objects, and set the quantity
+        CartLineItem cartLineItem1 = new CartLineItem();
+        cartLineItem1.setCartId(cart1);
+        cartLineItem1.setProductId(item1);
+        cartLineItem1.setQuantity(1);
+        cartLineItem1.setTotalPrice(item1.getPrice() * cartLineItem1.getQuantity());
+        cartLineItem1.setDeleted(false);
+        // Set quantity as needed
+
+        CartLineItem cartLineItem2 = new CartLineItem();
+        cartLineItem2.setCartId(cart1);
+        cartLineItem2.setProductId(item2);
+        cartLineItem2.setQuantity(1); // Set quantity as needed
+        cartLineItem2.setTotalPrice(item2.getPrice() * cartLineItem2.getQuantity());
+        cartLineItem2.setDeleted(false);
+
+        // Save the CartLineItem objects using the CartLineItemRepository
+        cartLineItemRepository.save(cartLineItem1);
+        cartLineItemRepository.save(cartLineItem2);
+
 
     }
 
