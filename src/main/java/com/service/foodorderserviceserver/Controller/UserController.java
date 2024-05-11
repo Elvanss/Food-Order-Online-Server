@@ -25,10 +25,10 @@ public class UserController {
     private final AddressMapper addressMapper; // Convert address to addressDto.
 
 
-    public UserController(UserService userService, UserMapper userMapper, AddressMapper addressMapper) {
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
-        this.addressMapper = addressMapper;
+        this.addressMapper = null;
     }
 
     //Login user with username and password
@@ -111,6 +111,6 @@ public class UserController {
         List<AddressDTO> addressDtos = addresses.stream()
                 .map(this.addressMapper::convertToDto)
                 .collect(Collectors.toList());
-        return new Result(true, StatusCode.SUCCESS, "Find All Success", addressDtos);
+        return new Result(true, StatusCode.SUCCESS, "Find All Success", addresses);
     }
 }
