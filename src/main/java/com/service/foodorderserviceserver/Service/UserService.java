@@ -2,8 +2,6 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Cart;
-import com.service.foodorderserviceserver.Entity.CartLineItem;
-import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
@@ -15,14 +13,9 @@ import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundE
 import jakarta.transaction.Transactional;
 
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,17 +23,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final CartRepository cartRepository;
-    private final CartLineItemRepository cartLineItemRepository;
 
 
 
     public UserService(UserRepository userRepository,
                        AddressRepository addressRepository,
-                       CartRepository cartRepository, CartLineItemRepository cartLineItemRepository) {
+                       CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.cartRepository = cartRepository;
-        this.cartLineItemRepository = cartLineItemRepository;
+
     }
 
     public List<User> findAll() {

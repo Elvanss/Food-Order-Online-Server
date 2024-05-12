@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
@@ -50,7 +51,6 @@ public class RestaurantService {
         restaurant.setCloseTime(restaurant.getCloseTime());
         restaurant.setOpened(restaurant.isOpened());
         restaurant.setDescription(restaurant.getDescription());
-        restaurant.setAddress(restaurant.getAddress());
         return restaurantRepository.save(restaurant);
     }
 
@@ -138,18 +138,16 @@ public class RestaurantService {
 
     @Transactional
     public void assignAddress(Integer restaurantId, Integer addressId) {
-        Address addressToBeAssigned = addressRepository.findById(addressId)
+        Address addressToBeAssigned = this.addressRepository.findById(addressId)
                 .orElseThrow(() -> new ObjectNotFoundException(addressId, "Address not found"));
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+        Restaurant restaurant = this.restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new ObjectNotFoundException(restaurantId, "Restaurant not found"));
-                // if address is assigned to user then throw exception
-        if (restaurant.getAddress() != null) {
-            throw new RuntimeException("Address already assigned to restaurant/user");
+
+        if (addressToBeAssigned.getRestaurant() != null) {
+            throw new RuntimeException("Address is already assigned to a restaurant");
         }
-        restaurant.setAddress(addressToBeAssigned);
+        restaurant.addAddress(addressToBeAssigned);
     }
-
-
 
 }
 

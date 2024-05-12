@@ -1,7 +1,6 @@
 package com.service.foodorderserviceserver.System;
 
-import com.service.foodorderserviceserver.DTO.CartDTO;
-import com.service.foodorderserviceserver.DTO.ItemDTO;
+
 import com.service.foodorderserviceserver.Entity.*;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
@@ -26,7 +25,6 @@ import java.time.LocalDateTime;
 public class DBInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
-    private final UserService userService;
     private final MembershipRepository membershipRepository;
     private final RestaurantRepository restaurantRepository;
     private final AddressRepository addressRepository;
@@ -37,10 +35,14 @@ public class DBInitializer implements CommandLineRunner {
 
     public DBInitializer(UserRepository userRepository,
                          UserService userService,
-                         MembershipRepository membershipRepository, RestaurantRepository restaurantRepository,
-                         AddressRepository addressRepository, ItemRepository itemRepository, CartRepository cartRepository, FeedbackRepository feedbackRepository, CartLineItemRepository cartLineItemRepository) {
+                         MembershipRepository membershipRepository, 
+                         RestaurantRepository restaurantRepository,
+                         AddressRepository addressRepository, 
+                         ItemRepository itemRepository, 
+                         CartRepository cartRepository, 
+                         FeedbackRepository feedbackRepository, 
+                         CartLineItemRepository cartLineItemRepository) {
         this.userRepository = userRepository;
-        this.userService = userService;
         this.membershipRepository = membershipRepository;
         this.restaurantRepository = restaurantRepository;
         this.addressRepository = addressRepository;
@@ -62,48 +64,56 @@ public class DBInitializer implements CommandLineRunner {
         * 200 menu items (20 menu items per restaurant)
         * */
 
-        /*
-         ====================Create Address for Customers=====================
-         */
-        Address personalAddress1 = new Address();
-        personalAddress1.setBname("Home Building");
-        personalAddress1.setStreet("123 Main St");
-        personalAddress1.setSuburb("Wollongong");
-        personalAddress1.setState("State");
-        personalAddress1.setPostCode("2500");
-//        CustomerAddress savedCustomerAddress1 = addressRepository.save(personalAddress1);
+//         /*
+//          ====================Create Address for Customers=====================
+//          */
+//         Address personalAddress1 = new Address();
+//         personalAddress1.setBname("Home Building");
+//         personalAddress1.setStreet("123 Main St");
+//         personalAddress1.setSuburb("Wollongong");
+//         personalAddress1.setState("State");
+//         personalAddress1.setPostCode("2500");
+//         personalAddress1.setLatitude(personalAddress1.getLatitude());
+//         personalAddress1.setLongitude(personalAddress1.getLongitude());
+// //        CustomerAddress savedCustomerAddress1 = addressRepository.save(personalAddress1);
 
-        Address personalAddress2 = new Address();
-        personalAddress2.setBname("Office Building");
-        personalAddress2.setStreet("456 Main St");
-        personalAddress2.setSuburb("Wollongong");
-        personalAddress2.setState("State");
-        personalAddress2.setPostCode("2500");
-//        CustomerAddress savedCustomerAddress2 = addressRepository.save(personalAddress2);
+//         Address personalAddress2 = new Address();
+//         personalAddress2.setBname("Office Building");
+//         personalAddress2.setStreet("456 Main St");
+//         personalAddress2.setSuburb("Wollongong");
+//         personalAddress2.setState("State");
+//         personalAddress2.setPostCode("2500");
+// //        CustomerAddress savedCustomerAddress2 = addressRepository.save(personalAddress2);
 
-        Address personalAddress3 = new Address();
-        personalAddress3.setBname("Apartment Building");
-        personalAddress3.setStreet("789 Main St");
-        personalAddress3.setSuburb("Wollongong");
-        personalAddress3.setState("State");
-        personalAddress3.setPostCode("2500");
-//        CustomerAddress savedCustomerAddress3 = addressRepository.save(personalAddress3);
+//         Address personalAddress3 = new Address();
+//         personalAddress3.setBname("Apartment Building");
+//         personalAddress3.setStreet("789 Main St");
+//         personalAddress3.setSuburb("Wollongong");
+//         personalAddress3.setState("State");
+//         personalAddress3.setPostCode("2500");
+// //        CustomerAddress savedCustomerAddress3 = addressRepository.save(personalAddress3);
 
-        Address personalAddress4 = new Address();
-        personalAddress4.setBname("Condo Building");
-        personalAddress4.setStreet("321 Main St");
-        personalAddress4.setSuburb("Wollongong");
-        personalAddress4.setState("State");
-        personalAddress4.setPostCode("2500");
-//        CustomerAddress savedCustomerAddress4 = addressRepository.save(personalAddress4);
+//         Address personalAddress4 = new Address();
+//         personalAddress4.setBname("Condo Building");
+//         personalAddress4.setStreet("321 Main St");
+//         personalAddress4.setSuburb("Wollongong");
+//         personalAddress4.setState("State");
+//         personalAddress4.setPostCode("2500");
+// //        CustomerAddress savedCustomerAddress4 = addressRepository.save(personalAddress4);
 
-        Address personalAddress5 = new Address();
-        personalAddress5.setBname("Townhouse Building");
-        personalAddress5.setStreet("654 Main St");
-        personalAddress5.setSuburb("Wollongong");
-        personalAddress5.setState("State");
-        personalAddress5.setPostCode("2500");
-//        CustomerAddress savedCustomerAddress5 = addressRepository.save(personalAddress5);
+//         Address personalAddress5 = new Address();
+//         personalAddress5.setBname("Townhouse Building");
+//         personalAddress5.setStreet("654 Main St");
+//         personalAddress5.setSuburb("Wollongong");
+//         personalAddress5.setState("State");
+//         personalAddress5.setPostCode("2500");
+// //        CustomerAddress savedCustomerAddress5 = addressRepository.save(personalAddress5);
+
+        Address personalAddress1 = new Address("Home Building", "123 Main St", "Wollongong", "State", "2500");
+        Address personalAddress2 = new Address("Office Building", "456 Main St", "Wollongong", "State", "2500");
+        Address personalAddress3 = new Address("Apartment Building", "789 Main St", "Wollongong", "State", "2500");
+        Address personalAddress4 = new Address("Condo Building", "321 Main St", "Wollongong", "State", "2500");
+        Address personalAddress5 = new Address("Townhouse Building", "654 Main St", "Wollongong", "State", "2500");
         /*
          ====================Create Address for Customers (End)=====================
          */
@@ -244,98 +254,125 @@ public class DBInitializer implements CommandLineRunner {
          ====================Create 10 restaurants=====================
          */
 
+        // // Create address for the first restaurant
+        // Address restaurantAddress = new Address();
+        // restaurantAddress.setBname("Victoria Building");
+        // restaurantAddress.setStreet("456 Collins St");
+        // restaurantAddress.setSuburb("Melbourne");
+        // restaurantAddress.setState("State");
+        // restaurantAddress.setPostCode("3000");
+        // restaurantAddress.setLatitude(personalAddress1.getLatitude());
+        // restaurantAddress.setLongitude(personalAddress1.getLongitude());
+
+        // // Create address for the second restaurant
+        // Address address2 = new Address();
+        // address2.setBname("Building 2");
+        // address2.setStreet("2 Main St");
+        // address2.setSuburb("Wollongong");
+        // address2.setState("State");
+        // address2.setPostCode("2500");
+        // address2.setLatitude(address2.getLatitude());
+        // address2.setLongitude(address2.getLongitude());
+
+        // // Create address for the third restaurant
+        // Address address3 = new Address();
+        // address3.setBname("Building 3");
+        // address3.setStreet("3 Main St");
+        // address3.setSuburb("Wollongong");
+        // address3.setState("State");
+        // address3.setPostCode("2500");
+        // address3.setLatitude(address3.getLatitude());
+        // address3.setLongitude(address3.getLongitude());
+
+        // // Create address for the fourth restaurant
+        // Address address4 = new Address();
+        // address4.setBname("Building 4");
+        // address4.setStreet("4 Main St");
+        // address4.setSuburb("Wollongong");
+        // address4.setState("State");
+        // address4.setPostCode("2500");
+
+        // // Create address for the fifth restaurant
+        // Address address5 = new Address();
+        // address5.setBname("Building 5");
+        // address5.setStreet("5 Main St");
+        // address5.setSuburb("Wollongong");
+        // address5.setState("State");
+        // address5.setPostCode("2500");
+
+        // // Create address for the sixth restaurant
+        // Address address6 = new Address();
+        // address6.setBname("Building 6");
+        // address6.setStreet("6 Main St");
+        // address6.setSuburb("Wollongong");
+        // address6.setState("State");
+        // address6.setPostCode("2500");
+
+        // // Create address for the seventh restaurant
+        // Address address7 = new Address();
+        // address7.setBname("Building 7");
+        // address7.setStreet("7 Main St");
+        // address7.setSuburb("Wollongong");
+        // address7.setState("State");
+        // address7.setPostCode("2500");
+
+        // // Create address for the eighth restaurant
+        // Address address8 = new Address();
+        // address8.setBname("Building 8");
+        // address8.setStreet("8 Main St");
+        // address8.setSuburb("Wollongong");
+        // address8.setState("State");
+        // address8.setPostCode("2500");
+
+
+        // // Create address for the ninth restaurant
+        // Address address9 = new Address();
+        // address9.setBname("Building 9");
+        // address9.setStreet("9 Main St");
+        // address9.setSuburb("Wollongong");
+        // address9.setState("State");
+        // address9.setPostCode("2500");
+
+        // // Create address for the tenth restaurant
+        // Address address10 = new Address();
+        // address10.setBname("Building 10");
+        // address10.setStreet("10 Main St");
+        // address10.setSuburb("Wollongong");
+        // address10.setState("State");
+        // address10.setPostCode("2500");
+
         // Create address for the first restaurant
-        Address restaurantAddress = new Address();
-        restaurantAddress.setBname("Victoria Building");
-        restaurantAddress.setStreet("456 Collins St");
-        restaurantAddress.setSuburb("Melbourne");
-        restaurantAddress.setState("State");
-        restaurantAddress.setPostCode("3000");
-
+        Address restaurantAddress = new Address("Victoria Building", "456 Collins St", "Melbourne", "State", "3000");
         // Create address for the second restaurant
-        Address address2 = new Address();
-        address2.setBname("Building 2");
-        address2.setStreet("2 Main St");
-        address2.setSuburb("Wollongong");
-        address2.setState("State");
-        address2.setPostCode("2500");
-
+        Address address2 = new Address("Building 2", "2 Main St", "Wollongong", "State", "2500");
         // Create address for the third restaurant
-        Address address3 = new Address();
-        address3.setBname("Building 3");
-        address3.setStreet("3 Main St");
-        address3.setSuburb("Wollongong");
-        address3.setState("State");
-        address3.setPostCode("2500");
-
+        Address address3 = new Address("Building 3", "3 Main St", "Wollongong", "State", "2500");
         // Create address for the fourth restaurant
-        Address address4 = new Address();
-        address4.setBname("Building 4");
-        address4.setStreet("4 Main St");
-        address4.setSuburb("Wollongong");
-        address4.setState("State");
-        address4.setPostCode("2500");
-
+        Address address4 = new Address("Building 4", "4 Main St", "Wollongong", "State", "2500");
         // Create address for the fifth restaurant
-        Address address5 = new Address();
-        address5.setBname("Building 5");
-        address5.setStreet("5 Main St");
-        address5.setSuburb("Wollongong");
-        address5.setState("State");
-        address5.setPostCode("2500");
-
+        Address address5 = new Address("Building 5", "5 Main St", "Wollongong", "State", "2500");
         // Create address for the sixth restaurant
-        Address address6 = new Address();
-        address6.setBname("Building 6");
-        address6.setStreet("6 Main St");
-        address6.setSuburb("Wollongong");
-        address6.setState("State");
-        address6.setPostCode("2500");
-
+        Address address6 = new Address("Building 6", "6 Main St", "Wollongong", "State", "2500");
         // Create address for the seventh restaurant
-        Address address7 = new Address();
-        address7.setBname("Building 7");
-        address7.setStreet("7 Main St");
-        address7.setSuburb("Wollongong");
-        address7.setState("State");
-        address7.setPostCode("2500");
-
+        Address address7 = new Address("Building 7", "7 Main St", "Wollongong", "State", "2500");
         // Create address for the eighth restaurant
-        Address address8 = new Address();
-        address8.setBname("Building 8");
-        address8.setStreet("8 Main St");
-        address8.setSuburb("Wollongong");
-        address8.setState("State");
-        address8.setPostCode("2500");
-
-
+        Address address8 = new Address("Building 8", "8 Main St", "Wollongong", "State", "2500");
         // Create address for the ninth restaurant
-        Address address9 = new Address();
-        address9.setBname("Building 9");
-        address9.setStreet("9 Main St");
-        address9.setSuburb("Wollongong");
-        address9.setState("State");
-        address9.setPostCode("2500");
-
+        Address address9 = new Address("Building 9", "9 Main St", "Wollongong", "State", "2500");
         // Create address for the tenth restaurant
-        Address address10 = new Address();
-        address10.setBname("Building 10");
-        address10.setStreet("10 Main St");
-        address10.setSuburb("Wollongong");
-        address10.setState("State");
-        address10.setPostCode("2500");
+        Address address10 = new Address("Building 10", "10 Main St", "Wollongong", "State", "2500");
 
         // Save the addresses
-        Address savedRestaurantAddress1 = addressRepository.save(restaurantAddress);
-        Address savedRestaurantAddress2 = addressRepository.save(address2);
-        Address savedRestaurantAddress3 = addressRepository.save(address3);
-        Address savedRestaurantAddress4 = addressRepository.save(address4);
-        Address savedRestaurantAddress5 = addressRepository.save(address5);
-        Address savedRestaurantAddress6 = addressRepository.save(address6);
-        Address savedRestaurantAddress7 = addressRepository.save(address7);
-        Address savedRestaurantAddress8 = addressRepository.save(address8);
-        Address savedRestaurantAddress9 = addressRepository.save(address9);
-        Address savedRestaurantAddress10 = addressRepository.save(address10);
+        // Address savedRestaurantAddress1 = addressRepository.save(restaurantAddress);
+        // Address savedRestaurantAddress2 = addressRepository.save(address2);
+        // Address savedRestaurantAddress3 = addressRepository.save(address3);
+        // Address savedRestaurantAddress4 = addressRepository.save(address4);
+        // Address savedRestaurantAddress5 = addressRepository.save(address5);
+        // Address savedRestaurantAddress6 = addressRepository.save(address6);
+        // Address savedRestaurantAddress7 = addressRepository.save(address7);
+        // Address savedRestaurantAddress8 = addressRepository.save(address8);
+        // Address savedRestaurantAddress9 = addressRepository.save(address9);
+        // Address savedRestaurantAddress10 = addressRepository.save(address10);
 
         // Create first restaurant
         Restaurant restaurant1 = new Restaurant();
@@ -347,7 +384,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant1.setOpenTime(Time.valueOf("08:00:00"));
         restaurant1.setCloseTime(Time.valueOf("22:00:00"));
         restaurant1.setDescription("Italian cuisine");
-        restaurant1.setAddress(savedRestaurantAddress1);
+        restaurant1.addAddress(restaurantAddress);
         restaurant1.setRoles(Roles.RESTAURANT);
 
         // Create second restaurant
@@ -360,7 +397,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant2.setOpenTime(Time.valueOf("10:00:00"));
         restaurant2.setCloseTime(Time.valueOf("23:00:00"));
         restaurant2.setDescription("Chinese cuisine");
-        restaurant2.setAddress(savedRestaurantAddress2);
+        restaurant2.addAddress(address2);
         restaurant2.setRoles(Roles.RESTAURANT);
 
         // Create third restaurant
@@ -373,7 +410,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant3.setOpenTime(Time.valueOf("09:00:00"));
         restaurant3.setCloseTime(Time.valueOf("23:00:00"));
         restaurant3.setDescription("Mexican cuisine");
-        restaurant3.setAddress(savedRestaurantAddress3);
+        restaurant3.addAddress(address3);
         restaurant3.setRoles(Roles.RESTAURANT);
 
         // Create fourth restaurant
@@ -386,7 +423,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant4.setOpenTime(Time.valueOf("10:00:00"));
         restaurant4.setCloseTime(Time.valueOf("22:00:00"));
         restaurant4.setDescription("Indian cuisine");
-        restaurant4.setAddress(savedRestaurantAddress4);
+        restaurant4.addAddress(address4);
         restaurant4.setRoles(Roles.RESTAURANT);
 
         // Create fifth restaurant
@@ -399,7 +436,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant5.setOpenTime(Time.valueOf("11:00:00"));
         restaurant5.setCloseTime(Time.valueOf("23:00:00"));
         restaurant5.setDescription("Japanese cuisine");
-        restaurant5.setAddress(savedRestaurantAddress5);
+        restaurant5.addAddress(address5);
         restaurant5.setRoles(Roles.RESTAURANT);
 
         // Create sixth restaurant
@@ -412,7 +449,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant6.setOpenTime(Time.valueOf("12:00:00"));
         restaurant6.setCloseTime(Time.valueOf("22:00:00"));
         restaurant6.setDescription("French cuisine");
-        restaurant6.setAddress(savedRestaurantAddress6);
+        restaurant6.addAddress(address6);
         restaurant6.setRoles(Roles.RESTAURANT);
 
         // Create seventh restaurant
@@ -425,7 +462,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant7.setOpenTime(Time.valueOf("7:00:00"));
         restaurant7.setCloseTime(Time.valueOf("12:00:00"));
         restaurant7.setDescription("Thai cuisine");
-        restaurant7.setAddress(savedRestaurantAddress7);
+        restaurant7.addAddress(address7);
         restaurant7.setRoles(Roles.RESTAURANT);
 
 
@@ -439,7 +476,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant8.setOpenTime(Time.valueOf("14:00:00"));
         restaurant8.setCloseTime(Time.valueOf("23:00:00"));
         restaurant8.setDescription("Greek cuisine");
-        restaurant8.setAddress(savedRestaurantAddress8);
+        restaurant8.addAddress(address8);
         restaurant8.setRoles(Roles.RESTAURANT);
 
         // Create ninth restaurant
@@ -452,7 +489,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant9.setOpenTime(Time.valueOf("15:00:00"));
         restaurant9.setCloseTime(Time.valueOf("23:00:00"));
         restaurant9.setDescription("Spanish cuisine");
-        restaurant9.setAddress(savedRestaurantAddress9);
+        restaurant9.addAddress(address9);
         restaurant9.setRoles(Roles.RESTAURANT);
 
 
@@ -466,7 +503,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.setOpenTime(Time.valueOf("16:00:00"));
         restaurant10.setCloseTime(Time.valueOf("23:00:00"));
         restaurant10.setDescription("American cuisine");
-        restaurant10.setAddress(savedRestaurantAddress10);
+        restaurant10.addAddress(address10);
         restaurant10.setRoles(Roles.RESTAURANT);
 
         // Save the restaurant

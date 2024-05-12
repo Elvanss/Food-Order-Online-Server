@@ -22,7 +22,7 @@ public class RestaurantDTO {
     private boolean isOpened;
     private String description;
     private Roles roles;
-    private AddressDTO address;
+    private Integer numberOfAddress;
     private Integer numberOfItems;
 }
 

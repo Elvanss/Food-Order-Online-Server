@@ -1,9 +1,5 @@
 package com.service.foodorderserviceserver.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -59,13 +56,21 @@ public class Restaurant implements Serializable {
     @Column(name="roles")
     private Roles roles;
 
-//    @JsonIgnore
-    @OneToOne(cascade = CascadeType.MERGE ,fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private Address address;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Address> addresses = new ArrayList<>();
 
-    public void setAddress(Address address) {
+    public Integer getNumberOfAddress() {
+        return this.addresses.size();
+    }
+
+    public void addAddress(Address address) {
         address.setRestaurant(this);
+        this.addresses.add(address);
+    }
+
+    public void removeAddress(Address addressToBeAssigned) {
+        addressToBeAssigned.setRestaurant(null);
+        this.addresses.remove(addressToBeAssigned);
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)

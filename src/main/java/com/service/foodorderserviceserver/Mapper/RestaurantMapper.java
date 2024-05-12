@@ -28,9 +28,7 @@ public class RestaurantMapper {
                                  source.isOpened(),
                                  source.getDescription(),
                                  source.getRoles(),
-                                 source.getAddress() != null
-                                         ? this.addressMapper.convertToDto(source.getAddress())
-                                         : null,
+                                 source.getNumberOfAddress(),
                                  source.getNumberOfItems());
     }
 
