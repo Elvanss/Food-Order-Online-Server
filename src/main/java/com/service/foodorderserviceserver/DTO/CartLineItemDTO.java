@@ -1,5 +1,7 @@
 package com.service.foodorderserviceserver.DTO;
 
+import com.service.foodorderserviceserver.Entity.Cart;
+import com.service.foodorderserviceserver.Entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class CartLineItemDTO {
     private Integer id;
-    private Integer cartId;
-    private Integer variantProductId;
+    private CartDTO cartId;
+    private ItemDTO variantProductId;
     private int quantity;
     private Double totalPrice;
-    private Date addedDate;
     private boolean isDeleted;
 }

@@ -2,27 +2,20 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Cart;
-import com.service.foodorderserviceserver.Entity.CartLineItem;
-import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
-import com.service.foodorderserviceserver.System.exception.AppException;
-import com.service.foodorderserviceserver.System.exception.ObjectNotFoundException;
 
+import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 import jakarta.transaction.Transactional;
 
-import org.springframework.http.HttpStatus;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,17 +23,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final CartRepository cartRepository;
-    private final CartLineItemRepository cartLineItemRepository;
 
 
 
     public UserService(UserRepository userRepository,
                        AddressRepository addressRepository,
-                       CartRepository cartRepository, CartLineItemRepository cartLineItemRepository) {
+                       CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.cartRepository = cartRepository;
-        this.cartLineItemRepository = cartLineItemRepository;
+
     }
 
     public List<User> findAll() {
@@ -70,7 +62,6 @@ public class UserService {
         Cart cart = new Cart();
         cart.setUser(userSaved);
         cart.setTotalPrice(0.0);
-        cart.setCreatedDate(new Date(Calendar.getInstance().getTime().getTime()));
         cartRepository.save(cart);
 
         return userSaved;
@@ -79,7 +70,7 @@ public class UserService {
     // Login by Username and Password but parameter is User
     public User login(User user) {
         User foundUser = this.userRepository.findByUserName(user.getUserName())
-                .orElseThrow(() -> new ObjectNotFoundException("user not found!", user.getUserName()));
+                .orElseThrow(() -> new CustomObjectNotFoundException("user not found!", user.getUserName()));
         if (foundUser.getPassword().equals(user.getPassword())) {
             return foundUser;
         } else {

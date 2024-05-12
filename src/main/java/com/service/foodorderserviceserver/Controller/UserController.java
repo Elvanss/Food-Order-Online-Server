@@ -1,8 +1,11 @@
 package com.service.foodorderserviceserver.Controller;
 
+import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
 import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
+import com.service.foodorderserviceserver.Mapper.Address.AddressMapper;
 import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import com.service.foodorderserviceserver.Service.UserService;
 import com.service.foodorderserviceserver.System.Result;
@@ -14,15 +17,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper; // Convert user to userDto.
+    private final AddressMapper addressMapper; // Convert address to addressDto.
 
 
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.addressMapper = null;
     }
 
     //Login user with username and password
@@ -95,5 +101,16 @@ public class UserController {
     public Result assignAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
         this.userService.assignAddress(userId, addressId);
         return new Result(true, StatusCode.SUCCESS, "Assign Address Success", addressId);
+    }
+
+    // Show all addresses of a user.
+    @GetMapping("/{userId}/addresses")
+    public Result showAddresses(@PathVariable Integer userId) {
+        User foundUser = this.userService.findById(userId);
+        List<Address> addresses = foundUser.getAddresses();
+        List<AddressDTO> addressDtos = addresses.stream()
+                .map(this.addressMapper::convertToDto)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Find All Success", addresses);
     }
 }

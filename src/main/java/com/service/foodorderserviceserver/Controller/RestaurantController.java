@@ -2,10 +2,14 @@ package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.RestaurantDTO;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
 import com.service.foodorderserviceserver.Service.RestaurantService;
+import com.service.foodorderserviceserver.Service.UserService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
+import com.service.foodorderserviceserver.Utils.GeoLocation;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,14 +17,19 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/restaurants")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final RestaurantMapper restaurantMapper;
+    private final UserService userService;
 
-    public RestaurantController(RestaurantService restaurantService, RestaurantMapper restaurantMapper) {
+    public RestaurantController(RestaurantService restaurantService, 
+                                RestaurantMapper restaurantMapper, 
+                                UserService userService) {
         this.restaurantService = restaurantService;
         this.restaurantMapper = restaurantMapper;
+        this.userService = userService;
     }
 
     // Get all restaurants
@@ -41,14 +50,31 @@ public class RestaurantController {
          return new Result(true, StatusCode.SUCCESS, "Success", restaurantDTO);
      }
 
-    //Update Restaurant
-    @PutMapping("/{restaurantId}")
-     public Result updateRestaurant(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
+    //Register Restaurant
+    @PutMapping("/update/{restaurantId}")
+     public Result register(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
          Restaurant update = restaurantMapper.convertToEntity(restaurantDTO);
          Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantId, update);
          RestaurantDTO updatedRestaurantDTO = restaurantMapper.convertToDto(updatedRestaurant);
          return new Result(true, StatusCode.SUCCESS, "Success", updatedRestaurantDTO);
      }
+
+     // Login
+    @PostMapping("/login")
+    public Result login(@RequestBody RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
+        Restaurant loginRestaurant = restaurantService.login(restaurant);
+        RestaurantDTO loginRestaurantDTO = restaurantMapper.convertToDto(loginRestaurant);
+        return new Result(true, StatusCode.SUCCESS, "Login successful", loginRestaurantDTO);
+    }
+
+    @PostMapping("/register")
+    public Result addRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
+        Restaurant newRestaurant = restaurantService.register(restaurant);
+        RestaurantDTO newRestaurantDTO = restaurantMapper.convertToDto(newRestaurant);
+        return new Result(true, StatusCode.SUCCESS, "Restaurant added successfully", newRestaurantDTO);
+    }
 
     @DeleteMapping("/{restaurantId}")
     public Result deleteRestaurant(@PathVariable Integer restaurantId) {
@@ -68,13 +94,6 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "Restaurant closed successfully");
     }
 
-    @PostMapping
-    public Result addRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
-        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
-        Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
-        RestaurantDTO newRestaurantDTO = restaurantMapper.convertToDto(newRestaurant);
-        return new Result(true, StatusCode.SUCCESS, "Restaurant added successfully", newRestaurantDTO);
-    }
 
     @GetMapping("/cuisine/{cuisine}")
     public Result getRestaurantByCuisine(@PathVariable String cuisine) {
@@ -91,6 +110,16 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "User assigned successfully", userId);
     }
 
-
+   @GetMapping("/nearest")
+    public Result getNearestRestaurants (@RequestParam("userId") Integer userId) {
+        User user = userService.findById(userId); // Get the user
+        List<Restaurant> allRestaurants = restaurantService.getAllRestaurants(); // Get all restaurants
+        List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.findNearestRestaurants(user, allRestaurants); // Find the nearest restaurants
+        List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
+                .map(restaurantDistance -> restaurantMapper.convertToDto(restaurantDistance.getRestaurant()))
+                .toList();
+        
+        return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
+    }
 
 }

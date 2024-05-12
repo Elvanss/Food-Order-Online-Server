@@ -1,6 +1,7 @@
 package com.service.foodorderserviceserver.DTO;
 
 import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.Entity.User.User;
 import lombok.*;
 
 import java.sql.Date;
@@ -12,6 +13,5 @@ import java.sql.Date;
 public class CartDTO {
     private Integer id;
     private Double totalPrice;
-    private Integer userId;
-    private Date createdDate;
+    private UserDTO userId;
 }
