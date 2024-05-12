@@ -59,7 +59,7 @@ public class FeedbackController {
     @PutMapping("/{id}")
     public Result updateFeedback(@PathVariable Integer id, @RequestBody FeedbackDTO feedbackDTO) {
         Feedback feedback = feedbackMapper.convertToEntity(feedbackDTO);
-        Feedback updatedFeedback = feedbackService.saveFeedback(feedback);
+        Feedback updatedFeedback = feedbackService.updateFeedback(id, feedback);
         return new Result(true, StatusCode.SUCCESS, "Feedback updated successfully", feedbackMapper.convert(updatedFeedback));
     }
 
