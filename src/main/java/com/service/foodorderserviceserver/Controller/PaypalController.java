@@ -8,7 +8,6 @@ import com.service.foodorderserviceserver.Service.MembershipService;
 import com.service.foodorderserviceserver.Service.Payment.PaypalService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/paypal")
 public class PaypalController {

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/restaurants")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RestaurantController {
-``
+
     private final RestaurantService restaurantService;
     private final RestaurantMapper restaurantMapper;
     private final UserService userService;
