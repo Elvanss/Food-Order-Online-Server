@@ -51,8 +51,8 @@ public class RestaurantController {
      }
 
     //Register Restaurant
-    @PutMapping("/register/{restaurantId}")
-     public Result r(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
+    @PutMapping("/update/{restaurantId}")
+     public Result register(@PathVariable Integer restaurantId, @RequestBody RestaurantDTO restaurantDTO) {
          Restaurant update = restaurantMapper.convertToEntity(restaurantDTO);
          Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantId, update);
          RestaurantDTO updatedRestaurantDTO = restaurantMapper.convertToDto(updatedRestaurant);
@@ -66,6 +66,14 @@ public class RestaurantController {
         Restaurant loginRestaurant = restaurantService.login(restaurant);
         RestaurantDTO loginRestaurantDTO = restaurantMapper.convertToDto(loginRestaurant);
         return new Result(true, StatusCode.SUCCESS, "Login successful", loginRestaurantDTO);
+    }
+
+    @PostMapping("/register")
+    public Result addRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
+        Restaurant newRestaurant = restaurantService.register(restaurant);
+        RestaurantDTO newRestaurantDTO = restaurantMapper.convertToDto(newRestaurant);
+        return new Result(true, StatusCode.SUCCESS, "Restaurant added successfully", newRestaurantDTO);
     }
 
     @DeleteMapping("/{restaurantId}")
@@ -86,13 +94,6 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "Restaurant closed successfully");
     }
 
-    @PostMapping
-    public Result addRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
-        Restaurant restaurant = restaurantMapper.convertToEntity(restaurantDTO);
-        Restaurant newRestaurant = restaurantService.register(restaurant);
-        RestaurantDTO newRestaurantDTO = restaurantMapper.convertToDto(newRestaurant);
-        return new Result(true, StatusCode.SUCCESS, "Restaurant added successfully", newRestaurantDTO);
-    }
 
     @GetMapping("/cuisine/{cuisine}")
     public Result getRestaurantByCuisine(@PathVariable String cuisine) {
