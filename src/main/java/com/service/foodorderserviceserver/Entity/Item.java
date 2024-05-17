@@ -40,6 +40,9 @@ public class Item {
     @Column(name = "itemCategory")
     private ItemCategory itemCategory;
 
+    @Column(name = "imageURL")
+    private String imageURL;
+
     @ManyToOne
     @JoinColumn(name = "restaurant-id", referencedColumnName = "id")
     private Restaurant restaurantId;

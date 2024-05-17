@@ -20,6 +20,7 @@ public class ItemMapper {
                            source.isAvailable(),
                            source.getPrice(),
                            source.getItemCategory(),
+                           source.getImageURL(),
                            source.getRestaurantId() != null
                                    ? this.restaurantMapper.convertToDto(source.getRestaurantId())
                                    : null);
@@ -32,6 +33,7 @@ public class ItemMapper {
         item.setAvailable(itemDTO.isAvailable());
         item.setPrice(itemDTO.getPrice());
         item.setItemCategory(itemDTO.getItemCategory());
+        item.setImageURL(itemDTO.getImageUrl());
         item.setRestaurantId(itemDTO.getRestaurantId() != null
                              ? this.restaurantMapper.convertToEntity(itemDTO.getRestaurantId())
                              : null);
