@@ -4,7 +4,7 @@ import com.service.foodorderserviceserver.Entity.Feedback;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.FeedbackRepository;
-import com.service.foodorderserviceserver.System.exception.ObjectNotFoundException;
+import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +35,11 @@ public class FeedbackService {
     }
 
     public Feedback findById(Integer feedbackId) {
-        return this.feedbackRepository.findById(feedbackId).orElseThrow(() -> new ObjectNotFoundException("feed", feedbackId));
+        return this.feedbackRepository.findById(feedbackId).orElseThrow(() -> new CustomObjectNotFoundException("feed", feedbackId));
     }
 
     public Feedback updateFeedback(Integer id, Feedback newFeedback) {
-        Feedback existingFeedback = this.feedbackRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("feed", id));
+        Feedback existingFeedback = this.feedbackRepository.findById(id).orElseThrow(() -> new CustomObjectNotFoundException("feed", id));
         existingFeedback.setUser(newFeedback.getUser());
         existingFeedback.setRestaurant(newFeedback.getRestaurant());
         existingFeedback.setContent(newFeedback.getContent());
