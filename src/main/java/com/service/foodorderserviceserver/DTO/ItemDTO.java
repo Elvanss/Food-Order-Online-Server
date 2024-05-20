@@ -17,5 +17,6 @@ public class ItemDTO {
     private boolean isAvailable;
     private Double price;
     private ItemCategory itemCategory;
+    private String imageUrl;
     private RestaurantDTO restaurantId;
 }

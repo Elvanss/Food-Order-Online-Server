@@ -52,6 +52,8 @@ public class DBInitializer implements CommandLineRunner {
         this.cartLineItemRepository = cartLineItemRepository;
     }
 
+    private static String URL = "/photos/";
+
     @Override
     public void run(String... args) throws Exception {
         /*
@@ -525,20 +527,22 @@ public class DBInitializer implements CommandLineRunner {
          ====================Create Items for Restaurant=====================
          */
         Item item1 = new Item();
-        item1.setItemName("Pizza");
-        item1.setDescription("Pepperoni pizza");
+        item1.setItemName("Hawaiian Pizza");
+        item1.setDescription("Pizza with pineapple");
         item1.setAvailable(true);
         item1.setPrice(15.5);
         item1.setItemCategory(ItemCategory.Main);
-        item1.setRestaurantId(restaurant1);
+        item1.setImageURL(URL + "HawaiianPizza.png");
+        item1.setRestaurantId(restaurant5);
 
         Item item2 = new Item();
-        item2.setItemName("Pasta");
+        item2.setItemName("Spaghetti");
         item2.setDescription("Spaghetti with meatballs");
         item2.setAvailable(true);
         item2.setPrice(12.5);
         item2.setItemCategory(ItemCategory.Main);
-        item2.setRestaurantId(restaurant1);
+        item2.setImageURL(URL + "spaghetti.png");
+        item2.setRestaurantId(restaurant6);
 
         Item item3 = new Item();
         item3.setItemName("Fried Rice");
@@ -546,7 +550,8 @@ public class DBInitializer implements CommandLineRunner {
         item3.setAvailable(true);
         item3.setPrice(10.5);
         item3.setItemCategory(ItemCategory.Main);
-        item3.setRestaurantId(restaurant1);
+        item3.setImageURL(URL + "FriedRice.png");
+        item3.setRestaurantId(restaurant7);
 
         Item item4 = new Item();
         item4.setItemName("Sushi");
@@ -554,15 +559,17 @@ public class DBInitializer implements CommandLineRunner {
         item4.setAvailable(true);
         item4.setPrice(8.5);
         item4.setItemCategory(ItemCategory.Main);
-        item4.setRestaurantId(restaurant1);
+        item4.setImageURL(URL + "sushi.png");
+        item4.setRestaurantId(restaurant8);
 
         Item item5 = new Item();
-        item5.setItemName("Tacos");
-        item5.setDescription("Beef tacos");
+        item5.setItemName("Udon");
+        item5.setDescription("Tasty Japanese noodle");
         item5.setAvailable(true);
         item5.setPrice(7.5);
-        item5.setItemCategory(ItemCategory.Main);
-        item5.setRestaurantId(restaurant2);
+        item5.setItemCategory(ItemCategory.Noodle);
+        item5.setImageURL(URL + "udon.png");
+        item5.setRestaurantId(restaurant9);
 
         Item item6 = new Item();
         item6.setItemName("Burger");
@@ -570,7 +577,584 @@ public class DBInitializer implements CommandLineRunner {
         item6.setAvailable(true);
         item6.setPrice(6.5);
         item6.setItemCategory(ItemCategory.Main);
-        item6.setRestaurantId(restaurant2);
+        item6.setImageURL(URL + "burger.png");
+        item6.setRestaurantId(restaurant10);
+
+        Item item7 = new Item();
+        item7.setItemName("Pizza");
+        item7.setDescription("Delicious Pizza with various toppings");
+        item7.setAvailable(true);
+        item7.setPrice(8.5);
+        item7.setItemCategory(ItemCategory.Main);
+        item7.setImageURL(URL + "HawaiianPizza.png");
+        item7.setRestaurantId(restaurant1);
+
+        Item item8 = new Item();
+        item8.setItemName("Pasta");
+        item8.setDescription("Classic Italian Pasta");
+        item8.setAvailable(true);
+        item8.setPrice(12.0);
+        item8.setItemCategory(ItemCategory.Main);
+        item8.setImageURL(URL + "pasta.png");
+        item8.setRestaurantId(restaurant2);
+
+        Item item9 = new Item();
+        item9.setItemName("Chicken Wings");
+        item9.setDescription("Spicy Chicken Wings");
+        item9.setAvailable(true);
+        item9.setPrice(7.0);
+        item9.setItemCategory(ItemCategory.Starter);
+        item9.setImageURL(URL + "chickenWing.png");
+        item9.setRestaurantId(restaurant3);
+
+        Item item10 = new Item();
+        item10.setItemName("Steak");
+        item10.setDescription("Juicy grilled Steak");
+        item10.setAvailable(true);
+        item10.setPrice(15.0);
+        item10.setItemCategory(ItemCategory.Main);
+        item10.setImageURL(URL + "steak.png");
+        item10.setRestaurantId(restaurant4);
+
+        Item item11 = new Item();
+        item11.setItemName("Tacos");
+        item11.setDescription("Tasty Tacos with salsa");
+        item11.setAvailable(true);
+        item11.setPrice(9.0);
+        item11.setItemCategory(ItemCategory.Main);
+        item11.setImageURL(URL + "tacos.png");
+        item11.setRestaurantId(restaurant5);
+
+        Item item12 = new Item();
+        item12.setItemName("Sashimi");
+        item12.setDescription("Fresh sashimi platter");
+        item12.setAvailable(true);
+        item12.setPrice(14.0);
+        item12.setItemCategory(ItemCategory.Main);
+        item12.setImageURL(URL + "sashimi.png");
+        item12.setRestaurantId(restaurant6);
+
+        Item item13 = new Item();
+        item13.setItemName("Ramen");
+        item13.setDescription("Hearty Ramen bowl");
+        item13.setAvailable(true);
+        item13.setPrice(10.0);
+        item13.setItemCategory(ItemCategory.Noodle);
+        item13.setImageURL(URL + "ramen.png");
+        item13.setRestaurantId(restaurant7);
+
+        Item item14 = new Item();
+        item14.setItemName("Ice Cream");
+        item14.setDescription("Creamy Ice Cream");
+        item14.setAvailable(true);
+        item14.setPrice(5.0);
+        item14.setItemCategory(ItemCategory.Dessert);
+        item14.setImageURL(URL + "iceCream.png");
+        item14.setRestaurantId(restaurant8);
+
+        Item item15 = new Item();
+        item15.setItemName("Coffee");
+        item15.setDescription("Hot brewed Coffee");
+        item15.setAvailable(true);
+        item15.setPrice(3.0);
+        item15.setItemCategory(ItemCategory.Drink);
+        item15.setImageURL(URL + "coffee.png");
+        item15.setRestaurantId(restaurant9);
+
+        Item item16 = new Item();
+        item16.setItemName("Sandwich");
+        item16.setDescription("Healthy Sandwich");
+        item16.setAvailable(true);
+        item16.setPrice(6.0);
+        item16.setItemCategory(ItemCategory.Main);
+        item16.setImageURL(URL + "sandwich.png");
+        item16.setRestaurantId(restaurant10);
+
+        Item item17 = new Item();
+        item17.setItemName("Fries");
+        item17.setDescription("Crispy Fries");
+        item17.setAvailable(true);
+        item17.setPrice(4.0);
+        item17.setItemCategory(ItemCategory.Side);
+        item17.setImageURL(URL + "fries.png");
+        item17.setRestaurantId(restaurant1);
+
+        Item item18 = new Item();
+        item18.setItemName("Salad");
+        item18.setDescription("Fresh Garden Salad");
+        item18.setAvailable(true);
+        item18.setPrice(6.5);
+        item18.setItemCategory(ItemCategory.Salad);
+        item18.setImageURL(URL + "salad.png");
+        item18.setRestaurantId(restaurant2);
+
+        Item item19 = new Item();
+        item19.setItemName("Soup");
+        item19.setDescription("Warm comforting Soup");
+        item19.setAvailable(true);
+        item19.setPrice(5.5);
+        item19.setItemCategory(ItemCategory.Soup);
+        item19.setImageURL(URL + "soup.png");
+        item19.setRestaurantId(restaurant3);
+
+        Item item20 = new Item();
+        item20.setItemName("Noodles");
+        item20.setDescription("Authentic Asian Noodles");
+        item20.setAvailable(true);
+        item20.setPrice(11.0);
+        item20.setItemCategory(ItemCategory.Noodle);
+        item20.setImageURL(URL + "noodle.png");
+        item20.setRestaurantId(restaurant4);
+
+        Item item21 = new Item();
+        item21.setItemName("Pie");
+        item21.setDescription("Sweet Fruit Pie");
+        item21.setAvailable(true);
+        item21.setPrice(7.0);
+        item21.setItemCategory(ItemCategory.Dessert);
+        item21.setImageURL(URL + "pie.png");
+        item21.setRestaurantId(restaurant5);
+
+        Item item22 = new Item();
+        item22.setItemName("Brownie");
+        item22.setDescription("Chocolate Brownie");
+        item22.setAvailable(true);
+        item22.setPrice(4.5);
+        item22.setItemCategory(ItemCategory.Dessert);
+        item22.setImageURL(URL + "brownie.png");
+        item22.setRestaurantId(restaurant6);
+
+        Item item23 = new Item();
+        item23.setItemName("Smoothie");
+        item23.setDescription("Refreshing Smoothie");
+        item23.setAvailable(true);
+        item23.setPrice(6.0);
+        item23.setItemCategory(ItemCategory.Drink);
+        item23.setImageURL(URL + "smoothie.png");
+        item23.setRestaurantId(restaurant7);
+
+        Item item24 = new Item();
+        item24.setItemName("Dumplings");
+        item24.setDescription("Steamed Dumplings");
+        item24.setAvailable(true);
+        item24.setPrice(7.5);
+        item24.setItemCategory(ItemCategory.Starter);
+        item24.setImageURL(URL + "dumpling.png");
+        item24.setRestaurantId(restaurant8);
+
+        Item item25 = new Item();
+        item25.setItemName("Curry");
+        item25.setDescription("Spicy Indian Curry");
+        item25.setAvailable(true);
+        item25.setPrice(9.5);
+        item25.setItemCategory(ItemCategory.Main);
+        item25.setImageURL(URL + "curry.png");
+        item25.setRestaurantId(restaurant9);
+
+        Item item26 = new Item();
+        item26.setItemName("Fish and Chips");
+        item26.setDescription("Classic Fish and Chips");
+        item26.setAvailable(true);
+        item26.setPrice(10.0);
+        item26.setItemCategory(ItemCategory.Main);
+        item26.setImageURL(URL + "fishAndChip.png");
+        item26.setRestaurantId(restaurant10);
+
+        Item item27 = new Item();
+        item27.setItemName("Burrito");
+        item27.setDescription("Loaded Burrito");
+        item27.setAvailable(true);
+        item27.setPrice(8.0);
+        item27.setItemCategory(ItemCategory.Main);
+        item27.setImageURL(URL + "burrito.png");
+        item27.setRestaurantId(restaurant1);
+
+        Item item28 = new Item();
+        item28.setItemName("Lasagna");
+        item28.setDescription("Cheesy Lasagna");
+        item28.setAvailable(true);
+        item28.setPrice(12.5);
+        item28.setItemCategory(ItemCategory.Main);
+        item28.setImageURL(URL + "lasagna.png");
+        item28.setRestaurantId(restaurant2);
+
+        Item item29 = new Item();
+        item29.setItemName("Pancakes");
+        item29.setDescription("Fluffy Pancakes");
+        item29.setAvailable(true);
+        item29.setPrice(6.5);
+        item29.setItemCategory(ItemCategory.Dessert);
+        item29.setImageURL(URL + "pancake.png");
+        item29.setRestaurantId(restaurant3);
+
+        Item item30 = new Item();
+        item30.setItemName("Muffin");
+        item30.setDescription("Blueberry Muffin");
+        item30.setAvailable(true);
+        item30.setPrice(3.5);
+        item30.setItemCategory(ItemCategory.Dessert);
+        item30.setImageURL(URL + "muffin.png");
+        item30.setRestaurantId(restaurant4);
+
+        Item item31 = new Item();
+        item31.setItemName("Bagel");
+        item31.setDescription("Toasted Bagel");
+        item31.setAvailable(true);
+        item31.setPrice(2.5);
+        item31.setItemCategory(ItemCategory.Main);
+        item31.setImageURL(URL + "bagel.png");
+        item31.setRestaurantId(restaurant5);
+
+        Item item32 = new Item();
+        item32.setItemName("Omelette");
+        item32.setDescription("Cheese Omelette");
+        item32.setAvailable(true);
+        item32.setPrice(5.5);
+        item32.setItemCategory(ItemCategory.Main);
+        item32.setImageURL(URL + "omelette.png");
+        item32.setRestaurantId(restaurant6);
+
+        Item item33 = new Item();
+        item33.setItemName("Waffles");
+        item33.setDescription("Belgian Waffles");
+        item33.setAvailable(true);
+        item33.setPrice(7.0);
+        item33.setItemCategory(ItemCategory.Dessert);
+        item33.setImageURL(URL + "waffles.png");
+        item33.setRestaurantId(restaurant7);
+
+        Item item34 = new Item();
+        item34.setItemName("Hot Dog");
+        item34.setDescription("Grilled Hot Dog");
+        item34.setAvailable(true);
+        item34.setPrice(3.0);
+        item34.setItemCategory(ItemCategory.Main);
+        item34.setImageURL(URL + "hotDog.png");
+        item34.setRestaurantId(restaurant8);
+
+        Item item35 = new Item();
+        item35.setItemName("Margarita");
+        item35.setDescription("Refreshing Margarita");
+        item35.setAvailable(true);
+        item35.setPrice(6.0);
+        item35.setItemCategory(ItemCategory.Drink);
+        item35.setImageURL(URL + "margarita.png");
+        item35.setRestaurantId(restaurant9);
+
+        Item item36 = new Item();
+        item36.setItemName("Nachos");
+        item36.setDescription("Cheesy Nachos");
+        item36.setAvailable(true);
+        item36.setPrice(5.5);
+        item36.setItemCategory(ItemCategory.Starter);
+        item36.setImageURL(URL + "nachos.png");
+        item36.setRestaurantId(restaurant10);
+
+        Item item37 = new Item();
+        item37.setItemName("Falafel");
+        item37.setDescription("Crispy Falafel");
+        item37.setAvailable(true);
+        item37.setPrice(4.0);
+        item37.setItemCategory(ItemCategory.Starter);
+        item37.setImageURL(URL + "falafel.png");
+        item37.setRestaurantId(restaurant1);
+
+        Item item38 = new Item();
+        item38.setItemName("Quiche");
+        item38.setDescription("Savory Quiche");
+        item38.setAvailable(true);
+        item38.setPrice(8.0);
+        item38.setItemCategory(ItemCategory.Starter);
+        item38.setImageURL(URL + "quiche.png");
+        item38.setRestaurantId(restaurant2);
+
+        Item item39 = new Item();
+        item39.setItemName("Tiramisu");
+        item39.setDescription("Delicate Tiramisu");
+        item39.setAvailable(true);
+        item39.setPrice(6.0);
+        item39.setItemCategory(ItemCategory.Dessert);
+        item39.setImageURL(URL + "tiramisu.png");
+        item39.setRestaurantId(restaurant3);
+
+        Item item40 = new Item();
+        item40.setItemName("Bruschetta");
+        item40.setDescription("Garlic Bruschetta");
+        item40.setAvailable(true);
+        item40.setPrice(5.5);
+        item40.setItemCategory(ItemCategory.Starter);
+        item40.setImageURL(URL + "bruschetta.png");
+        item40.setRestaurantId(restaurant4);
+
+        Item item41 = new Item();
+        item41.setItemName("Ceviche");
+        item41.setDescription("Fresh Ceviche");
+        item41.setAvailable(true);
+        item41.setPrice(12.0);
+        item41.setItemCategory(ItemCategory.Starter);
+        item41.setImageURL(URL + "ceviche.png");
+        item41.setRestaurantId(restaurant5);
+
+        Item item42 = new Item();
+        item42.setItemName("Paella");
+        item42.setDescription("Flavorful Paella");
+        item42.setAvailable(true);
+        item42.setPrice(13.0);
+        item42.setItemCategory(ItemCategory.Main);
+        item42.setImageURL(URL + "paella.png");
+        item42.setRestaurantId(restaurant6);
+
+        Item item43 = new Item();
+        item43.setItemName("BBQ Ribs");
+        item43.setDescription("Smokey BBQ Ribs");
+        item43.setAvailable(true);
+        item43.setPrice(11.5);
+        item43.setItemCategory(ItemCategory.Main);
+        item43.setImageURL(URL + "bbqRib.png");
+        item43.setRestaurantId(restaurant7);
+
+        Item item44 = new Item();
+        item44.setItemName("Clam Chowder");
+        item44.setDescription("Creamy Clam Chowder");
+        item44.setAvailable(true);
+        item44.setPrice(8.0);
+        item44.setItemCategory(ItemCategory.Soup);
+        item44.setImageURL(URL + "clamChowder.png");
+        item44.setRestaurantId(restaurant8);
+
+        Item item45 = new Item();
+        item45.setItemName("Vegan Fried Rice");
+        item45.setDescription("Vegetable Fried Rice");
+        item45.setAvailable(true);
+        item45.setPrice(6.5);
+        item45.setItemCategory(ItemCategory.Side);
+        item45.setImageURL(URL + "FriedRice.png");
+        item45.setRestaurantId(restaurant9);
+
+        Item item46 = new Item();
+        item46.setItemName("Chili");
+        item46.setDescription("Hearty Chili");
+        item46.setAvailable(true);
+        item46.setPrice(9.0);
+        item46.setItemCategory(ItemCategory.Main);
+        item46.setImageURL(URL + "chili.png");
+        item46.setRestaurantId(restaurant10);
+
+        Item item47 = new Item();
+        item47.setItemName("Gyoza");
+        item47.setDescription("Pan-fried Gyoza");
+        item47.setAvailable(true);
+        item47.setPrice(7.5);
+        item47.setItemCategory(ItemCategory.Starter);
+        item47.setImageURL(URL + "gyoza.png");
+        item47.setRestaurantId(restaurant1);
+
+        Item item48 = new Item();
+        item48.setItemName("Samosa");
+        item48.setDescription("Spiced Samosa");
+        item48.setAvailable(true);
+        item48.setPrice(4.0);
+        item48.setItemCategory(ItemCategory.Starter);
+        item48.setImageURL(URL + "samosa.png");
+        item48.setRestaurantId(restaurant2);
+
+        Item item49 = new Item();
+        item49.setItemName("Mac and Cheese");
+        item49.setDescription("Creamy Mac and Cheese");
+        item49.setAvailable(true);
+        item49.setPrice(6.5);
+        item49.setItemCategory(ItemCategory.Main);
+        item49.setImageURL(URL + "macAndCheese.png");
+        item49.setRestaurantId(restaurant3);
+
+        Item item50 = new Item();
+        item50.setItemName("Poke Bowl");
+        item50.setDescription("Healthy Poke Bowl");
+        item50.setAvailable(true);
+        item50.setPrice(9.0);
+        item50.setItemCategory(ItemCategory.Main);
+        item50.setImageURL(URL + "pokeBowl.png");
+        item50.setRestaurantId(restaurant4);
+
+        Item item51 = new Item();
+        item51.setItemName("Crab Cakes");
+        item51.setDescription("Savory Crab Cakes");
+        item51.setAvailable(true);
+        item51.setPrice(10.5);
+        item51.setItemCategory(ItemCategory.Starter);
+        item51.setImageURL(URL + "crabCake.png");
+        item51.setRestaurantId(restaurant5);
+
+        Item item52 = new Item();
+        item52.setItemName("Mozzarella Sticks");
+        item52.setDescription("Fried Mozzarella Sticks");
+        item52.setAvailable(true);
+        item52.setPrice(6.5);
+        item52.setItemCategory(ItemCategory.Starter);
+        item52.setImageURL(URL + "mozzarellaStick.png");
+        item52.setRestaurantId(restaurant6);
+
+        Item item53 = new Item();
+        item53.setItemName("Spring Rolls");
+        item53.setDescription("Crunchy Spring Rolls");
+        item53.setAvailable(true);
+        item53.setPrice(5.0);
+        item53.setItemCategory(ItemCategory.Starter);
+        item53.setImageURL(URL + "springRoll.png");
+        item53.setRestaurantId(restaurant7);
+
+        Item item54 = new Item();
+        item54.setItemName("Lamb Chops");
+        item54.setDescription("Tender Lamb Chops");
+        item54.setAvailable(true);
+        item54.setPrice(13.5);
+        item54.setItemCategory(ItemCategory.Main);
+        item54.setImageURL(URL + "lambChop.png");
+        item54.setRestaurantId(restaurant8);
+
+        Item item55 = new Item();
+        item55.setItemName("French Toast");
+        item55.setDescription("Sweet French Toast");
+        item55.setAvailable(true);
+        item55.setPrice(7.5);
+        item55.setItemCategory(ItemCategory.Dessert);
+        item55.setImageURL(URL + "frenchToast.png");
+        item55.setRestaurantId(restaurant9);
+
+        Item item56 = new Item();
+        item56.setItemName("Milkshake");
+        item56.setDescription("Thick Milkshake");
+        item56.setAvailable(true);
+        item56.setPrice(5.5);
+        item56.setItemCategory(ItemCategory.Drink);
+        item56.setImageURL(URL + "milkshake.png");
+        item56.setRestaurantId(restaurant10);
+
+        Item item57 = new Item();
+        item57.setItemName("Pita Bread");
+        item57.setDescription("Warm Pita Bread");
+        item57.setAvailable(true);
+        item57.setPrice(4.5);
+        item57.setItemCategory(ItemCategory.Main);
+        item57.setImageURL(URL + "pita.png");
+        item57.setRestaurantId(restaurant1);
+
+        Item item58 = new Item();
+        item58.setItemName("Goulash");
+        item58.setDescription("Rich Goulash");
+        item58.setAvailable(true);
+        item58.setPrice(10.0);
+        item58.setItemCategory(ItemCategory.Main);
+        item58.setImageURL(URL + "goulash.png");
+        item58.setRestaurantId(restaurant2);
+
+        Item item59 = new Item();
+        item59.setItemName("Peking Duck");
+        item59.setDescription("Crispy Peking Duck");
+        item59.setAvailable(true);
+        item59.setPrice(14.5);
+        item59.setItemCategory(ItemCategory.Main);
+        item59.setImageURL(URL + "pekingDuck.png");
+        item59.setRestaurantId(restaurant3);
+
+        Item item60 = new Item();
+        item60.setItemName("Gelato");
+        item60.setDescription("Italian Gelato");
+        item60.setAvailable(true);
+        item60.setPrice(6.5);
+        item60.setItemCategory(ItemCategory.Dessert);
+        item60.setImageURL(URL + "gelato.png");
+        item60.setRestaurantId(restaurant4);
+
+        Item item61 = new Item();
+        item61.setItemName("Churros");
+        item61.setDescription("Sweet Churros");
+        item61.setAvailable(true);
+        item61.setPrice(9.0);
+        item61.setItemCategory(ItemCategory.Dessert);
+        item61.setImageURL(URL + "churros.png");
+        item61.setRestaurantId(restaurant5);
+
+        Item item62 = new Item();
+        item62.setItemName("Moussaka");
+        item62.setDescription("Greek Moussaka");
+        item62.setAvailable(true);
+        item62.setPrice(11.0);
+        item62.setItemCategory(ItemCategory.Main);
+        item62.setImageURL(URL + "moussaka.png");
+        item62.setRestaurantId(restaurant6);
+
+        Item item63 = new Item();
+        item63.setItemName("Beef Stew");
+        item63.setDescription("Hearty Beef Stew");
+        item63.setAvailable(true);
+        item63.setPrice(7.5);
+        item63.setItemCategory(ItemCategory.Main);
+        item63.setImageURL(URL + "beefStew.png");
+        item63.setRestaurantId(restaurant7);
+
+        Item item64 = new Item();
+        item64.setItemName("Crepes");
+        item64.setDescription("Delicate Crepes");
+        item64.setAvailable(true);
+        item64.setPrice(12.0);
+        item64.setItemCategory(ItemCategory.Dessert);
+        item64.setImageURL(URL + "crepe.png");
+        item64.setRestaurantId(restaurant8);
+
+        Item item65 = new Item();
+        item65.setItemName("Pho");
+        item65.setDescription("Vietnamese Pho");
+        item65.setAvailable(true);
+        item65.setPrice(8.5);
+        item65.setItemCategory(ItemCategory.Noodle);
+        item65.setImageURL(URL + "pho.png");
+        item65.setRestaurantId(restaurant9);
+
+        Item item66 = new Item();
+        item66.setItemName("Egg Roll");
+        item66.setDescription("Crispy Egg Roll");
+        item66.setAvailable(true);
+        item66.setPrice(4.5);
+        item66.setItemCategory(ItemCategory.Starter);
+        item66.setImageURL(URL + "eggRoll.png");
+        item66.setRestaurantId(restaurant10);
+
+        Item item67 = new Item();
+        item67.setItemName("Guacamole");
+        item67.setDescription("Fresh Guacamole");
+        item67.setAvailable(true);
+        item67.setPrice(5.0);
+        item67.setItemCategory(ItemCategory.Starter);
+        item67.setImageURL(URL + "guacamole.png");
+        item67.setRestaurantId(restaurant1);
+
+        Item item68 = new Item();
+        item68.setItemName("Lobster Bisque");
+        item68.setDescription("Rich Lobster Bisque");
+        item68.setAvailable(true);
+        item68.setPrice(15.0);
+        item68.setItemCategory(ItemCategory.Soup);
+        item68.setImageURL(URL + "lobsterBisque.png");
+        item68.setRestaurantId(restaurant2);
+
+        Item item69 = new Item();
+        item69.setItemName("Pulled Pork");
+        item69.setDescription("Savory Pulled Pork");
+        item69.setAvailable(true);
+        item69.setPrice(9.0);
+        item69.setItemCategory(ItemCategory.Main);
+        item69.setImageURL(URL + "pulledPork.png");
+        item69.setRestaurantId(restaurant3);
+
+        Item item70 = new Item();
+        item70.setItemName("Chicken Tikka");
+        item70.setDescription("Spicy Chicken Tikka");
+        item70.setAvailable(true);
+        item70.setPrice(13.0);
+        item70.setItemCategory(ItemCategory.Main);
+        item70.setImageURL(URL + "chickenTikka.png");
+        item70.setRestaurantId(restaurant4);
 
         itemRepository.save(item1);
         itemRepository.save(item2);
@@ -578,6 +1162,71 @@ public class DBInitializer implements CommandLineRunner {
         itemRepository.save(item4);
         itemRepository.save(item5);
         itemRepository.save(item6);
+        itemRepository.save(item7);
+        itemRepository.save(item8);
+        itemRepository.save(item9);
+        itemRepository.save(item10);
+        itemRepository.save(item11);
+        itemRepository.save(item12);
+        itemRepository.save(item13);
+        itemRepository.save(item14);
+        itemRepository.save(item15);
+        itemRepository.save(item16);
+        itemRepository.save(item17);
+        itemRepository.save(item18);
+        itemRepository.save(item19);
+        itemRepository.save(item20);
+        itemRepository.save(item21);
+        itemRepository.save(item22);
+        itemRepository.save(item23);
+        itemRepository.save(item24);
+        itemRepository.save(item25);
+        itemRepository.save(item26);
+        itemRepository.save(item27);
+        itemRepository.save(item28);
+        itemRepository.save(item29);
+        itemRepository.save(item30);
+        itemRepository.save(item31);
+        itemRepository.save(item32);
+        itemRepository.save(item33);
+        itemRepository.save(item34);
+        itemRepository.save(item35);
+        itemRepository.save(item36);
+        itemRepository.save(item37);
+        itemRepository.save(item38);
+        itemRepository.save(item39);
+        itemRepository.save(item40);
+        itemRepository.save(item41);
+        itemRepository.save(item42);
+        itemRepository.save(item43);
+        itemRepository.save(item44);
+        itemRepository.save(item45);
+        itemRepository.save(item46);
+        itemRepository.save(item47);
+        itemRepository.save(item48);
+        itemRepository.save(item49);
+        itemRepository.save(item50);
+        itemRepository.save(item51);
+        itemRepository.save(item52);
+        itemRepository.save(item53);
+        itemRepository.save(item54);
+        itemRepository.save(item55);
+        itemRepository.save(item56);
+        itemRepository.save(item57);
+        itemRepository.save(item58);
+        itemRepository.save(item59);
+        itemRepository.save(item60);
+        itemRepository.save(item61);
+        itemRepository.save(item62);
+        itemRepository.save(item63);
+        itemRepository.save(item64);
+        itemRepository.save(item65);
+        itemRepository.save(item66);
+        itemRepository.save(item67);
+        itemRepository.save(item68);
+        itemRepository.save(item69);
+        itemRepository.save(item70);
+
         /*
          ====================Create Items for Restaurant=====================
          */
