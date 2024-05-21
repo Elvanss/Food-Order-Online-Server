@@ -1,12 +1,8 @@
-package com.service.foodorderserviceserver.Mapper.User;
+package com.service.foodorderserviceserver.Mapper;
 
-import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.DTO.UserDTO;
 import com.service.foodorderserviceserver.Entity.User.User;
-import com.service.foodorderserviceserver.Mapper.Address.AddressMapper;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -20,7 +16,6 @@ public class UserMapper {
                             source.getPassword(),
                             source.getEmail(),
                             source.getPhoneNumber(),
-                            source.getType(),
                             source.getNumberOfAddress());
 
     }
@@ -33,7 +28,6 @@ public class UserMapper {
         user.setPassword(source.getPassword());
         user.setEmail(source.getEmail());
         user.setPhoneNumber(source.getPhoneNumber());
-        user.setType(source.getRoles());
     return user;
 }
 }

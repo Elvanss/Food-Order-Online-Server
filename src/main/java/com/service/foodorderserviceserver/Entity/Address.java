@@ -1,5 +1,6 @@
 package com.service.foodorderserviceserver.Entity;
 
+import com.service.foodorderserviceserver.Entity.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +9,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Random;
-
-import com.service.foodorderserviceserver.Entity.User.User;
 
 @Getter
 @Setter

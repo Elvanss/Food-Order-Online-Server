@@ -1,12 +1,11 @@
 package com.service.foodorderserviceserver.Controller;
 
-import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
-import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.DTO.AddressDTO;
+import com.service.foodorderserviceserver.DTO.UserDTO;
 import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
-import com.service.foodorderserviceserver.Mapper.Address.AddressMapper;
-import com.service.foodorderserviceserver.Mapper.User.UserMapper;
+import com.service.foodorderserviceserver.Mapper.AddressMapper;
+import com.service.foodorderserviceserver.Mapper.UserMapper;
 import com.service.foodorderserviceserver.Service.UserService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
@@ -42,8 +41,8 @@ public class UserController {
 
     // Register a new user.
     @PostMapping("/register")
-    public Result register(@RequestBody User newUser, @RequestParam(name = "role", required=false) Roles role) {
-        User savedUser = this.userService.register(newUser, role);
+    public Result register(@RequestBody User newUser) {
+        User savedUser = this.userService.register(newUser);
         UserDTO savedUserDto = this.userMapper.convertToDto(savedUser);
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedUserDto);
     }
@@ -110,7 +109,7 @@ public class UserController {
         List<Address> addresses = foundUser.getAddresses();
         List<AddressDTO> addressDtos = addresses.stream()
                 .map(this.addressMapper::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
         return new Result(true, StatusCode.SUCCESS, "Find All Success", addresses);
     }
 }

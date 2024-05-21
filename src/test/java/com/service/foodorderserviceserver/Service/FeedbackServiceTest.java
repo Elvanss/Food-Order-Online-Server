@@ -1,7 +1,7 @@
 package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.DTO.FeedbackDTO;
-import com.service.foodorderserviceserver.DTO.User.UserDTO;
+import com.service.foodorderserviceserver.DTO.UserDTO;
 import com.service.foodorderserviceserver.Entity.Feedback;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.Type.Rating;

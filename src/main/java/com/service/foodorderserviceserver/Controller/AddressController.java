@@ -1,8 +1,8 @@
 package com.service.foodorderserviceserver.Controller;
 
-import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
+import com.service.foodorderserviceserver.DTO.AddressDTO;
 import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Mapper.Address.AddressMapper;
+import com.service.foodorderserviceserver.Mapper.AddressMapper;
 import com.service.foodorderserviceserver.Service.AddressService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;

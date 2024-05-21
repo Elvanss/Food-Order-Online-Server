@@ -1,13 +1,10 @@
 package com.service.foodorderserviceserver.Entity;
 
-import com.service.foodorderserviceserver.DTO.CartDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Entity
 @Getter
@@ -33,7 +30,4 @@ public class CartLineItem {
 
     @Column(name = "total_price")
     private Double totalPrice;
-
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
 }

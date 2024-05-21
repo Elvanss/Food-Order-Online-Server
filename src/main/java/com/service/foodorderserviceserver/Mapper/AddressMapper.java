@@ -1,9 +1,7 @@
-package com.service.foodorderserviceserver.Mapper.Address;
+package com.service.foodorderserviceserver.Mapper;
 
-import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
+import com.service.foodorderserviceserver.DTO.AddressDTO;
 import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
-import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import org.springframework.stereotype.Component;
 
 @Component

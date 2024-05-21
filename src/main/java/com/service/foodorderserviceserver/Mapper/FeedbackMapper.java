@@ -4,7 +4,6 @@ import com.service.foodorderserviceserver.DTO.FeedbackDTO;
 import com.service.foodorderserviceserver.Entity.Feedback;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
-import com.service.foodorderserviceserver.Mapper.User.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

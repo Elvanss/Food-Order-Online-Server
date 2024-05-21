@@ -9,9 +9,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class CartDTO {
+public class AddressDTO {
     private Integer id;
-    private Double totalPrice;
-    private UserDTO user;
-    private Integer numberOfCartLineItems;
+    private String bname;
+    private String street;
+    private String suburb;
+    private String state;
+    private String postCode;    
+    private UserDTO userId;
+    private RestaurantDTO restaurantId;
 }
+
+
