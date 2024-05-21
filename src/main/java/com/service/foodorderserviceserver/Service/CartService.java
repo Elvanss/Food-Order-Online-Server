@@ -61,12 +61,15 @@ public class CartService {
         newCartLineItem.setProductId(item);
         newCartLineItem.setQuantity(1);
         newCartLineItem.setTotalPrice(item.getPrice());
+        cart.setTotalPrice(cart.getTotalPrice() + item.getPrice());
+        cartRepository.save(cart);
         if (newCartLineItem != null) {
             List<CartLineItem> cartLineItems = cartLineItemRepository.findAllByCartId(cart.getId());
             for (CartLineItem cartLineItem : cartLineItems) {
                 if (cartLineItem.getProductId().getId().equals(itemId)) {
                     cartLineItem.setQuantity(cartLineItem.getQuantity() + 1);
                     cartLineItem.setTotalPrice(cartLineItem.getQuantity() * item.getPrice());
+                    cartRepository.save(cart);
                     return this.cartLineItemRepository.save(cartLineItem);
                 }
             }

@@ -110,6 +110,7 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "User assigned successfully", userId);
     }
 
+    // Get the nearest restaurants Filters
    @GetMapping("/nearest")
     public Result getNearestRestaurants (@RequestParam("userId") Integer userId) {
         User user = userService.findById(userId); // Get the user
@@ -121,5 +122,18 @@ public class RestaurantController {
         
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
     }
+
+    @GetMapping("/nearest/{cuisine}")
+    public Result getNearestRestaurantsByCuisine(@RequestParam("userId") Integer userId, @PathVariable String cuisine) {
+        User user = userService.findById(userId);
+        List<Restaurant> allRestaurants = restaurantService.getRestaurantByCuisine(cuisine);
+        List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.getNearestRestaurantByCuisine(user, allRestaurants, cuisine);
+        List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
+                .map(restaurantDistance -> restaurantMapper.convertToDto(restaurantDistance.getRestaurant()))
+                .toList();
+        return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
+    }
+
+
 
 }

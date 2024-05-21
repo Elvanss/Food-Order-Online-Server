@@ -1,9 +1,9 @@
 package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Entity.Types.Roles;
+//import com.service.foodorderserviceserver.Entity.Types.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
-import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
+//import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
