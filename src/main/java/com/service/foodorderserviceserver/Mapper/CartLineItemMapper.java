@@ -1,41 +1,31 @@
 package com.service.foodorderserviceserver.Mapper;
 
-import com.service.foodorderserviceserver.DTO.CartDTO;
 import com.service.foodorderserviceserver.DTO.CartLineItemDTO;
-import com.service.foodorderserviceserver.DTO.ItemDTO;
-import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Entity.CartLineItem;
-import com.service.foodorderserviceserver.Entity.Item;
-import com.service.foodorderserviceserver.Repository.CartRepository;
-import com.service.foodorderserviceserver.Repository.ItemRepository;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CartLineItemMapper {
 
-public CartLineItemDTO convertToDto(CartLineItem cartLineItem) {
+    private final CartMapper cartMapper;
+    private final ItemMapper itemMapper;
+
+    public CartLineItemMapper(CartMapper cartMapper, ItemMapper itemMapper) {
+        this.cartMapper = cartMapper;
+        this.itemMapper = itemMapper;
+    }
+
+    public CartLineItemDTO convertToDto(CartLineItem cartLineItem) {
     CartLineItemDTO cartLineItemDTO = new CartLineItemDTO();
     cartLineItemDTO.setId(cartLineItem.getId());
-
-    CartDTO cartDTO = new CartDTO();
-    cartDTO.setId(cartLineItem.getCartId().getId());
-    cartDTO.setTotalPrice(cartLineItem.getCartId().getTotalPrice()); // Set totalPrice
-    cartLineItemDTO.setCartId(cartDTO);
-
-    ItemDTO itemDTO = new ItemDTO();
-    itemDTO.setId(cartLineItem.getProductId().getId());
-    itemDTO.setName(cartLineItem.getProductId().getItemName()); // Set name
-    itemDTO.setDescription(cartLineItem.getProductId().getDescription()); // Set description
-    itemDTO.setPrice(cartLineItem.getProductId().getPrice()); // Set price
-    itemDTO.setItemCategory(cartLineItem.getProductId().getItemCategory()); // Set itemCategory
-//    itemDTO.setRestaurantId(cartLineItem.getProductId().getRestaurantId()); // Set restaurantId
-    itemDTO.setAvailable(cartLineItem.getProductId().isAvailable()); // Set available
-    cartLineItemDTO.setVariantProductId(itemDTO);
-
     cartLineItemDTO.setQuantity(cartLineItem.getQuantity());
+    cartLineItemDTO.setTotalPrice(cartLineItem.getTotalPrice());
+    cartLineItemDTO.setCartId(cartLineItem.getCartId() != null
+            ? this.cartMapper.convertToDto(cartLineItem.getCartId())
+            : null);
+    cartLineItemDTO.setVariantProductId(cartLineItem.getProductId() != null
+            ? this.itemMapper.convertToDto(cartLineItem.getProductId())
+            : null);
     return cartLineItemDTO;
 }
 
@@ -52,16 +42,10 @@ public CartLineItemDTO convertToDto(CartLineItem cartLineItem) {
 //        return cartLineItem;
 //    }
 
+
     public CartLineItem convertToEntity(CartLineItemDTO cartItemRequestDTO) {
         CartLineItem cartLineItem = new CartLineItem();
         cartLineItem.setId(cartItemRequestDTO.getId());
-        Cart cart = new Cart();
-//        cart.setId(cartItemRequestDTO.getCartId());
-//        cartLineItem.setCartId(cart);
-        cart.setId(cartItemRequestDTO.getCartId().getId());
-        cartLineItem.setCartId(cart);
-        Item variantProduct = new Item();
-        cartLineItem.setProductId(variantProduct);
         cartLineItem.setQuantity(cartItemRequestDTO.getQuantity());
         cartLineItem.setTotalPrice(cartItemRequestDTO.getTotalPrice());
         return cartLineItem;

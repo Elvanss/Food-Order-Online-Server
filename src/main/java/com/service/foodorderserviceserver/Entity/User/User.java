@@ -1,7 +1,6 @@
 package com.service.foodorderserviceserver.Entity.User;
 
 import com.service.foodorderserviceserver.Entity.Address;
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,10 +43,6 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="type")
-    private Roles type;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Address> addresses = new ArrayList<>();
 
@@ -62,7 +57,6 @@ public class User implements Serializable {
     }
 
     public void removeAddress(Address addressToBeAssigned) {
-        // Remove artifact owner.
         addressToBeAssigned.setUser(null);
         this.addresses.remove(addressToBeAssigned);
     }

@@ -2,16 +2,12 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Cart;
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.User;
-import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
-import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
+import com.service.foodorderserviceserver.Repository.AddressRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
-
 import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 import jakarta.transaction.Transactional;
-
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +41,7 @@ public class UserService {
     }
 
     // register user
-    public User register(User newUser, Roles role) {
+    public User register(User newUser) {
         if (userRepository.findByUsername(newUser.getUserName()).isPresent()) {
             throw new RuntimeException("User already exists");
         }
@@ -56,9 +52,9 @@ public class UserService {
         user.setEmail(newUser.getEmail());
         user.setPassword(newUser.getPassword());
         user.setPhoneNumber(newUser.getPhoneNumber()); // Ensure this line is present
-        user.setType(role);
         User userSaved = this.userRepository.save(user);
 
+        // Create a cart for the user
         Cart cart = new Cart();
         cart.setUser(userSaved);
         cart.setTotalPrice(0.0);

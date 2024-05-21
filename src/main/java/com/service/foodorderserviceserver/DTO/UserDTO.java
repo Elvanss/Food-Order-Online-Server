@@ -1,6 +1,5 @@
-package com.service.foodorderserviceserver.DTO.User;
+package com.service.foodorderserviceserver.DTO;
 
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,6 @@ public class UserDTO {
     private String password;
     private String email;
     private String phoneNumber;
-    private Roles roles;
     private Integer numberOfAddress;
 
     public UserDTO(Integer id,
@@ -26,7 +24,6 @@ public class UserDTO {
                    String password,
                    String email,
                    String phoneNumber,
-                   Roles roles,
                    Integer numberOfAddress) {
         this.id = id;
         this.firstName = firstName;
@@ -35,7 +32,6 @@ public class UserDTO {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.roles = roles;
         this.numberOfAddress = numberOfAddress;
     }
 

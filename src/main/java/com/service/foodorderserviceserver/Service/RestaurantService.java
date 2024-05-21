@@ -2,11 +2,9 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Restaurant;
-import com.service.foodorderserviceserver.Entity.User.User;
+import com.service.foodorderserviceserver.Repository.AddressRepository;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
-import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
-
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

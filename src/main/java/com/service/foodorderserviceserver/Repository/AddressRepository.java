@@ -1,4 +1,4 @@
-package com.service.foodorderserviceserver.Repository.Address;
+package com.service.foodorderserviceserver.Repository;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;

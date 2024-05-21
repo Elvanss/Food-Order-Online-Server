@@ -1,8 +1,9 @@
 package com.service.foodorderserviceserver.DTO;
 
-import com.service.foodorderserviceserver.DTO.Address.AddressDTO;
-import com.service.foodorderserviceserver.Entity.Type.Roles;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Time;
 
@@ -21,7 +22,6 @@ public class RestaurantDTO {
     private Time closeTime;
     private boolean isOpened;
     private String description;
-    private Roles roles;
     private Integer numberOfAddress;
     private Integer numberOfItems;
 }

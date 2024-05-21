@@ -5,11 +5,9 @@ import com.service.foodorderserviceserver.Entity.*;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Rating;
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import com.service.foodorderserviceserver.Entity.User.Membership;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.*;
-import com.service.foodorderserviceserver.Repository.Address.AddressRepository;
 import com.service.foodorderserviceserver.Repository.User.MembershipRepository;
 import com.service.foodorderserviceserver.Repository.User.UserRepository;
 import com.service.foodorderserviceserver.Service.UserService;
@@ -129,7 +127,6 @@ public class DBInitializer implements CommandLineRunner {
         user1.setEmail("john@gmail.com");
         user1.setPassword("password");
         user1.setPhoneNumber("1234567890");
-        user1.setType(Roles.USER);
         user1.addAddress(personalAddress1);
 
         User user2 = new User();
@@ -139,7 +136,6 @@ public class DBInitializer implements CommandLineRunner {
         user2.setPassword("password");
         user2.setEmail("jane@gmail.com");
         user2.setPhoneNumber("0987654321");
-        user2.setType(Roles.USER);
         user2.addAddress(personalAddress2);
 
         User user3 = new User();
@@ -149,7 +145,6 @@ public class DBInitializer implements CommandLineRunner {
         user3.setPassword("password");
         user3.setEmail("alice@gmail.com");
         user3.setPhoneNumber("1122334455");
-        user3.setType(Roles.USER);
         user3.addAddress(personalAddress3);
 
         User user4 = new User();
@@ -159,7 +154,6 @@ public class DBInitializer implements CommandLineRunner {
         user4.setPassword("password");
         user4.setEmail("bob@gmail.com");
         user4.setPhoneNumber("2233445566");
-        user4.setType(Roles.USER);
         user4.addAddress(personalAddress4);
 
         User user5 = new User();
@@ -169,7 +163,6 @@ public class DBInitializer implements CommandLineRunner {
         user5.setUserName("charliefoodie");
         user5.setEmail("charlie@gmail.com");
         user5.setPhoneNumber("3344556677");
-        user5.setType(Roles.USER);
         user5.addAddress(personalAddress5);
 
         userRepository.save(user1);
@@ -387,7 +380,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant1.setCloseTime(Time.valueOf("22:00:00"));
         restaurant1.setDescription("Italian cuisine");
         restaurant1.addAddress(restaurantAddress);
-        restaurant1.setRoles(Roles.RESTAURANT);
 
         // Create second restaurant
         Restaurant restaurant2 = new Restaurant();
@@ -400,7 +392,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant2.setCloseTime(Time.valueOf("23:00:00"));
         restaurant2.setDescription("Chinese cuisine");
         restaurant2.addAddress(address2);
-        restaurant2.setRoles(Roles.RESTAURANT);
 
         // Create third restaurant
         Restaurant restaurant3 = new Restaurant();
@@ -413,7 +404,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant3.setCloseTime(Time.valueOf("23:00:00"));
         restaurant3.setDescription("Mexican cuisine");
         restaurant3.addAddress(address3);
-        restaurant3.setRoles(Roles.RESTAURANT);
 
         // Create fourth restaurant
         Restaurant restaurant4 = new Restaurant();
@@ -426,7 +416,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant4.setCloseTime(Time.valueOf("22:00:00"));
         restaurant4.setDescription("Indian cuisine");
         restaurant4.addAddress(address4);
-        restaurant4.setRoles(Roles.RESTAURANT);
 
         // Create fifth restaurant
         Restaurant restaurant5 = new Restaurant();
@@ -439,7 +428,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant5.setCloseTime(Time.valueOf("23:00:00"));
         restaurant5.setDescription("Japanese cuisine");
         restaurant5.addAddress(address5);
-        restaurant5.setRoles(Roles.RESTAURANT);
 
         // Create sixth restaurant
         Restaurant restaurant6 = new Restaurant();
@@ -452,7 +440,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant6.setCloseTime(Time.valueOf("22:00:00"));
         restaurant6.setDescription("French cuisine");
         restaurant6.addAddress(address6);
-        restaurant6.setRoles(Roles.RESTAURANT);
 
         // Create seventh restaurant
         Restaurant restaurant7 = new Restaurant();
@@ -465,8 +452,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant7.setCloseTime(Time.valueOf("12:00:00"));
         restaurant7.setDescription("Thai cuisine");
         restaurant7.addAddress(address7);
-        restaurant7.setRoles(Roles.RESTAURANT);
-
 
         // Create eighth restaurant
         Restaurant restaurant8 = new Restaurant();
@@ -479,7 +464,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant8.setCloseTime(Time.valueOf("23:00:00"));
         restaurant8.setDescription("Greek cuisine");
         restaurant8.addAddress(address8);
-        restaurant8.setRoles(Roles.RESTAURANT);
 
         // Create ninth restaurant
         Restaurant restaurant9 = new Restaurant();
@@ -492,7 +476,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant9.setCloseTime(Time.valueOf("23:00:00"));
         restaurant9.setDescription("Spanish cuisine");
         restaurant9.addAddress(address9);
-        restaurant9.setRoles(Roles.RESTAURANT);
 
 
         // Create tenth restaurant
@@ -506,7 +489,6 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.setCloseTime(Time.valueOf("23:00:00"));
         restaurant10.setDescription("American cuisine");
         restaurant10.addAddress(address10);
-        restaurant10.setRoles(Roles.RESTAURANT);
 
         // Save the restaurant
         restaurantRepository.save(restaurant1);
@@ -1249,33 +1231,6 @@ public class DBInitializer implements CommandLineRunner {
         feedbackRepository.save(feedback1);
         feedbackRepository.save(feedback2);
 
-
-//        private Integer id;
-//        private CartDTO cartId;
-//        private ItemDTO variantProductId;
-//        private int quantity;
-//        private Double totalPrice;
-//        private boolean isDeleted;
-
-        // Create CartLineItem objects with the retrieved Cart and Item objects, and set the quantity
-        CartLineItem cartLineItem1 = new CartLineItem();
-        cartLineItem1.setCartId(cart1);
-        cartLineItem1.setProductId(item1);
-        cartLineItem1.setQuantity(1);
-        cartLineItem1.setTotalPrice(item1.getPrice() * cartLineItem1.getQuantity());
-        cartLineItem1.setDeleted(false);
-        // Set quantity as needed
-
-        CartLineItem cartLineItem2 = new CartLineItem();
-        cartLineItem2.setCartId(cart1);
-        cartLineItem2.setProductId(item2);
-        cartLineItem2.setQuantity(1); // Set quantity as needed
-        cartLineItem2.setTotalPrice(item2.getPrice() * cartLineItem2.getQuantity());
-        cartLineItem2.setDeleted(false);
-
-        // Save the CartLineItem objects using the CartLineItemRepository
-        cartLineItemRepository.save(cartLineItem1);
-        cartLineItemRepository.save(cartLineItem2);
 
 
     }

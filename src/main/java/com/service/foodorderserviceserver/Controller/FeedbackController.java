@@ -7,7 +7,7 @@ import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.FeedbackMapper;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
-import com.service.foodorderserviceserver.Mapper.User.UserMapper;
+import com.service.foodorderserviceserver.Mapper.UserMapper;
 import com.service.foodorderserviceserver.Service.FeedbackService;
 import com.service.foodorderserviceserver.Service.RestaurantService;
 import com.service.foodorderserviceserver.Service.UserService;

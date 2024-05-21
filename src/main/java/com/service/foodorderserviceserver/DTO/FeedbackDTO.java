@@ -1,9 +1,6 @@
 package com.service.foodorderserviceserver.DTO;
 
-import com.service.foodorderserviceserver.DTO.User.UserDTO;
-import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.Type.Rating;
-import com.service.foodorderserviceserver.Entity.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

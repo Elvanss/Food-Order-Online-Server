@@ -1,6 +1,5 @@
 package com.service.foodorderserviceserver.Entity;
 
-import com.service.foodorderserviceserver.Entity.Type.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,16 +27,16 @@ public class Restaurant implements Serializable {
     @Column(name = "restaurant-name")
     private String restaurantName;
 
-    @Column(name = "email") // Represent the restaurant email
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password") // Represent the restaurant password
+    @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "cuisine") // Represent the cuisine type {VNese, Chinese, Aussie}
+    @Column(name = "cuisine")
     private String cuisine;
 
     @Column(name = "open-time")
@@ -52,13 +51,13 @@ public class Restaurant implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="roles")
-    private Roles roles;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Address> addresses = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)
+    private List<Item> itemList;
+
+    // Address Behaviour
     public Integer getNumberOfAddress() {
         return this.addresses.size();
     }
@@ -73,9 +72,7 @@ public class Restaurant implements Serializable {
         this.addresses.remove(addressToBeAssigned);
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)
-    private List<Item> itemList;
-
+    // Items Behaviour
     public int getNumberOfItems() {
         return itemList.size();
     }
