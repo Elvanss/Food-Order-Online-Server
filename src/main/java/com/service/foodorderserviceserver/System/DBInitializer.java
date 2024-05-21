@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.System;
 
 
 import com.service.foodorderserviceserver.Entity.*;
+import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.Rating;
@@ -375,7 +376,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant1.setEmail("restaurant1@gmail.com");
         restaurant1.setPassword("password");
         restaurant1.setPhone("1234567890");
-        restaurant1.setCuisine("Italian");
+        restaurant1.setCuisine(CuisineType.Italian);
         restaurant1.setOpenTime(Time.valueOf("08:00:00"));
         restaurant1.setCloseTime(Time.valueOf("22:00:00"));
         restaurant1.setDescription("Italian cuisine");
@@ -387,7 +388,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant2.setEmail("restaurant2@gmail.com");
         restaurant2.setPassword("password");
         restaurant2.setPhone("0987654321");
-        restaurant2.setCuisine("Chinese");
+        restaurant2.setCuisine(CuisineType.Chinese);
         restaurant2.setOpenTime(Time.valueOf("10:00:00"));
         restaurant2.setCloseTime(Time.valueOf("23:00:00"));
         restaurant2.setDescription("Chinese cuisine");
@@ -399,7 +400,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant3.setEmail("restaurant3@gmail.com");
         restaurant3.setPassword("password");
         restaurant3.setPhone("1234567891");
-        restaurant3.setCuisine("Mexican");
+        restaurant3.setCuisine(CuisineType.Mexican);
         restaurant3.setOpenTime(Time.valueOf("09:00:00"));
         restaurant3.setCloseTime(Time.valueOf("23:00:00"));
         restaurant3.setDescription("Mexican cuisine");
@@ -411,7 +412,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant4.setEmail("restaurant4@gmail.com");
         restaurant4.setPassword("password");
         restaurant4.setPhone("1234567892");
-        restaurant4.setCuisine("Indian");
+        restaurant4.setCuisine(CuisineType.Indian);
         restaurant4.setOpenTime(Time.valueOf("10:00:00"));
         restaurant4.setCloseTime(Time.valueOf("22:00:00"));
         restaurant4.setDescription("Indian cuisine");
@@ -423,7 +424,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant5.setEmail("restaurant5@gmail.com");
         restaurant5.setPassword("password");
         restaurant5.setPhone("1234567894");
-        restaurant5.setCuisine("Japanese");
+        restaurant5.setCuisine(CuisineType.Japanese);
         restaurant5.setOpenTime(Time.valueOf("11:00:00"));
         restaurant5.setCloseTime(Time.valueOf("23:00:00"));
         restaurant5.setDescription("Japanese cuisine");
@@ -435,7 +436,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant6.setEmail("restaurant6@gmail.com");
         restaurant6.setPassword("password");
         restaurant6.setPhone("1234567895");
-        restaurant6.setCuisine("French");
+        restaurant6.setCuisine(CuisineType.French);
         restaurant6.setOpenTime(Time.valueOf("12:00:00"));
         restaurant6.setCloseTime(Time.valueOf("22:00:00"));
         restaurant6.setDescription("French cuisine");
@@ -447,7 +448,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant7.setEmail("restaurant7@gmail.com");
         restaurant7.setPassword("password");
         restaurant7.setPhone("1234567896");
-        restaurant7.setCuisine("Thai");
+        restaurant7.setCuisine(CuisineType.Thai);
         restaurant7.setOpenTime(Time.valueOf("7:00:00"));
         restaurant7.setCloseTime(Time.valueOf("12:00:00"));
         restaurant7.setDescription("Thai cuisine");
@@ -459,7 +460,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant8.setEmail("restaurant8@gmail.com");
         restaurant8.setPassword("password");
         restaurant8.setPhone("1234567897");
-        restaurant8.setCuisine("Greek");
+        restaurant8.setCuisine(CuisineType.Thai);
         restaurant8.setOpenTime(Time.valueOf("14:00:00"));
         restaurant8.setCloseTime(Time.valueOf("23:00:00"));
         restaurant8.setDescription("Greek cuisine");
@@ -471,7 +472,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant9.setEmail("restaurant9@gmail.com");
         restaurant9.setPassword("password");
         restaurant9.setPhone("1234567898");
-        restaurant9.setCuisine("Spanish");
+        restaurant9.setCuisine(CuisineType.Spanish);
         restaurant9.setOpenTime(Time.valueOf("15:00:00"));
         restaurant9.setCloseTime(Time.valueOf("23:00:00"));
         restaurant9.setDescription("Spanish cuisine");
@@ -484,7 +485,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.setEmail("restaurant10@gmail.com");
         restaurant10.setPassword("password");
         restaurant10.setPhone("1234567899");
-        restaurant10.setCuisine("American");
+        restaurant10.setCuisine(CuisineType.American);
         restaurant10.setOpenTime(Time.valueOf("16:00:00"));
         restaurant10.setCloseTime(Time.valueOf("23:00:00"));
         restaurant10.setDescription("American cuisine");

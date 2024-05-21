@@ -1,5 +1,6 @@
 package com.service.foodorderserviceserver.DTO;
 
+import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class RestaurantDTO {
     private String email;
     private String password;
     private String phone;
-    private String cuisine;
+    private CuisineType cuisine;
     private Time openTime;
     private Time closeTime;
     private boolean isOpened;

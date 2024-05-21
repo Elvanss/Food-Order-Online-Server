@@ -1,5 +1,6 @@
 package com.service.foodorderserviceserver.Entity;
 
+import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,7 +38,8 @@ public class Restaurant implements Serializable {
     private String phone;
 
     @Column(name = "cuisine")
-    private String cuisine;
+    @Enumerated(EnumType.STRING)
+    private CuisineType cuisine;
 
     @Column(name = "open-time")
     private Time openTime;

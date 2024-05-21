@@ -49,12 +49,12 @@ public class CartController {
         return new Result(true, StatusCode.SUCCESS, "Cart line item found", cartLineItemDTO);
     }
 
-    @PostMapping("/add")
-    public Result addItemToCart(@RequestParam("cartId") Integer cartId, @RequestParam("cartId") Integer itemId) {
-        CartLineItem cartLineItem = cartService.addItemToCart(cartId, itemId);
-        CartLineItemDTO cartLineItemDTO = cartLineItemMapper.convertToDto(cartLineItem);
-        return new Result(true, StatusCode.SUCCESS, "Item added to cart", cartLineItemDTO);
-    }
+@PostMapping("/add")
+public Result addItemToCart(@RequestParam("cartId") Integer cartId, @RequestParam("itemId") Integer itemId) {
+    CartLineItem cartLineItem = cartService.addItemToCart(cartId, itemId);
+    CartLineItemDTO cartLineItemDTO = cartLineItemMapper.convertToDto(cartLineItem);
+    return new Result(true, StatusCode.SUCCESS, "Item added to cart", cartLineItemDTO);
+}
 
     // Only Quantity can be updated
     @PutMapping("/{cartId}/items/{cartLineItemId}")

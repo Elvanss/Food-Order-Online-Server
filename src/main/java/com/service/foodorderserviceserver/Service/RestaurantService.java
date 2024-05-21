@@ -147,5 +147,11 @@ public class RestaurantService {
         restaurant.addAddress(addressToBeAssigned);
     }
 
+    // Searching items in a restaurant
+    public List<Restaurant> searchItems(String itemName) {
+        return restaurantRepository.findByItemName(itemName);
+    }
+
+
 }
 

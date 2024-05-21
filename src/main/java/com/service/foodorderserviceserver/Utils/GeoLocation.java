@@ -4,11 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.service.foodorderserviceserver.Entity.Address;
+import com.service.foodorderserviceserver.Entity.Item;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
+import com.service.foodorderserviceserver.Repository.RestaurantRepository;
+import com.service.foodorderserviceserver.Service.RestaurantService;
 
 public class GeoLocation {
     private static final double EARTH_RADIUS = 6371; // Approximate radius of the Earth in kilometers
+    private final RestaurantRepository restaurantRepository;
+    private final RestaurantService restaurantService;
+
+    public GeoLocation(RestaurantRepository restaurantRepository,
+                       RestaurantService restaurantService) {
+        this.restaurantRepository = restaurantRepository;
+        this.restaurantService = restaurantService;
+    }
 
     public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
@@ -22,7 +33,6 @@ public class GeoLocation {
     public static List<RestaurantDistance> findNearestRestaurants(User user, List<Restaurant> restaurants) {
         List<Address> userAddresses = user.getAddresses();
         if (userAddresses.isEmpty()) {
-            // User has no addresses, return an empty list
             return List.of();
         }
 
@@ -35,6 +45,33 @@ public class GeoLocation {
                 .map(r -> new RestaurantDistance(r, calculateDistance(userLatitude, userLongitude, r.getAddresses().get(0).getLatitude(), r.getAddresses().get(0).getLongitude())))
                 .sorted((rd1, rd2) -> Double.compare(rd1.getDistance(), rd2.getDistance()))
                 .collect(Collectors.toList());
+    }
+
+    public static List<RestaurantDistance> getNearestRestaurantByCuisine(User user, List<Restaurant> restaurants, String cuisine) {
+        List<Address> userAddresses = user.getAddresses();
+        if (userAddresses.isEmpty()) {
+            return List.of();
+        }
+
+        Address userAddress = userAddresses.get(0);
+        double userLatitude = userAddress.getLatitude();
+        double userLongitude = userAddress.getLongitude();
+
+        return restaurants.stream()
+                .filter(r -> r.getAddresses().get(0) != null && r.getAddresses().get(0).getLatitude() != null && r.getAddresses().get(0).getLongitude() != null)
+                .filter(r -> r.getCuisine().equals(cuisine))
+                .map(r -> new RestaurantDistance(r, calculateDistance(userLatitude, userLongitude, r.getAddresses().get(0).getLatitude(), r.getAddresses().get(0).getLongitude())))
+                .sorted((rd1, rd2) -> Double.compare(rd1.getDistance(), rd2.getDistance()))
+                .collect(Collectors.toList());
+    }
+
+    public List<RestaurantDistance> filterOfSearchingNearestRestaurantByCuisine(User user, List<Restaurant> restaurants, String cuisine, String item) {
+        List<Restaurant> restaurantsInSearch = restaurantService.searchItems(item);
+        List<Address> userAddresses = user.getAddresses();
+        if (userAddresses.isEmpty()) {
+            return List.of();
+        }
+        return null;
     }
 
     public static class RestaurantDistance {
