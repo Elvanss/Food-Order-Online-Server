@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Item;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.Service.RestaurantService;
@@ -47,7 +48,7 @@ public class GeoLocation {
                 .collect(Collectors.toList());
     }
 
-    public static List<RestaurantDistance> getNearestRestaurantByCuisine(User user, List<Restaurant> restaurants, String cuisine) {
+    public static List<RestaurantDistance> getNearestRestaurantByCuisine(User user, List<Restaurant> restaurants, CuisineType cuisine) {
         List<Address> userAddresses = user.getAddresses();
         if (userAddresses.isEmpty()) {
             return List.of();
@@ -71,6 +72,12 @@ public class GeoLocation {
         if (userAddresses.isEmpty()) {
             return List.of();
         }
+        // Assuming the first address is the primary one
+        Address userAddress = userAddresses.get(0);
+        double userLatitude = userAddress.getLatitude();
+        double userLongitude = userAddress.getLongitude();
+
+
         return null;
     }
 
