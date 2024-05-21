@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.RestaurantDTO;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
 import com.service.foodorderserviceserver.Service.RestaurantService;
@@ -123,16 +124,26 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
     }
 
-    @GetMapping("/nearest/{cuisine}")
-    public Result getNearestRestaurantsByCuisine(@RequestParam("userId") Integer userId, @PathVariable String cuisine) {
-        User user = userService.findById(userId);
-        List<Restaurant> allRestaurants = restaurantService.getRestaurantByCuisine(cuisine);
-        List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.getNearestRestaurantByCuisine(user, allRestaurants, cuisine);
-        List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
-                .map(restaurantDistance -> restaurantMapper.convertToDto(restaurantDistance.getRestaurant()))
-                .toList();
-        return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
-    }
+//    @GetMapping("/nearest/{cuisine}")
+//    public Result getNearestRestaurantsByCuisine(@RequestParam("userId") Integer userId, @RequestParam("cuisine") String cuisine) {
+//        User user = userService.findById(userId);
+//        List<Restaurant> allRestaurants = restaurantService.getRestaurantByCuisine(cuisine);
+//        List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.getNearestRestaurantByCuisine(user, allRestaurants, cuisine);
+//        List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
+//                .map(restaurantDistance -> restaurantMapper.convertToDto(restaurantDistance.getRestaurant()))
+//                .toList();
+//        return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
+//    }
+@GetMapping("/nearest/{cuisine}")
+public Result getNearestRestaurantsByCuisine(@RequestParam("userId") Integer userId, @PathVariable("cuisine") CuisineType cuisine) {
+    User user = userService.findById(userId);
+    List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
+    List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.getNearestRestaurantByCuisine(user, allRestaurants, cuisine);
+    List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
+            .map(restaurantDistance -> restaurantMapper.convertToDto(restaurantDistance.getRestaurant()))
+            .toList();
+    return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
+}
 
 
 
