@@ -2,15 +2,15 @@ package com.service.foodorderserviceserver.Service;
 
 import com.paypal.base.rest.PayPalRESTException;
 import com.service.foodorderserviceserver.Entity.*;
+import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.OrderStatus;
+import com.service.foodorderserviceserver.Entity.User.Membership;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.OrderRepository;
 import com.service.foodorderserviceserver.Service.Payment.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,15 +56,30 @@ public class OrderService {
         Cart cart = cartService.getCartForUser(user);
         Order order = initializeOrder(user, restaurant, address, cart);
 
-        double totalPrice = calculateTotalPriceAndPopulateOrderLineItems(cart, order);
+        double totalPriceBeforeDiscount = calculateTotalPriceAndPopulateOrderLineItems(cart, order);
+        double discountPercentage = calculateDiscountPercentage(user.getMembership());
+        double totalPriceAfterDiscount = totalPriceBeforeDiscount * (1 - discountPercentage);
 
-        order.setTotalPrice(totalPrice);
+        order.setTotalPrice(totalPriceAfterDiscount);
         Order savedOrder = orderRepository.save(order);
 
         processOrderPayment(savedOrder);
 
         return savedOrder;
     }
+
+    private double calculateDiscountPercentage(Membership membership) {
+        if (membership == null || membership.getMembershipType() == MembershipType.NONE) {
+            return 0.0; // No discount
+        } else if (membership.getMembershipType() == MembershipType.MONTHLY) {
+            return 0.1; // 10% discount
+        } else if (membership.getMembershipType() == MembershipType.ANNUALLY) {
+            return 0.12; // 12% discount
+        } else {
+            throw new IllegalArgumentException("Invalid membership type: " + membership.getMembershipType());
+        }
+    }
+
 
     private Order initializeOrder(User user, Restaurant restaurant, Address address, Cart cart) {
         Order order = new Order();
@@ -113,7 +128,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+    public void saveOrder(Order order) {
+        orderRepository.save(order);
     }
 }

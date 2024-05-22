@@ -43,6 +43,9 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phoneNumber;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+    private Membership membership;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Address> addresses = new ArrayList<>();
 
