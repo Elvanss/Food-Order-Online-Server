@@ -3,6 +3,7 @@ package com.service.foodorderserviceserver.Controller;
 import com.service.foodorderserviceserver.DTO.RestaurantDTO;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.Type.CuisineType;
+import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
 import com.service.foodorderserviceserver.Service.RestaurantService;
@@ -121,6 +122,15 @@ public class RestaurantController {
         return new Result(true, StatusCode.SUCCESS, "Success", restaurantDTOS);
     }
 
+    @GetMapping("itemCategory/{category}")
+    public Result getRestaurantByItemCategory(@PathVariable ItemCategory category) {
+        List<Restaurant> restaurants = restaurantService.findAllByItemType(category);
+        List<RestaurantDTO> restaurantDTOS = restaurants.stream()
+                .map(this.restaurantMapper::convertToDto)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Success", restaurantDTOS);
+    }
+
     /**
      * Get the nearest restaurants functions
      */
@@ -173,6 +183,7 @@ public class RestaurantController {
                 .toList();
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
     }
+
 
 
 

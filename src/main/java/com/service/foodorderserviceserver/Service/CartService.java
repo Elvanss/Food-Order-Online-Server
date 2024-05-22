@@ -3,6 +3,7 @@ package com.service.foodorderserviceserver.Service;
 import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Entity.CartLineItem;
 import com.service.foodorderserviceserver.Entity.Item;
+import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.CartLineItemRepository;
 import com.service.foodorderserviceserver.Repository.CartRepository;
 import com.service.foodorderserviceserver.Repository.ItemRepository;
@@ -88,5 +89,18 @@ public class CartService {
         CartLineItem cartLineItem = cartLineItemRepository.findById(cartLineItemId)
                 .orElseThrow(() -> new ObjectNotFoundException(cartLineItemId, "Cart line item not found"));
         cartLineItemRepository.save(cartLineItem);
+    }
+
+    public Cart getCartForUser(User user) {
+        return cartRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ObjectNotFoundException(user.getId(), "Cart not found"));
+    }
+
+    public void clearCartForUser(User user) {
+        Cart cart = cartRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ObjectNotFoundException(user.getId(), "Cart not found"));
+        cartLineItemRepository.deleteAllByCartId(cart.getId());
+        cart.setTotalPrice(0.0);
+        cartRepository.save(cart);
     }
 }

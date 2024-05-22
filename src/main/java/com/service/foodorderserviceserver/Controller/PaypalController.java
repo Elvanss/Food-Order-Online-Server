@@ -3,17 +3,22 @@ package com.service.foodorderserviceserver.Controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.service.foodorderserviceserver.Entity.Order;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
+import com.service.foodorderserviceserver.Entity.Type.OrderStatus;
 import com.service.foodorderserviceserver.Service.MembershipService;
+import com.service.foodorderserviceserver.Service.OrderService;
 import com.service.foodorderserviceserver.Service.Payment.PaypalService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +29,7 @@ public class PaypalController {
 
     private final PaypalService paypalService;
     private final MembershipService membershipService;
+    private final OrderService orderService;
 
     @Value("${paypal.success.url}")
     private String success;
@@ -31,9 +37,11 @@ public class PaypalController {
     @Value("${paypal.cancel.url}")
     private String cancel;
 
-    public PaypalController(PaypalService paypalService, MembershipService membershipService) {
+    @Autowired
+    public PaypalController(PaypalService paypalService, MembershipService membershipService, OrderService orderService) {
         this.paypalService = paypalService;
         this.membershipService = membershipService;
+        this.orderService = orderService;
     }
 
     @PostMapping("/create-payment")
@@ -43,15 +51,7 @@ public class PaypalController {
             MembershipType membershipType = MembershipType.valueOf(paymentDetails.get("membershipType"));
             double total = membershipType == MembershipType.MONTHLY ? 8.99 : 129.99;
 
-            Payment payment = paypalService.createPayment(
-                    total,
-                    "AUD",
-                    "paypal",
-                    "sale",
-                    "Membership payment",
-                    cancel,
-                    success
-            );
+            Payment payment = paypalService.createPayment(total, "AUD", "paypal", "sale", "Membership payment", cancel, success);
 
             Map<String, Object> response = new HashMap<>();
             response.put("id", payment.getId());
@@ -66,21 +66,21 @@ public class PaypalController {
 
             return ResponseEntity.ok(response);
         } catch (PayPalRESTException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
     @GetMapping("/membership/success")
     public Result paymentSuccess(@RequestParam("paymentId") String paymentId,
-                                                 @RequestParam("PayerID") String payerId,
-                                                 @RequestParam("username") String username,
-                                                 @RequestParam("membershipType") MembershipType membershipType) {
+                                 @RequestParam("PayerID") String payerId,
+                                 @RequestParam("username") String username,
+                                 @RequestParam("membershipType") MembershipType membershipType) {
         try {
             paypalService.executePayment(paymentId, payerId);
             createMembership(username, membershipType);
-            return new Result(true,  StatusCode.SUCCESS,"Payment successful!");
+            return new Result(true, StatusCode.SUCCESS, "Payment successful!");
         } catch (PayPalRESTException e) {
-            return new Result(true, StatusCode.INTERNAL_SERVER_ERROR,"Payment failed.");
+            return new Result(false, StatusCode.INTERNAL_SERVER_ERROR, "Payment failed: " + e.getMessage());
         }
     }
 
@@ -98,48 +98,39 @@ public class PaypalController {
         }
     }
 
-    //    @GetMapping("/membership/success")
-//    public ResponseEntity<String> paymentSuccess(@RequestParam String paymentId,
-//                                                 @RequestParam String PayerID,
-//                                                 @RequestParam String username) {
-//        if (PayerID != null) {
-//            try {
-//                paypalService.executePayment(paymentId, PayerID);
-//                signUpForYearlyMembership(username); // default to yearly membership
-//                return ResponseEntity.ok("Payment successful!");
-//            } catch (PayPalRESTException e) {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment failed.");
-//            }
-//        } else {
-//            return ResponseEntity.ok("Payment cancelled.");
-//        }
-//    }
+    @PostMapping("/create-order-payment")
+    public ResponseEntity<Map<String, Object>> createOrderPayment(@RequestBody Map<String, String> paymentDetails) {
+        try {
+            String orderId = paymentDetails.get("orderId");
+            double total = Double.parseDouble(paymentDetails.get("total"));
 
-//    @RequestMapping(value = "/payment/success", method = {RequestMethod.POST, RequestMethod.GET})
-//    public Result paymentSuccess(
-//            @RequestParam("paymentId") String paymentId,
-//            @RequestParam("PayerID") String payerId,
-//            @RequestParam("username") String username,
-//            @RequestParam("membershipType") MembershipType membershipType
-//    ) {
-//        if (payerId == null) {
-//            return new Result(false, StatusCode.NOT_FOUND, "Payment cancelled.");
-//        }
-//        try {
-//            Payment payment = paypalService.executePayment(paymentId, payerId);
-//            if (payment.getState().equals("approved")) {
-//                if (membershipType == MembershipType.MONTHLY) {
-//                    membershipService.signUpForMonthlyMembership(username);
-//                } else if (membershipType == MembershipType.ANNUALLY) {
-//                    membershipService.signUpForYearlyMembership(username);
-//                } else {
-//                    log.error("Invalid membership type.");
-//                }
-//                return new Result(true, StatusCode.SUCCESS, "Payment successful!");
-//            }
-//        } catch (PayPalRESTException e) {
-//            log.error("Error occurred:: ", e);
-//        }
-//        return new Result(false, StatusCode.NOT_FOUND, "Payment failed.");
-//    }
+            Map<String, Object> response = paypalService.createOrderPayment(orderId, total);
+
+            return ResponseEntity.ok(response);
+        } catch (PayPalRESTException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/order-payment/success")
+    public Result orderPaymentSuccess(@RequestParam("paymentId") String paymentId,
+                                      @RequestParam("PayerID") String payerId,
+                                      @RequestParam("orderId") Integer orderId) {
+        try {
+            paypalService.executePayment(paymentId, payerId);
+            Order order = orderService.findOrder(orderId);
+            if (order != null) {
+                order.setStatus(OrderStatus.PROCESSING);
+                orderService.saveOrder(order);
+                return new Result(true, StatusCode.SUCCESS, "Order payment successful!");
+            } else {
+                return new Result(false, StatusCode.NOT_FOUND, "Order not found.");
+            }
+        } catch (PayPalRESTException e) {
+            if (e.getDetails() != null && "PAYMENT_NOT_APPROVED_FOR_EXECUTION".equals(e.getDetails().getName())) {
+                return new Result(false, StatusCode.INTERNAL_SERVER_ERROR, "Payment was not approved by the payer.");
+            }
+            return new Result(false, StatusCode.INTERNAL_SERVER_ERROR, "Order payment failed: " + e.getMessage());
+        }
+    }
 }

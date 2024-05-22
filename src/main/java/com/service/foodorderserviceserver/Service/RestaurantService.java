@@ -2,6 +2,7 @@ package com.service.foodorderserviceserver.Service;
 
 import com.service.foodorderserviceserver.Entity.Address;
 import com.service.foodorderserviceserver.Entity.Restaurant;
+import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Repository.AddressRepository;
 import com.service.foodorderserviceserver.Repository.RestaurantRepository;
 import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
@@ -60,6 +61,10 @@ public class RestaurantService {
         } else {
             throw new RuntimeException("Password is incorrect");
         }
+    }
+
+    public List<Restaurant> findAllByItemType(ItemCategory itemCategory) {
+        return this.restaurantRepository.findByItemType(itemCategory);
     }
 
     // Update an existing restaurant
