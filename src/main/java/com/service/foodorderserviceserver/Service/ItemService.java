@@ -78,6 +78,7 @@ public class ItemService {
             item.setAvailable(item.isAvailable());
             item.setPrice(item.getPrice());
             item.setItemCategory(item.getItemCategory());
+            item.setImageURL(item.getImageURL());
             item.setRestaurantId(restaurant);
             itemRepository.save(item);
         }
@@ -96,6 +97,7 @@ public class ItemService {
         itemValid.setDescription(item.getDescription());
         itemValid.setAvailable(item.isAvailable());
         itemValid.setItemCategory(item.getItemCategory());
+        item.setImageURL(item.getImageURL());
         itemRepository.save(itemValid);
         return item;
     }
@@ -140,6 +142,10 @@ public class ItemService {
                 .orElseThrow(() -> new ObjectNotFoundException(itemId, "Item not found"));
         item.setPrice(price);
         itemRepository.save(item);
+    }
+
+    public List<Item> findRelatedItemByRating(String itemName) {
+        return itemRepository.findByKeyword(itemName);
     }
 
 

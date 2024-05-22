@@ -1,20 +1,27 @@
 package com.service.foodorderserviceserver.Controller;
 
 import com.service.foodorderserviceserver.DTO.RestaurantDTO;
+import com.service.foodorderserviceserver.DTO.RestaurantRatingDTO;
+import com.service.foodorderserviceserver.Entity.Item;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.Type.CuisineType;
 import com.service.foodorderserviceserver.Entity.Type.ItemCategory;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Mapper.RestaurantMapper;
+import com.service.foodorderserviceserver.Service.FeedbackService;
+import com.service.foodorderserviceserver.Service.ItemService;
 import com.service.foodorderserviceserver.Service.RestaurantService;
 import com.service.foodorderserviceserver.Service.UserService;
 import com.service.foodorderserviceserver.System.Result;
 import com.service.foodorderserviceserver.System.StatusCode;
 import com.service.foodorderserviceserver.Utils.GeoLocation;
 
+import com.service.foodorderserviceserver.Utils.SortByRating;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,14 +31,20 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final RestaurantMapper restaurantMapper;
+    private final ItemService itemService;
+    private final FeedbackService feedbackService;
     private final UserService userService;
     private final GeoLocation geoLocation;
 
     public RestaurantController(RestaurantService restaurantService,
                                 RestaurantMapper restaurantMapper,
+                                ItemService itemService,
+                                FeedbackService feedbackService,
                                 UserService userService, GeoLocation geoLocation) {
         this.restaurantService = restaurantService;
         this.restaurantMapper = restaurantMapper;
+        this.itemService = itemService;
+        this.feedbackService = feedbackService;
         this.userService = userService;
         this.geoLocation = geoLocation;
     }
@@ -182,6 +195,25 @@ public class RestaurantController {
                 .map(restaurantDistance -> restaurantMapper.convertToDtoByDistance(restaurantDistance))
                 .toList();
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
+    }
+
+    // Rating
+    @GetMapping("/findByRating/{itemName}")
+    public Result findItemByRating(@PathVariable String itemName) {
+        List<Item> relatedItems = itemService.findRelatedItemByRating(itemName);
+        Map<Restaurant, Double> relatedRestaurants = SortByRating.sortItemByRating(relatedItems, feedbackService);
+
+        // Convert Restaurant entities to RestaurantDTO objects and create RestaurantRatingDTO objects
+        List<RestaurantRatingDTO> relatedRestaurantRatings = new ArrayList<>();
+        for (Map.Entry<Restaurant, Double> entry : relatedRestaurants.entrySet()) {
+            RestaurantDTO dto = restaurantMapper.convertToDto(entry.getKey());
+            RestaurantRatingDTO restaurantRating = new RestaurantRatingDTO();
+            restaurantRating.setRestaurant(dto);
+            restaurantRating.setAverageRating(entry.getValue());
+            relatedRestaurantRatings.add(restaurantRating);
+        }
+
+        return new Result(true, StatusCode.SUCCESS, "Success", relatedRestaurantRatings);
     }
 
 
