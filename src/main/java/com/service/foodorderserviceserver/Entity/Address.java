@@ -59,8 +59,8 @@ public class Address implements Serializable {
     }
 
     private void generateRandomCoordinates() {
-        double minLat = -38.43; // Minimum latitude
-        double maxLat = -37.48; // Maximum latitude
+        double minLat = -118.43; // Minimum latitude
+        double maxLat = -117.48; // Maximum latitude
         double minLon = 144.58; // Minimum longitude
         double maxLon = 145.21; // Maximum longitude
 

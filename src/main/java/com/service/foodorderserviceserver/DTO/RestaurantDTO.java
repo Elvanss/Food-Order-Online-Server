@@ -23,8 +23,10 @@ public class RestaurantDTO {
     private Time closeTime;
     private boolean isOpened;
     private String description;
+    private double distance;
     private Integer numberOfAddress;
     private Integer numberOfItems;
+
 }
 
 
