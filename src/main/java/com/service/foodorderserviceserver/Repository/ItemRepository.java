@@ -19,4 +19,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     // Find the item by id and restaurant id
     @Query("select i from Item i where i.id = ?1 and i.restaurantId = ?2")
     Optional<Item> findByIdAndRestaurantId(int itemId, Restaurant restaurant);
+
+    // Find the item by keyword
+    @Query("select i from Item i where i.itemName like %?1%")
+    List<Item> findByKeyword(String itemName);
 }

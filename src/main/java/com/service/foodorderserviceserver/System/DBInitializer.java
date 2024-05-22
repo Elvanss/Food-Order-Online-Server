@@ -358,7 +358,11 @@ public class DBInitializer implements CommandLineRunner {
         // Create address for the tenth restaurant
         Address address10 = new Address("Building 10", "10 Main St", "Wollongong", "State", "2500");
 
-        // Save the addresses
+        Address address11 = new Address("Building 11", "11 Main St", "Wollongong", "NSW", "2500");
+
+        Address address12 = new Address("Building 12", "12 Main St", "Wollongong", "NSW", "2500");
+
+               // Save the addresses
         // Address savedRestaurantAddress1 = addressRepository.save(restaurantAddress);
         // Address savedRestaurantAddress2 = addressRepository.save(address2);
         // Address savedRestaurantAddress3 = addressRepository.save(address3);
@@ -491,6 +495,28 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.setDescription("American cuisine");
         restaurant10.addAddress(address10);
 
+        Restaurant restaurant11 = new Restaurant();
+        restaurant11.setRestaurantName("Restaurant 11");
+        restaurant11.setEmail("restaurant11@gmail.com");
+        restaurant11.setPassword("password");
+        restaurant11.setPhone("1234567898");
+        restaurant11.setCuisine(CuisineType.Chinese);
+        restaurant11.setOpenTime(Time.valueOf("17:00:00"));
+        restaurant11.setCloseTime(Time.valueOf("23:00:00"));
+        restaurant11.setDescription("Chinese cuisine");
+        restaurant11.addAddress(address11);
+
+        Restaurant restaurant12 = new Restaurant();
+        restaurant12.setRestaurantName("Restaurant 12");
+        restaurant12.setEmail("restaurant12@gmail.com");
+        restaurant12.setPassword("password");
+        restaurant12.setPhone("1234567899");
+        restaurant12.setCuisine(CuisineType.Chinese);
+        restaurant12.setOpenTime(Time.valueOf("17:00:00"));
+        restaurant12.setCloseTime(Time.valueOf("23:00:00"));
+        restaurant12.setDescription("Chinese cuisine");
+        restaurant12.addAddress(address12);
+
         // Save the restaurant
         restaurantRepository.save(restaurant1);
         restaurantRepository.save(restaurant2);
@@ -502,6 +528,8 @@ public class DBInitializer implements CommandLineRunner {
         restaurantRepository.save(restaurant8);
         restaurantRepository.save(restaurant9);
         restaurantRepository.save(restaurant10);
+        restaurantRepository.save(restaurant11);
+        restaurantRepository.save(restaurant12);
         /*
          ====================Create 10 restaurants (End)=====================
          */
@@ -1229,8 +1257,32 @@ public class DBInitializer implements CommandLineRunner {
         feedback2.setRating(Rating.ThreeStar);
         feedback2.setPostDateTime(LocalDateTime.now());
 
+        Feedback feedback3 = new Feedback();
+        feedback3.setUser(user1);
+        feedback3.setRestaurant(restaurant2);
+        feedback3.setContent("Ok");
+        feedback3.setRating(Rating.FourStar);
+        feedback3.setPostDateTime(LocalDateTime.now());
+
+        Feedback feedback4 = new Feedback();
+        feedback4.setUser(user1);
+        feedback4.setRestaurant(restaurant4);
+        feedback4.setContent("Ok");
+        feedback4.setRating(Rating.ThreeStar);
+        feedback4.setPostDateTime(LocalDateTime.now());
+
+        Feedback feedback5 = new Feedback();
+        feedback5.setUser(user1);
+        feedback5.setRestaurant(restaurant5);
+        feedback5.setContent("Ok");
+        feedback5.setRating(Rating.FiveStar);
+        feedback5.setPostDateTime(LocalDateTime.now());
+
         feedbackRepository.save(feedback1);
         feedbackRepository.save(feedback2);
+        feedbackRepository.save(feedback3);
+        feedbackRepository.save(feedback4);
+        feedbackRepository.save(feedback5);
 
 
 
