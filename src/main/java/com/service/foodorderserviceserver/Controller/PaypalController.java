@@ -3,9 +3,11 @@ package com.service.foodorderserviceserver.Controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.service.foodorderserviceserver.Entity.Cart;
 import com.service.foodorderserviceserver.Entity.Order;
 import com.service.foodorderserviceserver.Entity.Type.MembershipType;
 import com.service.foodorderserviceserver.Entity.Type.OrderStatus;
+import com.service.foodorderserviceserver.Service.CartService;
 import com.service.foodorderserviceserver.Service.MembershipService;
 import com.service.foodorderserviceserver.Service.OrderService;
 import com.service.foodorderserviceserver.Service.Payment.PaypalService;
@@ -30,6 +32,7 @@ public class PaypalController {
     private final PaypalService paypalService;
     private final MembershipService membershipService;
     private final OrderService orderService;
+    private final CartService cartService;
 
     @Value("${paypal.success.url}")
     private String success;
@@ -38,10 +41,11 @@ public class PaypalController {
     private String cancel;
 
     @Autowired
-    public PaypalController(PaypalService paypalService, MembershipService membershipService, OrderService orderService) {
+    public PaypalController(PaypalService paypalService, MembershipService membershipService, OrderService orderService, CartService cartService) {
         this.paypalService = paypalService;
         this.membershipService = membershipService;
         this.orderService = orderService;
+        this.cartService = cartService;
     }
 
     @PostMapping("/create-payment")
@@ -121,6 +125,7 @@ public class PaypalController {
             Order order = orderService.findOrder(orderId);
             if (order != null) {
                 order.setStatus(OrderStatus.PROCESSING);
+                cartService.clearCartForUser(savedOrder.getUser());
                 orderService.saveOrder(order);
                 return new Result(true, StatusCode.SUCCESS, "Order payment successful!");
             } else {
@@ -134,3 +139,4 @@ public class PaypalController {
         }
     }
 }
+
