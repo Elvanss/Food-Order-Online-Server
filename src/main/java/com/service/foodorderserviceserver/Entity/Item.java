@@ -38,6 +38,7 @@ public class Item {
     private Double price;
 
     @Column(name = "itemCategory")
+    @Enumerated(EnumType.STRING)
     private ItemCategory itemCategory;
 
     @Column(name = "imageURL")

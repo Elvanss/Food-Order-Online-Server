@@ -20,6 +20,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<Restaurant> findByCuisine(String cuisine);
 
     // Find restaurant by item name
-    @Query("SELECT r FROM Restaurant r JOIN r.itemList i WHERE i.itemName like%?1%")
+    @Query("SELECT r FROM Restaurant r JOIN r.itemList i WHERE i.itemName LIKE %?1%")
     List<Restaurant> findByItemName(String itemName);
 }
