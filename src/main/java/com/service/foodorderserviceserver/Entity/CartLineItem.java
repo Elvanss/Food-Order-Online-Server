@@ -22,7 +22,7 @@ public class CartLineItem {
     private Cart cartId;
 
     @ManyToOne
-    @JoinColumn(name = "variant_product_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "cart_item_id", referencedColumnName = "id", nullable = false)
     private Item productId;
 
     @Column(name = "quantity")
@@ -30,4 +30,8 @@ public class CartLineItem {
 
     @Column(name = "total_price")
     private Double totalPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 }
