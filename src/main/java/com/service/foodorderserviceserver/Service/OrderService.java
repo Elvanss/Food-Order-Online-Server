@@ -153,4 +153,9 @@ public class OrderService {
             throw new RuntimeException("Order not found");
         }
     }
+
+    public List<Order> viewOrderInUserId(Integer userId) {
+        User user = userService.findById(userId);
+        return orderRepository.findAllOrderByUser(user);
+    }
 }
