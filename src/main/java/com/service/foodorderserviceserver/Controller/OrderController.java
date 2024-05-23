@@ -51,5 +51,13 @@ public class OrderController {
         return new Result(true, StatusCode.SUCCESS, "Order rejected successfully!");
     }
 
+    @GetMapping("/viewOrdersByUser")
+    public Result viewOrdersByUser(@RequestParam("userId") Integer userId) {
+        List<Order> orders = orderService.viewOrderInUserId(userId);
+        List<OrderDTO> orderDTOS = orders.stream()
+                .map(orderMapper::convertToDto)
+                .toList();
+        return new Result(true, StatusCode.SUCCESS, "All Orders", orderDTOS);
+    }
 
 }
