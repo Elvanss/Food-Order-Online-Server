@@ -142,7 +142,7 @@ public class DBInitializer implements CommandLineRunner {
         User user3 = new User();
         user3.setFirstName("Alice");
         user3.setLastName("Smith");
-        user3.setUserName("janefoodie");
+        user3.setUserName("smithfoodie");
         user3.setPassword("password");
         user3.setEmail("alice@gmail.com");
         user3.setPhoneNumber("1122334455");
@@ -412,7 +412,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create fourth restaurant
         Restaurant restaurant4 = new Restaurant();
-        restaurant4.setRestaurantName("Crown Indian Cuisine");
+        restaurant4.setRestaurantName("Crown Indian");
         restaurant4.setEmail("restaurant4@gmail.com");
         restaurant4.setPassword("password");
         restaurant4.setPhone("1234567892");
@@ -448,7 +448,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create seventh restaurant
         Restaurant restaurant7 = new Restaurant();
-        restaurant7.setRestaurantName("Jasmine Rice Thai Restaurant");
+        restaurant7.setRestaurantName("Jasmine Rice");
         restaurant7.setEmail("restaurant7@gmail.com");
         restaurant7.setPassword("password");
         restaurant7.setPhone("1234567896");
@@ -507,7 +507,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant11.addAddress(address11);
 
         Restaurant restaurant12 = new Restaurant();
-        restaurant12.setRestaurantName("Hong Kong Chef");
+        restaurant12.setRestaurantName("HongKong Chef");
         restaurant12.setEmail("restaurant12@gmail.com");
         restaurant12.setPassword("password");
         restaurant12.setPhone("1234567899");
