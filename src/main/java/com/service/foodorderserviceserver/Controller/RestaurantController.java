@@ -153,9 +153,9 @@ public class RestaurantController {
     public Result getNearestRestaurants (@RequestParam("userId") Integer userId) {
         User user = userService.findById(userId); // Get the user
         List<Restaurant> allRestaurants = restaurantService.getAllRestaurants(); // Get all restaurants
-        List<GeoLocation.RestaurantDistance> nearestRestaurants = geoLocation.findNearestRestaurants(user, allRestaurants); // Find the nearest restaurants
+        List<GeoLocation.RestaurantDistance> nearestRestaurants = GeoLocation.findNearestRestaurants(user, allRestaurants); // Find the nearest restaurants
         List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
-                .map(restaurantDistance -> restaurantMapper.convertToDtoByDistance(restaurantDistance))
+                .map(restaurantMapper::convertToDtoByDistance)
                 .toList();
         
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
@@ -181,7 +181,7 @@ public class RestaurantController {
         User user = userService.findById(userId);
         List<GeoLocation.RestaurantDistance> nearestRestaurants = geoLocation.filterOfSearchingNearestRestaurantLowToHigh(user, item);
         List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
-                .map(restaurantDistance -> restaurantMapper.convertToDtoByDistance(restaurantDistance))
+                .map(restaurantMapper::convertToDtoByDistance)
                 .toList();
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
     }
@@ -192,7 +192,7 @@ public class RestaurantController {
         User user = userService.findById(userId);
         List<GeoLocation.RestaurantDistance> nearestRestaurants = geoLocation.filterOfSearchingNearestRestaurantHighToLow(user, item);
         List<RestaurantDTO> nearestRestaurantDTOs = nearestRestaurants.stream()
-                .map(restaurantDistance -> restaurantMapper.convertToDtoByDistance(restaurantDistance))
+                .map(restaurantMapper::convertToDtoByDistance)
                 .toList();
         return new Result(true, StatusCode.SUCCESS, "Success", nearestRestaurantDTOs);
     }
