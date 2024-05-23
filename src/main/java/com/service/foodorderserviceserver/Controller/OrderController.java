@@ -39,5 +39,17 @@ public class OrderController {
         return new Result(true, StatusCode.SUCCESS, "Order Created", orderDTO);
     }
 
+    @PostMapping("/completeOrder")
+    public Result completeOrder(@RequestParam("orderId") Integer orderId) {
+        orderService.completeOrder(orderId);
+        return new Result(true, StatusCode.SUCCESS, "Order completed successfully!");
+    }
+
+    @PostMapping("/rejectOrder")
+    public Result rejectOrder(@RequestParam("orderId") Integer orderId) {
+        orderService.rejectOrder(orderId);
+        return new Result(true, StatusCode.SUCCESS, "Order rejected successfully!");
+    }
+
 
 }

@@ -131,4 +131,26 @@ public class OrderService {
     public void saveOrder(Order order) {
         orderRepository.save(order);
     }
+
+    @Transactional
+    public void completeOrder(Integer orderId) {
+        Order order = findOrder(orderId);
+        if (order != null) {
+            order.setStatus(OrderStatus.COMPLETED);
+            saveOrder(order);
+        } else {
+            throw new RuntimeException("Order not found");
+        }
+    }
+
+    @Transactional
+    public void rejectOrder(Integer orderId) {
+        Order order = findOrder(orderId);
+        if (order != null) {
+            order.setStatus(OrderStatus.REJECTED);
+            saveOrder(order);
+        } else {
+            throw new RuntimeException("Order not found");
+        }
+    }
 }

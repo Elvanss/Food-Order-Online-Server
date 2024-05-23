@@ -376,7 +376,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create first restaurant
         Restaurant restaurant1 = new Restaurant();
-        restaurant1.setRestaurantName("Restaurant 1");
+        restaurant1.setRestaurantName("Ciao Cucina");
         restaurant1.setEmail("restaurant1@gmail.com");
         restaurant1.setPassword("password");
         restaurant1.setPhone("1234567890");
@@ -388,7 +388,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create second restaurant
         Restaurant restaurant2 = new Restaurant();
-        restaurant2.setRestaurantName("Restaurant 2");
+        restaurant2.setRestaurantName("Chef's Choice");
         restaurant2.setEmail("restaurant2@gmail.com");
         restaurant2.setPassword("password");
         restaurant2.setPhone("0987654321");
@@ -400,7 +400,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create third restaurant
         Restaurant restaurant3 = new Restaurant();
-        restaurant3.setRestaurantName("Restaurant 3");
+        restaurant3.setRestaurantName("Guzman y Gomez");
         restaurant3.setEmail("restaurant3@gmail.com");
         restaurant3.setPassword("password");
         restaurant3.setPhone("1234567891");
@@ -412,7 +412,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create fourth restaurant
         Restaurant restaurant4 = new Restaurant();
-        restaurant4.setRestaurantName("Restaurant 4");
+        restaurant4.setRestaurantName("Crown Indian Cuisine");
         restaurant4.setEmail("restaurant4@gmail.com");
         restaurant4.setPassword("password");
         restaurant4.setPhone("1234567892");
@@ -424,7 +424,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create fifth restaurant
         Restaurant restaurant5 = new Restaurant();
-        restaurant5.setRestaurantName("Restaurant 5");
+        restaurant5.setRestaurantName("Sakura Sushi");
         restaurant5.setEmail("restaurant5@gmail.com");
         restaurant5.setPassword("password");
         restaurant5.setPhone("1234567894");
@@ -436,7 +436,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create sixth restaurant
         Restaurant restaurant6 = new Restaurant();
-        restaurant6.setRestaurantName("Restaurant 6");
+        restaurant6.setRestaurantName("Debutant");
         restaurant6.setEmail("restaurant6@gmail.com");
         restaurant6.setPassword("password");
         restaurant6.setPhone("1234567895");
@@ -448,7 +448,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create seventh restaurant
         Restaurant restaurant7 = new Restaurant();
-        restaurant7.setRestaurantName("Restaurant 7");
+        restaurant7.setRestaurantName("Jasmine Rice Thai Restaurant");
         restaurant7.setEmail("restaurant7@gmail.com");
         restaurant7.setPassword("password");
         restaurant7.setPhone("1234567896");
@@ -460,7 +460,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create eighth restaurant
         Restaurant restaurant8 = new Restaurant();
-        restaurant8.setRestaurantName("Restaurant 8");
+        restaurant8.setRestaurantName("Carnation Thai");
         restaurant8.setEmail("restaurant8@gmail.com");
         restaurant8.setPassword("password");
         restaurant8.setPhone("1234567897");
@@ -472,7 +472,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create ninth restaurant
         Restaurant restaurant9 = new Restaurant();
-        restaurant9.setRestaurantName("Restaurant 9");
+        restaurant9.setRestaurantName("Bull And Bear");
         restaurant9.setEmail("restaurant9@gmail.com");
         restaurant9.setPassword("password");
         restaurant9.setPhone("1234567898");
@@ -485,7 +485,7 @@ public class DBInitializer implements CommandLineRunner {
 
         // Create tenth restaurant
         Restaurant restaurant10 = new Restaurant();
-        restaurant10.setRestaurantName("Restaurant 10");
+        restaurant10.setRestaurantName("His Boy Elroy");
         restaurant10.setEmail("restaurant10@gmail.com");
         restaurant10.setPassword("password");
         restaurant10.setPhone("1234567899");
@@ -496,7 +496,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.addAddress(address10);
 
         Restaurant restaurant11 = new Restaurant();
-        restaurant11.setRestaurantName("Restaurant 11");
+        restaurant11.setRestaurantName("Wok In Wok");
         restaurant11.setEmail("restaurant11@gmail.com");
         restaurant11.setPassword("password");
         restaurant11.setPhone("1234567898");
@@ -507,7 +507,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant11.addAddress(address11);
 
         Restaurant restaurant12 = new Restaurant();
-        restaurant12.setRestaurantName("Restaurant 12");
+        restaurant12.setRestaurantName("Hong Kong Chef");
         restaurant12.setEmail("restaurant12@gmail.com");
         restaurant12.setPassword("password");
         restaurant12.setPhone("1234567899");
