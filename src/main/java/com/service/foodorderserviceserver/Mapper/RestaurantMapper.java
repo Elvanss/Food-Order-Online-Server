@@ -20,6 +20,7 @@ public class RestaurantMapper {
                                  source.getCloseTime(),
                                  source.isOpened(),
                                  source.getDescription(),
+                                    source.getImageUrl(),
                                  0,
                                  source.getNumberOfAddress(),
                                  source.getNumberOfItems());
@@ -42,6 +43,7 @@ public class RestaurantMapper {
         restaurant.setCloseTime(source.getCloseTime());
         restaurant.setOpened(source.isOpened());
         restaurant.setDescription(source.getDescription());
+        restaurant.setImageUrl(source.getImageURL());
         return restaurant;
     }
 

@@ -50,6 +50,7 @@ public class RestaurantService {
         restaurant.setCloseTime(restaurant.getCloseTime());
         restaurant.setOpened(restaurant.isOpened());
         restaurant.setDescription(restaurant.getDescription());
+        restaurant.setImageUrl(restaurant.getImageUrl());
         return restaurantRepository.save(restaurant);
     }
 

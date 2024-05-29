@@ -59,6 +59,9 @@ public class Restaurant implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurantId", cascade = CascadeType.ALL)
     private List<Item> itemList;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     // Address Behaviour
     public Integer getNumberOfAddress() {
         return this.addresses.size();

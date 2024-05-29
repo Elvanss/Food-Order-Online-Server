@@ -26,4 +26,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     @Query("SELECT r FROM Restaurant r JOIN r.itemList i WHERE i.itemCategory = ?1")
     List<Restaurant> findByItemType(ItemCategory itemCategory);
+
+
 }
