@@ -385,6 +385,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant1.setCloseTime(Time.valueOf("22:00:00"));
         restaurant1.setDescription("Italian cuisine");
         restaurant1.addAddress(restaurantAddress);
+        restaurant1.setImageUrl(URL + "restaurant1.jpg");
 
         // Create second restaurant
         Restaurant restaurant2 = new Restaurant();
@@ -397,6 +398,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant2.setCloseTime(Time.valueOf("23:00:00"));
         restaurant2.setDescription("Chinese cuisine");
         restaurant2.addAddress(address2);
+        restaurant2.setImageUrl(URL + "restaurant2.jpg");
 
         // Create third restaurant
         Restaurant restaurant3 = new Restaurant();
@@ -409,6 +411,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant3.setCloseTime(Time.valueOf("23:00:00"));
         restaurant3.setDescription("Mexican cuisine");
         restaurant3.addAddress(address3);
+        restaurant2.setImageUrl(URL + "restaurant3.jpg");
 
         // Create fourth restaurant
         Restaurant restaurant4 = new Restaurant();
@@ -421,6 +424,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant4.setCloseTime(Time.valueOf("22:00:00"));
         restaurant4.setDescription("Indian cuisine");
         restaurant4.addAddress(address4);
+        restaurant4.setImageUrl(URL + "restaurant4.jpg");
 
         // Create fifth restaurant
         Restaurant restaurant5 = new Restaurant();
@@ -433,6 +437,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant5.setCloseTime(Time.valueOf("23:00:00"));
         restaurant5.setDescription("Japanese cuisine");
         restaurant5.addAddress(address5);
+        restaurant5.setImageUrl(URL + "restaurant5.jpg");
 
         // Create sixth restaurant
         Restaurant restaurant6 = new Restaurant();
@@ -445,6 +450,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant6.setCloseTime(Time.valueOf("22:00:00"));
         restaurant6.setDescription("French cuisine");
         restaurant6.addAddress(address6);
+        restaurant6.setImageUrl(URL + "restaurant6.jpg");
 
         // Create seventh restaurant
         Restaurant restaurant7 = new Restaurant();
@@ -457,6 +463,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant7.setCloseTime(Time.valueOf("12:00:00"));
         restaurant7.setDescription("Thai cuisine");
         restaurant7.addAddress(address7);
+        restaurant7.setImageUrl(URL + "restaurant7.jpg");
 
         // Create eighth restaurant
         Restaurant restaurant8 = new Restaurant();
@@ -469,6 +476,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant8.setCloseTime(Time.valueOf("23:00:00"));
         restaurant8.setDescription("Greek cuisine");
         restaurant8.addAddress(address8);
+        restaurant8.setImageUrl(URL + "restaurant8.jpg");
 
         // Create ninth restaurant
         Restaurant restaurant9 = new Restaurant();
@@ -481,6 +489,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant9.setCloseTime(Time.valueOf("23:00:00"));
         restaurant9.setDescription("Spanish cuisine");
         restaurant9.addAddress(address9);
+        restaurant9.setImageUrl(URL + "restaurant9.jpg");
 
 
         // Create tenth restaurant
@@ -494,6 +503,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant10.setCloseTime(Time.valueOf("23:00:00"));
         restaurant10.setDescription("American cuisine");
         restaurant10.addAddress(address10);
+        restaurant10.setImageUrl(URL + "restaurant10.jpg");
 
         Restaurant restaurant11 = new Restaurant();
         restaurant11.setRestaurantName("Wok In Wok");
@@ -505,6 +515,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant11.setCloseTime(Time.valueOf("23:00:00"));
         restaurant11.setDescription("Chinese cuisine");
         restaurant11.addAddress(address11);
+        restaurant11.setImageUrl(URL + "restaurant11.jpg");
 
         Restaurant restaurant12 = new Restaurant();
         restaurant12.setRestaurantName("HongKong Chef");
@@ -516,6 +527,7 @@ public class DBInitializer implements CommandLineRunner {
         restaurant12.setCloseTime(Time.valueOf("23:00:00"));
         restaurant12.setDescription("Chinese cuisine");
         restaurant12.addAddress(address12);
+        restaurant12.setImageUrl(URL + "restaurant12.jpg");
 
         // Save the restaurant
         restaurantRepository.save(restaurant1);
