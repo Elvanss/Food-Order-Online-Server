@@ -4,6 +4,8 @@ import com.service.foodorderserviceserver.Entity.Feedback;
 import com.service.foodorderserviceserver.Entity.Restaurant;
 import com.service.foodorderserviceserver.Entity.User.User;
 import com.service.foodorderserviceserver.Repository.FeedbackRepository;
+import com.service.foodorderserviceserver.Repository.RestaurantRepository;
+import com.service.foodorderserviceserver.Repository.User.UserRepository;
 import com.service.foodorderserviceserver.System.exception.CustomObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,23 +16,42 @@ import java.util.List;
 public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public FeedbackService(FeedbackRepository feedbackRepository) {
+    public FeedbackService(FeedbackRepository feedbackRepository,
+                           UserRepository userRepository,
+                           RestaurantRepository restaurantRepository) {
         this.feedbackRepository = feedbackRepository;
+        this.userRepository = userRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Feedback> findAllFeedback() {
         return feedbackRepository.findAll();
     }
 
-    public Feedback createFeedback(Feedback newFeedback, User user, Restaurant restaurant) {
+//    public Feedback createFeedback(Feedback newFeedback, User user, Restaurant restaurant) {
+//        Feedback feedback = new Feedback();
+//        feedback.setUser(user);
+//        feedback.setRestaurant(restaurant);
+//        feedback.setContent(newFeedback.getContent());
+//        feedback.setRating(newFeedback.getRating());
+//        feedback.setPostDateTime(newFeedback.getPostDateTime());
+//        return this.feedbackRepository.save(feedback);
+//    }
+    public Feedback createFeedback(Feedback newFeedback, Integer user, Integer restaurant) {
+        User userFeedback = userRepository.findById(user)
+                .orElseThrow(() -> new CustomObjectNotFoundException("user", user));
+        Restaurant restaurantFeedback = restaurantRepository.findById(restaurant)
+                .orElseThrow(() -> new CustomObjectNotFoundException("restaurant", restaurant));
         Feedback feedback = new Feedback();
-        feedback.setUser(user);
-        feedback.setRestaurant(restaurant);
         feedback.setContent(newFeedback.getContent());
         feedback.setRating(newFeedback.getRating());
         feedback.setPostDateTime(newFeedback.getPostDateTime());
+        feedback.setUser(userFeedback);
+        feedback.setRestaurant(restaurantFeedback);
         return this.feedbackRepository.save(feedback);
     }
 

@@ -49,11 +49,9 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public Result createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
-        User user = userMapper.convertToEntity(feedbackDTO.getUser());
-        Restaurant restaurant = restaurantMapper.convertToEntity(feedbackDTO.getRestaurant());
+    public Result createFeedback(@RequestBody FeedbackDTO feedbackDTO, @RequestParam("userId") Integer userId, @RequestParam("restaurantId") Integer restaurantId) {
         Feedback feedback = feedbackMapper.convertToEntity(feedbackDTO);
-        Feedback createdFeedback = feedbackService.createFeedback(feedback, user, restaurant);
+        Feedback createdFeedback = feedbackService.createFeedback(feedback, userId, restaurantId);
         return new Result(true, StatusCode.SUCCESS, "Feedback created successfully", feedbackMapper.convert(createdFeedback));
     }
 
