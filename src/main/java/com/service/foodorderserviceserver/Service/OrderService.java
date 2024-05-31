@@ -23,7 +23,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserService userService;
     private final RestaurantService restaurantService;
-    private final AddressService addressService;
     private final CartService cartService;
     private final PaypalService paypalService;
 
@@ -31,13 +30,11 @@ public class OrderService {
     public OrderService(OrderRepository orderRepository,
                         UserService userService,
                         RestaurantService restaurantService,
-                        AddressService addressService,
                         CartService cartService,
                         PaypalService paypalService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.restaurantService = restaurantService;
-        this.addressService = addressService;
         this.cartService = cartService;
         this.paypalService = paypalService;
     }

@@ -14,10 +14,10 @@ public class PaypalService {
 
     private final APIContext apiContext;
 
-    @Value("${paypal.success.url}")
+    @Value("${paypal.successOrder.url}")
     private String successUrl;
 
-    @Value("${paypal.cancel.url}")
+    @Value("${paypal.cancelOrder.url}")
     private String cancelUrl;
 
     @Autowired
@@ -67,14 +67,14 @@ public class PaypalService {
         return redirectUrls;
     }
 
-    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
+    public void executePayment(String paymentId, String payerId) throws PayPalRESTException {
         Payment payment = new Payment();
         payment.setId(paymentId);
 
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(payerId);
 
-        return payment.execute(apiContext, paymentExecution);
+        payment.execute(apiContext, paymentExecution);
     }
 
     public Map<String, Object> createOrderPayment(String orderId, double total) throws PayPalRESTException {
